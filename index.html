@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeDB2 Gastronomy Portal & API Playground</title>
+  <meta name="description" content="A comprehensive interactive client and developer console for accessing over 128,942 recipes, nutritional metrics, and meal planning features of RecipeDB2.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Decorative Glowing Blobs -->
+  <div class="glow-blob blob-1"></div>
+  <div class="glow-blob blob-2"></div>
+  <div class="glow-blob blob-3"></div>
+
+  <div class="app-container">
+    
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+      <div class="brand" id="brand-home" style="cursor: pointer;">
+        <div class="brand-icon">R2</div>
+        <span class="brand-title">RecipeDB2 Portal</span>
+      </div>
+      
+      <!-- Primary Tab Toggles -->
+      <div class="nav-links">
+        <button class="nav-tab active" id="tab-btn-explorer" data-tab="explorer-pane">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Recipe Portal
+        </button>
+        <button class="nav-tab" id="tab-btn-analytics" data-tab="analytics-pane">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+          Analytics & Planner
+        </button>
+        <button class="nav-tab" id="tab-btn-playground" data-tab="playground-pane">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          API Console
+        </button>
+      </div>
+
+      <!-- Engine Status & Configuration Button -->
+      <div class="nav-settings">
+        <span class="badge-engine live" id="current-engine-badge">Live Server</span>
+        <button class="btn-settings" id="btn-open-settings" title="Settings & Credentials">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Workspace Section -->
+    <main class="main-content">
+      
+      <!-- ==========================================
+           RECIPE EXPLORER VIEW (TAB 1)
+           ========================================== -->
+      <div id="explorer-pane" class="tab-pane active">
+        
+        <!-- Cuisine Carousel Deck -->
+        <div class="glass-panel carousel-section">
+          <h3 class="panel-title" style="margin-bottom: 0.75rem;">Explore Cuisines</h3>
+          <div class="carousel-container" id="cuisine-carousel">
+            <div class="carousel-card active" data-cuisine="">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(8, 145, 178, 0.7)), url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>All Cuisines</h4>
+                <p>Browse entire catalog</p>
+              </div>
+            </div>
+            <div class="carousel-card" data-cuisine="Indian">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(234, 179, 8, 0.7)), url('https://images.unsplash.com/photo-1585938338392-50a59970d8ee?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>Indian</h4>
+                <p>Spiced & rich</p>
+              </div>
+            </div>
+            <div class="carousel-card" data-cuisine="Middle Eastern">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.7)), url('https://images.unsplash.com/photo-1547058881-aa0edd92aab3?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>Middle Eastern</h4>
+                <p>Aromatic & savory</p>
+              </div>
+            </div>
+            <div class="carousel-card" data-cuisine="French">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>French</h4>
+                <p>Classic & elegant</p>
+              </div>
+            </div>
+            <div class="carousel-card" data-cuisine="Mexican">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(101, 163, 13, 0.7)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>Mexican</h4>
+                <p>Fiery & vibrant</p>
+              </div>
+            </div>
+            <div class="carousel-card" data-cuisine="Italian">
+              <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(16, 185, 129, 0.7)), url('https://images.unsplash.com/photo-1534080391025-09795d197360?q=80&w=300&auto=format&fit=crop')"></div>
+              <div class="carousel-card-info">
+                <h4>Italian</h4>
+                <p>Herbs & cheese</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About & Featured Recipe Dual-Card Section -->
+        <div class="about-featured-grid">
+          
+          <!-- Left Panel: About RecipeDB2 -->
+          <div class="glass-panel about-panel">
+            <h2 class="about-title">About RecipeDB2</h2>
+            <div class="about-divider"></div>
+            <p class="about-text">
+              Cooking is the act of turning nature into a culture that has enabled the advent of the omnivorous human diet. The cultural wisdom of processing raw ingredients into delicious dishes is embodied in their cuisines. Recipes, thus, are the cultural capsules that encode elaborate cooking protocols for evoking sensory satiation as well as providing nourishment. As we stand on the verge of an epidemic of diet-linked disorders, it is important to investigate the culinary correlates of dietary elements to probe their association with sensory responses and consequences for nutrition and health.
+            </p>
+            <p class="about-text" style="margin-top: 0.75rem;">
+              <strong>RecipeDB2</strong> is an extensive, structured compilation of recipes and their nutritional profiles. This repertoire comprises <strong>128,942 recipes</strong> with <strong>35,474 ingredients</strong> from <strong>7 continents, 32 regions, 99 countries, and 34 states</strong>, further linked to nutritional profiles (USDA). This resource aims to facilitate scientific explorations of the culinary space (recipe, ingredients, cooking processes, dietary styles, etc.), seeking divergent applications.
+            </p>
+
+            <!-- Database Stats Banner -->
+            <div class="stats-banner">
+              <div class="stat-card">
+                <div class="stat-number">128K+</div>
+                <div class="stat-label">Recipes</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">35K+</div>
+                <div class="stat-label">Ingredients</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">99</div>
+                <div class="stat-label">Countries</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Continents</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Recipe of the Day Featured Card -->
+          <div class="glass-panel featured-box-card" id="featured-recipe-container">
+            <!-- Loading Spinner (shown while fetching) -->
+            <div class="featured-loading" id="featured-loading-state">
+              <div class="loading-spinner"></div>
+              <span>Loading Recipe of the Day...</span>
+            </div>
+
+            <div class="featured-img-overlay">
+              <img class="featured-box-bg-img" id="featured-image" src="https://images.unsplash.com/photo-1608039829572-78524f79c4c7?q=80&w=600&auto=format&fit=crop" alt="Recipe background">
+              <div class="featured-card-blur"></div>
+            </div>
+            
+            <div class="featured-box-content">
+              <div class="featured-box-tag">Recipe of the day</div>
+              <h2 class="featured-box-title" id="featured-title">Persian Shish Kabob</h2>
+              <div class="featured-box-meta">
+                <span id="featured-region">Middle Eastern</span> &bull; 
+                <span id="featured-time">50 mins</span>
+              </div>
+              <div class="diet-badges" id="featured-badges" style="margin-top: 1rem;">
+                <!-- Badges loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- "Search By" Multi-Tab Deck Card -->
+        <div class="glass-panel search-by-container">
+          <h3 class="search-by-header">Search By</h3>
+          
+          <!-- Inner Search Tab Toggles -->
+          <div class="search-tab-bar">
+            <button class="search-tab-btn active" data-search-tab="tab-cuisine">Cuisine</button>
+            <button class="search-tab-btn" data-search-tab="tab-ingredient">Ingredient</button>
+            <button class="search-tab-btn" data-search-tab="tab-category">Category</button>
+            <button class="search-tab-btn" data-search-tab="tab-nutrition">Nutrition</button>
+            <button class="search-tab-btn" data-search-tab="tab-advanced">Advanced</button>
+          </div>
+
+          <!-- Search Tabs Contents Panes -->
+          <div class="search-tab-content">
+            
+            <!-- Pane 1: Cuisine Filters -->
+            <div class="search-tab-pane active" id="tab-cuisine">
+              <div class="search-form-row">
+                <div class="param-input-group">
+                  <label class="param-label" for="search-region">Region</label>
+                  <input type="text" class="param-field" id="search-region" placeholder="Enter any region (e.g., Egyptian, North Indian)">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="search-country">Country</label>
+                  <input type="text" class="param-field" id="search-country" placeholder="Enter any country (e.g., Egypt, India, Canada)">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="search-title">Recipe Title</label>
+                  <input type="text" class="param-field" id="search-title" placeholder="Enter any recipe title...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 2: Ingredient Filters -->
+            <div class="search-tab-pane" id="tab-ingredient">
+              <div class="search-form-row col-2">
+                <div class="param-input-group">
+                  <label class="param-label" for="search-ing-used">Used</label>
+                  <input type="text" class="param-field" id="search-ing-used" placeholder="Enter ingredients to include (comma separated)">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="search-ing-notused">Not Used</label>
+                  <input type="text" class="param-field" id="search-ing-notused" placeholder="Enter ingredients to exclude (comma separated)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 3: Category Filters -->
+            <div class="search-tab-pane" id="tab-category">
+              <div class="search-form-row col-2">
+                <div class="param-input-group">
+                  <label class="param-label" for="search-cat-used">Used</label>
+                  <input type="text" class="param-field" id="search-cat-used" placeholder="Enter food groups to include (e.g., Dairy, Meat)">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="search-cat-notused">Not Used</label>
+                  <input type="text" class="param-field" id="search-cat-notused" placeholder="Enter food groups to exclude (e.g., Nuts, Gluten)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Pane 4: Nutrition Filters -->
+            <div class="search-tab-pane" id="tab-nutrition">
+              <div class="nutrition-sliders-row">
+                
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span class="slider-label">Energy (Calories)</span>
+                    <span class="slider-value" id="val-search-cal">800 KCal</span>
+                  </div>
+                  <input type="range" class="planner-range" id="search-nut-cal" min="100" max="1500" value="800">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span class="slider-label">Carbohydrates</span>
+                    <span class="slider-value" id="val-search-carbs">150g</span>
+                  </div>
+                  <input type="range" class="planner-range" id="search-nut-carbs" min="10" max="450" value="150">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span class="slider-label">Protein</span>
+                    <span class="slider-value" id="val-search-protein">30g</span>
+                  </div>
+                  <input type="range" class="planner-range" id="search-nut-protein" min="5" max="120" value="30">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span class="slider-label">Fat</span>
+                    <span class="slider-value" id="val-search-fat">60g</span>
+                  </div>
+                  <input type="range" class="planner-range" id="search-nut-fat" min="5" max="150" value="60">
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Pane 5: Advanced Filters -->
+            <div class="search-tab-pane" id="tab-advanced">
+              
+              <div class="search-form-row">
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-continent">Continent</label>
+                  <input type="text" class="param-field" id="adv-continent" placeholder="Enter continent...">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-region">Region</label>
+                  <input type="text" class="param-field" id="adv-region" placeholder="Enter region...">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-country">Country</label>
+                  <input type="text" class="param-field" id="adv-country" placeholder="Enter country...">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-title">Recipe Title</label>
+                  <input type="text" class="param-field" id="adv-title" placeholder="Enter recipe title...">
+                </div>
+              </div>
+
+              <div class="search-form-row col-2" style="margin-top: 1rem;">
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-ing-used">Used Ingredients</label>
+                  <input type="text" class="param-field" id="adv-ing-used" placeholder="Used ingredients...">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-ing-notused">Not Used Ingredients</label>
+                  <input type="text" class="param-field" id="adv-ing-notused" placeholder="Excluded ingredients...">
+                </div>
+              </div>
+
+              <div class="search-form-row col-2" style="margin-top: 1rem;">
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-process">Cooking Process</label>
+                  <input type="text" class="param-field" id="adv-process" placeholder="Enter cooking process (e.g., boil, roast)">
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="adv-utensil">Utensil</label>
+                  <input type="text" class="param-field" id="adv-utensil" placeholder="Enter utensil used (e.g., saucepan, pot)">
+                </div>
+              </div>
+
+              <div class="checkbox-row" style="margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" id="adv-show-nutri" style="accent-color: var(--accent-cyan); width: 16px; height: 16px; cursor: pointer;">
+                <label for="adv-show-nutri" class="param-label" style="cursor: pointer; margin-bottom: 0;">Show nutritional profile columns in results table</label>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Master Submit Button -->
+          <button class="btn-action-panel" id="btn-submit-search" style="max-width: 200px; margin: 1.5rem auto 0 auto;">
+            Submit Search
+          </button>
+        </div>
+
+        <!-- "Showing All Recipes" Table Container -->
+        <div class="glass-panel" style="margin-top: 2rem; padding: 1.5rem 0 0 0;">
+          <div class="table-header-row" style="padding: 0 1.5rem 1rem 1.5rem;">
+            <h3 class="section-title" id="results-table-title">Showing All Recipes</h3>
+            
+            <div class="search-bar">
+              <span class="search-icon">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </span>
+              <input type="text" class="search-input" id="table-search-input" placeholder="Search recipes in results...">
+            </div>
+          </div>
+
+          <!-- Dynamic Data Table Wrapper -->
+          <div class="table-responsive">
+            <table class="gastronomy-table" id="recipes-data-table">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="Recipe_title">Recipe <span class="sort-icon">&Dagger;</span></th>
+                  <th class="sortable" data-sort="Region">Region <span class="sort-icon">&Dagger;</span></th>
+                  <th class="sortable" data-sort="Country">Country <span class="sort-icon">&Dagger;</span></th>
+                  <th class="sortable" data-sort="servings">Servings <span class="sort-icon">&Dagger;</span></th>
+                  <th class="sortable" data-sort="Calories">Calories (KCal) <span class="sort-icon">&Dagger;</span></th>
+                  
+                  <!-- Nutritional profiles fields (dynamic toggling based on checkbox) -->
+                  <th class="nutri-col hidable-col" data-sort="Protein (g)">Protein (g) <span class="sort-icon">&Dagger;</span></th>
+                  <th class="nutri-col hidable-col" data-sort="Total lipid (fat) (g)">Fat (g) <span class="sort-icon">&Dagger;</span></th>
+                  
+                  <th>More Info</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-container">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Interactive Footer controls -->
+          <div class="table-footer-controls">
+            <div class="rows-per-page">
+              <span class="footer-label">Rows per page:</span>
+              <select class="footer-select" id="rows-selector">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+              </select>
+            </div>
+            
+            <div class="table-pagination-nav">
+              <span class="footer-label" id="footer-item-counter">1-10 of 128942</span>
+              
+              <div class="pagination-arrows">
+                <button class="btn-arrow-nav" id="btn-nav-first" title="First page">&laquo;</button>
+                <button class="btn-arrow-nav" id="btn-nav-prev" title="Previous page">&lsaquo;</button>
+                <button class="btn-arrow-nav" id="btn-nav-next" title="Next page">&rsaquo;</button>
+                <button class="btn-arrow-nav" id="btn-nav-last" title="Last page">&raquo;</button>
+              </div>
+
+              <div class="goto-box">
+                <span class="footer-label">Go To</span>
+                <input type="number" class="goto-input" id="input-goto-page" value="1" min="1">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           COMPUTATIONAL ANALYTICS & PLANNING VIEW (TAB 2)
+           ========================================== -->
+      <div id="analytics-pane" class="tab-pane">
+        <div class="analytics-grid">
+          
+          <!-- Column 1: Analytics Center -->
+          <div class="glass-panel">
+            <h3 class="panel-title">RecipeDB2 Statistics</h3>
+            
+            <div class="exclusion-section">
+              <h4 class="exclusion-subtitle">Average Calories by Continent</h4>
+              <div class="chart-box" id="calories-bar-chart">
+                <!-- Custom SVG Bar Chart Rendered Dynamically -->
+              </div>
+            </div>
+
+            <div class="analytics-row-2">
+              <div class="exclusion-section">
+                <h4 class="exclusion-subtitle">Global Macronutrient Target Weights</h4>
+                <div class="macro-chart-container" style="background: rgba(255,255,255,0.02)">
+                  <div class="macro-row">
+                    <div class="macro-header">
+                      <span class="macro-name">Carbohydrates</span>
+                      <span class="macro-val">48%</span>
+                    </div>
+                    <div class="macro-progress-bg">
+                      <div class="macro-progress-fill carbs" style="width: 48%"></div>
+                    </div>
+                  </div>
+                  <div class="macro-row">
+                    <div class="macro-header">
+                      <span class="macro-name">Protein</span>
+                      <span class="macro-val">22%</span>
+                    </div>
+                    <div class="macro-progress-bg">
+                      <div class="macro-progress-fill protein" style="width: 22%"></div>
+                    </div>
+                  </div>
+                  <div class="macro-row">
+                    <div class="macro-header">
+                      <span class="macro-name">Total Fats</span>
+                      <span class="macro-val">30%</span>
+                    </div>
+                    <div class="macro-progress-bg">
+                      <div class="macro-progress-fill fat" style="width: 30%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exclusion-section">
+                <h4 class="exclusion-subtitle">Dietary Profile Distributions</h4>
+                <div class="stats-pills-container" id="dietary-profile-stats">
+                  <!-- Loaded Dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Nutri-Planner Calculator -->
+          <div class="glass-panel">
+            <h3 class="panel-title">Daily Nutri-Planner Calculator</h3>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1.5rem;">
+              Set your target macro thresholds. The database solver will filter through the catalog and suggest matching recipes in real-time.
+            </p>
+            
+            <div class="planner-sliders">
+              
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">Calories Max</span>
+                  <span class="slider-value" id="val-slide-cal">800 kcal</span>
+                </div>
+                <input type="range" class="planner-range" id="slide-cal" min="100" max="1500" step="50" value="800">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">Carbohydrates Max</span>
+                  <span class="slider-value" id="val-slide-carbs">120g</span>
+                </div>
+                <input type="range" class="planner-range" id="slide-carbs" min="10" max="400" step="10" value="120">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">Protein Min</span>
+                  <span class="slider-value" id="val-slide-protein">30g</span>
+                </div>
+                <input type="range" class="planner-range" id="slide-protein" min="5" max="120" step="5" value="30">
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">Total Fats Max</span>
+                  <span class="slider-value" id="val-slide-fat">60g</span>
+                </div>
+                <input type="range" class="planner-range" id="slide-fat" min="5" max="150" step="5" value="60">
+              </div>
+
+            </div>
+
+            <h4 class="exclusion-subtitle" style="margin-top: 1.5rem; margin-bottom: 0.75rem;">Recommended Plan Matching Recipes</h4>
+            <div class="planner-results" id="planner-results-container">
+              <!-- Cards Loaded dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================
+           DEVELOPER PLAYGROUND VIEW (TAB 3)
+           ========================================== -->
+      <div id="playground-pane" class="tab-pane">
+        <div class="playground-grid">
+          
+          <!-- Left Column: Endpoint Directory -->
+          <div class="glass-panel" style="height: fit-content;">
+            <h3 class="panel-title">API Endpoints</h3>
+            <div class="endpoint-list" id="endpoint-sidebar">
+              <!-- Loaded Dynamically -->
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Workstation -->
+          <div class="play-workspace">
+            
+            <!-- Address Bar Box -->
+            <div class="glass-panel">
+              <div class="url-bar-container">
+                <div class="method-tag" id="pg-method-tag">GET</div>
+                <input type="text" class="input-url" id="pg-url-input" value="http://cosylab.iiitd.edu.in:6969/recipe2-api/recipe/recipesinfo" readonly>
+                <button class="btn-send" id="pg-btn-send">
+                  <span>Send</span>
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Parameters Panels -->
+            <div class="glass-panel" id="pg-params-panel">
+              <h4 class="pg-sec-title">Query Parameters</h4>
+              <div class="params-grid" id="pg-params-container">
+                <!-- Parameters form fields loaded dynamically based on active endpoint -->
+              </div>
+            </div>
+
+            <!-- Developer Output Console Log -->
+            <div class="console-panel">
+              <div class="console-header">
+                <div class="console-tab-container">
+                  <button class="console-tab active" id="pg-tab-btn-response" data-console-tab="response">Response Body</button>
+                  <button class="console-tab" id="pg-tab-btn-headers" data-console-tab="headers">Headers</button>
+                  <button class="console-tab" id="pg-tab-btn-curl" data-console-tab="curl">cURL Format</button>
+                </div>
+                
+                <div class="console-metrics">
+                  <div class="metric-pill success" id="console-metric-status">Status: <span>--</span></div>
+                  <div class="metric-pill latency" id="console-metric-time">Time: <span>--</span></div>
+                  <button class="btn-copy-curl" id="pg-btn-copy-curl" title="Copy output">
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                    Copy
+                  </button>
+                </div>
+              </div>
+              <div class="console-body">
+                <pre class="code-block" id="pg-console-output">// Click "Send" above to dispatch request and inspect responses.</pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="app-footer">
+      <div class="footer-copyright-banner">
+        <div class="footer-logo-iiitd">
+          <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="rgba(255,255,255,0.06)"/>
+            <path d="M10 12H14V28H10V12Z" fill="var(--text-muted)"/>
+            <path d="M18 12H22V28H18V12Z" fill="var(--accent-cyan)"/>
+            <path d="M26 12H30V28H26V12Z" fill="var(--accent-orange)"/>
+          </svg>
+          <span style="font-weight: 800; font-size: 0.95rem; color: var(--text-primary);">IIIT Delhi CoSyLab</span>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.75rem; font-weight: 500;">
+          Copyright &copy; 2026 All rights reserved. RecipeDB2 Portal.
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.4;">
+          This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. All material on this website is a product of research and is provided for your information only and may not be construed as medical advice or instruction. Instead, readers should consult appropriate health professionals.
+        </p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);">
+          Indraprastha Institute of Information Technology Delhi (IIIT-Delhi) &bull; Prof. Ganesh Bagler
+        </p>
+        
+        <!-- Glowing Circular Social Links -->
+        <div class="social-circle-row">
+          <a href="#" class="social-circle" title="Google+">G+</a>
+          <a href="#" class="social-circle" title="LinkedIn">in</a>
+          <a href="#" class="social-circle" title="Wikipedia">W</a>
+          <a href="#" class="social-circle" title="GitHub">git</a>
+          <a href="#" class="social-circle" title="Twitter">tw</a>
+          <a href="#" class="social-circle" title="Facebook">fb</a>
+          <a href="#" class="social-circle" title="Instagram">ig</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==========================================
+       MODALS OVERLAYS
+       ========================================== -->
+
+  <!-- Drawer Modal 1: Settings Panel -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Settings & Authorization</h3>
+        <button class="btn-close-modal" id="btn-close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="param-input-group">
+          <label class="param-label">Database Engine Toggle</label>
+          <div class="toggle-group" id="engine-toggle-group">
+            <button class="toggle-option mock" data-engine="mock">Mock Sandbox</button>
+            <button class="toggle-option live active" data-engine="live">Live Server</button>
+          </div>
+          <span style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">
+            * Use **Mock Sandbox** for local sandbox testing, or **Live Server** to fetch live research parameters.
+          </span>
+        </div>
+
+        <div class="param-input-group">
+          <label class="param-label" for="setting-baseurl">API Base URL</label>
+          <input type="text" class="param-field" id="setting-baseurl" value="https://api.foodoscope.com">
+        </div>
+
+        <div class="param-input-group">
+          <label class="param-label" for="setting-apikey">Authorization Token (Bearer Key)</label>
+          <input type="password" class="param-field" id="setting-apikey" placeholder="Enter Foodoscope API Key...">
+          <span style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Obtained at your Profile Dashboard at <a href="https://www.foodoscope.com/" target="_blank" style="color: var(--accent-cyan);">Foodoscope</a>.
+          </span>
+        </div>
+
+        <button class="btn-save-settings" id="btn-save-settings">Save Configurations</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer Modal 2: Recipe Detail & Nutritional Breakdown -->
+  <div class="modal-backdrop" id="modal-recipe-detail">
+    <div class="modal-container" style="max-width: 800px; width: 95%;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="det-modal-title">Recipe Details</h3>
+        <button class="btn-close-modal" id="btn-close-recipe">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="recipe-detail-grid">
+          
+          <!-- Left Panel: General Info, Ingredients & Utensils -->
+          <div>
+            <div class="detail-meta-grid">
+              <div class="detail-meta-box">
+                <div class="detail-meta-label">Total Time</div>
+                <div class="detail-meta-val" id="det-time">--</div>
+              </div>
+              <div class="detail-meta-box">
+                <div class="detail-meta-label">Servings</div>
+                <div class="detail-meta-val" id="det-servings">--</div>
+              </div>
+              <div class="detail-meta-box">
+                <div class="detail-meta-label">Region</div>
+                <div class="detail-meta-val" id="det-region">--</div>
+              </div>
+            </div>
+
+            <div class="exclusion-section">
+              <h4 class="detail-section-title">Cooking Tools</h4>
+              <div class="diet-badges" id="det-utensils">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+
+            <div class="exclusion-section">
+              <h4 class="detail-section-title">Techniques</h4>
+              <div class="diet-badges" id="det-processes">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+
+            <div class="exclusion-section">
+              <h4 class="detail-section-title">Dietary Classification</h4>
+              <div class="diet-badges" id="det-diet-tags">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Instructions & Nutritional Breakdown -->
+          <div>
+            <div class="exclusion-section">
+              <h4 class="detail-section-title">Nutritional Distribution</h4>
+              
+              <!-- Nutrient breakdown micro progress rings -->
+              <div class="macro-chart-container">
+                <div class="macro-row">
+                  <div class="macro-header">
+                    <span class="macro-name">Energy (Calories)</span>
+                    <span class="macro-val" id="det-nut-cal">--</span>
+                  </div>
+                  <div class="macro-progress-bg">
+                    <div class="macro-progress-fill carbs" id="det-fill-cal" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <div class="macro-row">
+                  <div class="macro-header">
+                    <span class="macro-name">Carbohydrates</span>
+                    <span class="macro-val" id="det-nut-carbs">--</span>
+                  </div>
+                  <div class="macro-progress-bg">
+                    <div class="macro-progress-fill carbs" id="det-fill-carbs" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <div class="macro-row">
+                  <div class="macro-header">
+                    <span class="macro-name">Protein</span>
+                    <span class="macro-val" id="det-nut-protein">--</span>
+                  </div>
+                  <div class="macro-progress-bg">
+                    <div class="macro-progress-fill protein" id="det-fill-protein" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <div class="macro-row">
+                  <div class="macro-header">
+                    <span class="macro-name">Total Fats</span>
+                    <span class="macro-val" id="det-nut-fat">--</span>
+                  </div>
+                  <div class="macro-progress-bg">
+                    <div class="macro-progress-fill fat" id="det-fill-fat" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="exclusion-section">
+              <h4 class="detail-section-title">Preparation Instructions</h4>
+              <div class="instruction-list" id="det-instructions">
+                <!-- Steps loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Bootstrapping App Module -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
