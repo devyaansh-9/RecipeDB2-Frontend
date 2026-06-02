@@ -13,6 +13,71 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== LOADING SCREEN ===== */
+    #loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #020202;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 24px;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, #f59e0b, #d97706, #92400e);
+      border-radius: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 28px; color: #000;
+      letter-spacing: -1px;
+      animation: loader-pulse 1.6s ease-in-out infinite, loader-rotate 2.4s ease-in-out infinite;
+      box-shadow: 0 0 60px rgba(245,158,11,0.4), 0 0 120px rgba(245,158,11,0.15);
+    }
+    @keyframes loader-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(245,158,11,0.4); }
+      50% { transform: scale(1.08); box-shadow: 0 0 80px rgba(245,158,11,0.6); }
+    }
+    @keyframes loader-rotate {
+      0% { border-radius: 22px; }
+      50% { border-radius: 32px; }
+      100% { border-radius: 22px; }
+    }
+    .loader-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      animation: loader-text-fade 1.6s ease-in-out infinite;
+    }
+    @keyframes loader-text-fade {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    .loader-bar {
+      width: 180px; height: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px; overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+      border-radius: 2px;
+      animation: loader-bar-anim 1.8s ease-in-out infinite;
+    }
+    @keyframes loader-bar-anim {
+      0% { width: 0%; margin-left: 0; }
+      50% { width: 60%; margin-left: 20%; }
+      100% { width: 0%; margin-left: 100%; }
+    }
+
+    /* Page entrance after loader */
+    body.loaded > *:not(#loader):not(#cursor):not(#cursor-ring):not(#scroll-progress) {
+      animation: page-enter 1s var(--ease-out-expo) 0.1s both;
+    }
+    @keyframes page-enter {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* ===== RESET & GLOBALS ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -27,11 +92,15 @@
       --teal:         #14b8a6;
       --cyan:         #06b6d4;
       --rose:         #f43f5e;
+      --sage:         #6b8f71;
+      --matcha:       #8fbc8f;
+      --earth:        #92400e;
       --text-1:       #f9f9f9;
       --text-2:       #a3a3a3;
       --text-3:       #555;
       --nav-h:        72px;
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html { scroll-behavior: smooth; }
@@ -66,6 +135,16 @@
     }
     body:hover #cursor { opacity: 1; }
     a:hover ~ #cursor, button:hover ~ #cursor { width: 24px; height: 24px; }
+
+    /* Cursor trail particles */
+    .cursor-trail {
+      position: fixed; pointer-events: none; z-index: 9997;
+      width: 4px; height: 4px;
+      background: var(--amber);
+      border-radius: 50%;
+      opacity: 0;
+      transition: none;
+    }
 
     /* ===== NAV ===== */
     nav {
@@ -165,6 +244,44 @@
     }
 
     .hero-content { position: relative; z-index: 10; max-width: 900px; }
+
+    /* ===== HERO ORBIT RING ===== */
+    .hero-orbit {
+      position: absolute;
+      width: clamp(500px, 60vw, 900px);
+      height: clamp(500px, 60vw, 900px);
+      border-radius: 50%;
+      border: 1px solid rgba(245,158,11,0.06);
+      z-index: 3;
+      pointer-events: none;
+      animation: hero-orbit-spin 40s linear infinite;
+    }
+    .hero-orbit-2 {
+      width: clamp(400px, 48vw, 720px);
+      height: clamp(400px, 48vw, 720px);
+      border-color: rgba(20,184,166,0.05);
+      animation-duration: 55s;
+      animation-direction: reverse;
+    }
+    @keyframes hero-orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .orbit-dot {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--amber), 0 0 24px rgba(245,158,11,0.3);
+    }
+    .orbit-dot-2 {
+      width: 4px; height: 4px;
+      background: var(--teal);
+      box-shadow: 0 0 12px var(--teal), 0 0 24px rgba(20,184,166,0.3);
+    }
+    .orbit-dot:nth-child(1) { top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .orbit-dot:nth-child(2) { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+    .orbit-dot:nth-child(3) { top: 50%; right: 0; transform: translate(50%, -50%); }
+    .orbit-dot-2:nth-child(1) { top: 15%; left: 5%; }
+    .orbit-dot-2:nth-child(2) { bottom: 10%; right: 8%; }
+    .orbit-dot-2:nth-child(3) { top: 50%; left: 0; transform: translate(-50%, -50%); }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -491,22 +608,34 @@
       gap: 24px;
     }
     .glass-card {
-      background: var(--surface);
+      background: rgba(17,17,17,0.85);
+      backdrop-filter: blur(20px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 36px;
       position: relative; overflow: hidden;
-      transition: border-color 0.3s, transform 0.4s var(--ease-out-expo);
+      transition: border-color 0.4s, transform 0.5s var(--ease-out-expo), box-shadow 0.5s;
     }
     .glass-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent);
-      opacity: 0; transition: opacity 0.3s;
+      background: linear-gradient(90deg, transparent, rgba(245,158,11,0.5), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .glass-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(245,158,11,0.03) 0%, transparent 40%, rgba(20,184,166,0.02) 100%);
+      pointer-events: none;
     }
     .glass-card:hover::before { opacity: 1; }
-    .glass-card:hover { border-color: rgba(245,158,11,0.15); transform: translateY(-4px); }
+    .glass-card:hover {
+      border-color: rgba(245,158,11,0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 0 40px rgba(245,158,11,0.06);
+    }
     .card-label {
       font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
@@ -623,29 +752,40 @@
       gap: 20px;
     }
     .feature-card {
-      background: var(--surface);
+      background: rgba(17,17,17,0.8);
+      backdrop-filter: blur(16px) saturate(140%);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 32px;
       position: relative; overflow: hidden;
-      transition: border-color 0.3s, transform 0.4s var(--ease-out-expo), box-shadow 0.4s;
+      transition: border-color 0.4s, transform 0.5s var(--ease-out-expo), box-shadow 0.5s;
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 50%);
+      pointer-events: none;
     }
     .feature-card:hover {
       border-color: rgba(245,158,11,0.2);
-      transform: translateY(-6px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.5), 0 0 30px rgba(245,158,11,0.05);
     }
     .feature-glow {
       position: absolute; top: -60px; right: -60px;
-      width: 180px; height: 180px; border-radius: 50%;
-      opacity: 0; transition: opacity 0.4s;
+      width: 200px; height: 200px; border-radius: 50%;
+      opacity: 0; transition: opacity 0.5s;
+      filter: blur(20px);
     }
     .feature-card:hover .feature-glow { opacity: 1; }
     .feature-icon {
-      width: 52px; height: 52px; border-radius: 14px;
+      width: 56px; height: 56px; border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; margin-bottom: 20px;
+      font-size: 26px; margin-bottom: 22px;
+      transition: transform 0.4s var(--ease-out-expo);
     }
+    .feature-card:hover .feature-icon { transform: scale(1.1) rotate(-3deg); }
     .feature-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.3px; }
     .feature-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; }
 
@@ -929,12 +1069,21 @@
 </head>
 <body>
 
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="loader-logo">R2</div>
+  <div class="loader-text">Loading Culinary Intelligence</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
 <!-- Scroll progress -->
 <div id="scroll-progress"></div>
 
 <!-- Custom cursor -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
+<!-- Cursor trail particles -->
+<div id="cursor-trails"></div>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -957,6 +1106,18 @@
   <div id="hero-bg"></div>
   <div id="hero-mesh"></div>
   <canvas id="particle-canvas"></canvas>
+
+  <!-- Orbit rings -->
+  <div class="hero-orbit" style="top:50%;left:50%;transform:translate(-50%,-50%);">
+    <div class="orbit-dot"></div>
+    <div class="orbit-dot"></div>
+    <div class="orbit-dot"></div>
+  </div>
+  <div class="hero-orbit hero-orbit-2" style="top:50%;left:50%;transform:translate(-50%,-50%);">
+    <div class="orbit-dot orbit-dot-2"></div>
+    <div class="orbit-dot orbit-dot-2"></div>
+    <div class="orbit-dot orbit-dot-2"></div>
+  </div>
 
   <div class="hero-content">
     <div class="hero-badge">
@@ -1377,17 +1538,72 @@
   const BASE_URL  = 'https://api.foodoscope.com';
 
   /* ========================================================
-     CUSTOM CURSOR
+     LOADING SCREEN
+  ======================================================== */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      loader.classList.add('hidden');
+      document.body.classList.add('loaded');
+      // Clean up loader after transition
+      setTimeout(() => loader.remove(), 800);
+    }, 1800);
+  });
+
+  /* ========================================================
+     CUSTOM CURSOR + TRAIL
   ======================================================== */
   const cursor     = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursor-ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
 
+  // Trail particles
+  const TRAIL_COUNT = 12;
+  const trailContainer = document.getElementById('cursor-trails');
+  const trails = [];
+  for (let i = 0; i < TRAIL_COUNT; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'cursor-trail';
+    trailContainer.appendChild(dot);
+    trails.push({ el: dot, x: 0, y: 0, life: 0 });
+  }
+  let trailIndex = 0;
+  let lastTrailX = 0, lastTrailY = 0;
+
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
     cursor.style.top  = my + 'px';
+
+    // Spawn trail particle if moved enough
+    const dx = mx - lastTrailX, dy = my - lastTrailY;
+    if (dx*dx + dy*dy > 120) {
+      const trail = trails[trailIndex % TRAIL_COUNT];
+      trail.x = mx; trail.y = my; trail.life = 1;
+      trail.el.style.left = mx + 'px';
+      trail.el.style.top  = my + 'px';
+      trail.el.style.opacity = '0.6';
+      trail.el.style.transform = 'translate(-50%,-50%) scale(1)';
+      trailIndex++;
+      lastTrailX = mx; lastTrailY = my;
+    }
   });
+
+  // Animate trail fade
+  function animateTrails() {
+    trails.forEach(t => {
+      if (t.life > 0) {
+        t.life -= 0.03;
+        if (t.life <= 0) { t.life = 0; t.el.style.opacity = '0'; }
+        else {
+          t.el.style.opacity = (t.life * 0.5).toString();
+          t.el.style.transform = `translate(-50%,-50%) scale(${0.3 + t.life * 0.7})`;
+        }
+      }
+    });
+    requestAnimationFrame(animateTrails);
+  }
+  animateTrails();
 
   function animateRing() {
     rx += (mx - rx) * 0.12;
