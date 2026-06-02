@@ -10,8 +10,8 @@ import {
 export const configStore = {
   get baseUrl() {
     let url = localStorage.getItem('recipedb_baseUrl');
-    if (!url || url.includes('cosylab.iiitd.edu.in')) {
-      url = 'https://api.foodoscope.com';
+    if (!url || url === 'https://api.foodoscope.com') {
+      url = 'http://cosylab.iiitd.edu.in:6969';
       localStorage.setItem('recipedb_baseUrl', url);
     }
     return url;
@@ -21,8 +21,8 @@ export const configStore = {
   },
   get apiKey() {
     let key = localStorage.getItem('recipedb_apiKey');
-    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00') {
-      key = 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6';
+    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00' || key === 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6') {
+      key = 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL';
       localStorage.setItem('recipedb_apiKey', key);
     }
     return key;
