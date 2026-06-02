@@ -732,6 +732,196 @@
       transform-origin: left; transform: scaleX(0);
       transition: transform 0.1s linear;
     }
+
+    /* ===== KUMO-STYLE PINNED SCROLL STORY ===== */
+    #pinned-story {
+      position: relative;
+      height: 350vh;
+    }
+    #pinned-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Animated background layers */
+    #ps-bg {
+      position: absolute; inset: 0;
+      background: var(--black);
+      transition: background 0.8s ease;
+    }
+    #ps-bg-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 70% at 50% 50%, rgba(245,158,11,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 20% 30%, rgba(20,184,166,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 40% at 80% 70%, rgba(244,63,94,0.04) 0%, transparent 60%);
+      transition: opacity 1s;
+    }
+    /* Noise texture overlay */
+    #ps-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Centre dish image */
+    #ps-center {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    #ps-dish-wrap {
+      position: relative;
+      width: clamp(200px, 28vw, 420px);
+      height: clamp(200px, 28vw, 420px);
+    }
+    #ps-dish-ring {
+      position: absolute; inset: -18px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,158,11,0.15);
+      animation: ring-spin 12s linear infinite;
+    }
+    #ps-dish-ring::before {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--amber);
+      border-radius: 50%;
+      top: 50%; left: -4px;
+      box-shadow: 0 0 12px var(--amber);
+    }
+    @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    #ps-dish-img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(245,158,11,0.2);
+      box-shadow:
+        0 0 0 1px rgba(245,158,11,0.08),
+        0 40px 120px rgba(0,0,0,0.7),
+        0 0 80px rgba(245,158,11,0.12);
+      transition: transform 0.8s var(--ease-out-expo), box-shadow 0.8s;
+    }
+
+    /* Headline cycling text */
+    #ps-text-wrap {
+      position: absolute;
+      bottom: 13vh; left: 0; right: 0;
+      text-align: center;
+      z-index: 12;
+      pointer-events: none;
+    }
+    .ps-phase {
+      position: absolute; left: 0; right: 0;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    }
+    .ps-phase.active {
+      opacity: 1; transform: translateY(0);
+      position: relative;
+    }
+    .ps-phase-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--amber);
+      margin-bottom: 12px;
+    }
+    .ps-phase-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(56px, 9vw, 120px);
+      font-weight: 800; line-height: 1;
+      letter-spacing: -3px;
+      background: linear-gradient(135deg, var(--text-1) 30%, var(--text-2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ps-phase-number em {
+      font-style: italic;
+      background: linear-gradient(90deg, var(--amber), var(--saffron));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ps-phase-sub {
+      font-size: clamp(14px, 1.6vw, 18px);
+      color: var(--text-2); margin-top: 10px;
+    }
+
+    /* Scroll hint inside pinned section */
+    #ps-scroll-hint {
+      position: absolute; bottom: 4vh; left: 50%; transform: translateX(-50%);
+      z-index: 15;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      transition: opacity 0.5s;
+    }
+    #ps-scroll-hint span {
+      font-size: 10px; color: var(--text-3);
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    #ps-progress-bar {
+      width: 120px; height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px; overflow: hidden;
+    }
+    #ps-progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--amber), var(--saffron));
+      transition: width 0.1s linear;
+    }
+
+    /* ===== INGREDIENT CARDS ===== */
+    .ing-card {
+      position: absolute;
+      z-index: 20;
+      /* All cards start collapsed at center — JS moves them */
+      transform: translate(0px, 0px) rotate(0deg) scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    .ing-card-inner {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 16px 20px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      min-width: 100px;
+      position: relative; overflow: hidden;
+    }
+    .ing-card-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .ing-card-emoji {
+      font-size: 36px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    }
+    .ing-card-name {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-align: center;
+    }
+    .ing-card-subtle {
+      position: absolute; bottom: -30px; right: -30px;
+      width: 80px; height: 80px; border-radius: 50%;
+      opacity: 0.06;
+    }
   </style>
 </head>
 <body>
@@ -792,6 +982,110 @@
   <div class="scroll-hint">
     <span>Scroll to explore</span>
     <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     KUMO-STYLE PINNED SCROLL STORY
+     ========================================================= -->
+<section id="pinned-story">
+  <div id="pinned-sticky">
+    <!-- Background -->
+    <div id="ps-bg"></div>
+    <div id="ps-bg-glow"></div>
+
+    <!-- 8 Ingredient Cards (positioned by JS) -->
+    <div class="ing-card" id="ic-0">
+      <div class="ing-card-inner" style="--c:rgba(134,239,172,0.15)">
+        <div class="ing-card-subtle" style="background:var(--teal)"></div>
+        <div class="ing-card-emoji">🌿</div>
+        <div class="ing-card-name">Fresh Herbs</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-1">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:var(--rose)"></div>
+        <div class="ing-card-emoji">🌶️</div>
+        <div class="ing-card-name">Chili</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-2">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:var(--amber)"></div>
+        <div class="ing-card-emoji">🧄</div>
+        <div class="ing-card-name">Garlic</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-3">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:rgba(253,224,71,0.3)"></div>
+        <div class="ing-card-emoji">🍋</div>
+        <div class="ing-card-name">Lemon</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-4">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:rgba(251,191,36,0.3)"></div>
+        <div class="ing-card-emoji">🧅</div>
+        <div class="ing-card-name">Onion</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-5">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:rgba(134,239,172,0.2)"></div>
+        <div class="ing-card-emoji">🫚</div>
+        <div class="ing-card-name">Olive Oil</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-6">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:var(--rose)"></div>
+        <div class="ing-card-emoji">🍅</div>
+        <div class="ing-card-name">Tomato</div>
+      </div>
+    </div>
+    <div class="ing-card" id="ic-7">
+      <div class="ing-card-inner">
+        <div class="ing-card-subtle" style="background:var(--teal)"></div>
+        <div class="ing-card-emoji">🫛</div>
+        <div class="ing-card-name">Legumes</div>
+      </div>
+    </div>
+
+    <!-- Central dish -->
+    <div id="ps-center">
+      <div id="ps-dish-wrap">
+        <div id="ps-dish-ring"></div>
+        <img id="ps-dish-img"
+          src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&auto=format&fit=crop&q=80"
+          alt="World cuisine dish">
+      </div>
+    </div>
+
+    <!-- Cycling text phases -->
+    <div id="ps-text-wrap">
+      <div class="ps-phase active" id="ps-phase-0">
+        <div class="ps-phase-label">Ingredient Universe</div>
+        <div class="ps-phase-number"><em>35,474</em></div>
+        <div class="ps-phase-sub">Unique ingredients in the database</div>
+      </div>
+      <div class="ps-phase" id="ps-phase-1">
+        <div class="ps-phase-label">Global Coverage</div>
+        <div class="ps-phase-number"><em>99</em> Countries</div>
+        <div class="ps-phase-sub">7 continents · 32 geo-cultural regions</div>
+      </div>
+      <div class="ps-phase" id="ps-phase-2">
+        <div class="ps-phase-label">Recipe Catalog</div>
+        <div class="ps-phase-number"><em>128,942</em></div>
+        <div class="ps-phase-sub">Recipes linked to USDA nutrition data</div>
+      </div>
+    </div>
+
+    <!-- Progress indicator -->
+    <div id="ps-scroll-hint">
+      <span>scroll to discover</span>
+      <div id="ps-progress-bar"><div id="ps-progress-fill"></div></div>
+    </div>
   </div>
 </section>
 
@@ -1493,6 +1787,132 @@
     const scrollY = window.scrollY;
     heroBg.style.transform = `translateY(${scrollY * 0.35}px)`;
   }, { passive: true });
+
+  /* ========================================================
+     KUMO-STYLE PINNED SCROLL ANIMATION
+  ======================================================== */
+  (function initPinnedScroll() {
+
+    const section   = document.getElementById('pinned-story');
+    const psFill    = document.getElementById('ps-progress-fill');
+    const psHint    = document.getElementById('ps-scroll-hint');
+    const psDish    = document.getElementById('ps-dish-img');
+    const psBg      = document.getElementById('ps-bg');
+    const psBgGlow  = document.getElementById('ps-bg-glow');
+    const phases    = [0,1,2].map(i => document.getElementById(`ps-phase-${i}`));
+
+    // Card definitions: final position (% of vw/vh from centre), final rotation
+    const CARDS = [
+      { id:'ic-0', fx:-38, fy:-18, rot:-14, delay:0.00 }, // Herbs  — top-left
+      { id:'ic-1', fx: 36, fy:-22, rot: 11, delay:0.04 }, // Chili  — top-right
+      { id:'ic-2', fx:-44, fy:  8, rot:-18, delay:0.08 }, // Garlic — mid-left
+      { id:'ic-3', fx: 42, fy: 12, rot: 14, delay:0.12 }, // Lemon  — mid-right
+      { id:'ic-4', fx: -8, fy:-38, rot:  6, delay:0.06 }, // Onion  — top-centre
+      { id:'ic-5', fx: 12, fy:-36, rot: -9, delay:0.10 }, // Oil    — top-centre-right
+      { id:'ic-6', fx:-26, fy: 34, rot: 16, delay:0.02 }, // Tomato — bottom-left
+      { id:'ic-7', fx: 28, fy: 32, rot:-12, delay:0.14 }, // Peas   — bottom-right
+    ].map(c => ({ ...c, el: document.getElementById(c.id) }));
+
+    // Easing helpers
+    const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    const easeInOut   = t => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+    const clamp       = (v,a,b) => Math.min(b, Math.max(a, v));
+    const lerp        = (a,b,t) => a + (b - a) * t;
+    const invlerp     = (a,b,v) => clamp((v-a)/(b-a), 0, 1);
+
+    // Convert percent-of-viewport to actual px offset from centre
+    function toVPx(pct) { return (pct / 100) * window.innerWidth;  }
+    function toVPy(pct) { return (pct / 100) * window.innerHeight; }
+
+    // Gentle float animation per card (independent of scroll)
+    const floatOffsets = CARDS.map(() => ({
+      amp:  Math.random() * 8 + 4,
+      freq: Math.random() * 0.0008 + 0.0005,
+      phase: Math.random() * Math.PI * 2,
+    }));
+
+    let lastProgress = -1;
+    let rafId = null;
+
+    function update() {
+      const rect         = section.getBoundingClientRect();
+      const sectionH     = section.offsetHeight - window.innerHeight;
+      const scrolled     = -rect.top;
+      const progress     = clamp(scrolled / sectionH, 0, 1);
+      const now          = performance.now();
+
+      // --- Progress bar ---
+      psFill.style.width = (progress * 100) + '%';
+
+      // --- Hide scroll hint after a bit ---
+      psHint.style.opacity = progress > 0.08 ? '0' : '1';
+
+      // --- Background color shift ---
+      const bgIntensity = easeInOut(clamp(progress * 2, 0, 1));
+      const r = Math.round(lerp(2,   8, bgIntensity));
+      const g = Math.round(lerp(2,   5, bgIntensity));
+      const b = Math.round(lerp(2,   2, bgIntensity));
+      psBg.style.background = `rgb(${r},${g},${b})`;
+      psBgGlow.style.opacity = 0.4 + bgIntensity * 0.6;
+
+      // --- Dish image scale ---
+      const dishScale = lerp(0.75, 1.08, easeOutExpo(clamp(progress * 1.4, 0, 1)));
+      psDish.style.transform = `scale(${dishScale})`;
+      psDish.style.boxShadow = `0 0 0 1px rgba(245,158,11,${0.05 + progress * 0.2}),
+        0 ${40 + progress*40}px ${80 + progress*80}px rgba(0,0,0,0.8),
+        0 0 ${60 + progress*80}px rgba(245,158,11,${0.08 + progress * 0.18})`;
+
+      // --- Ingredient cards ---
+      CARDS.forEach((card, i) => {
+        const fo = floatOffsets[i];
+        // Each card has its own stagger window: [delay, delay+0.55]
+        const start  = card.delay;
+        const end    = start + 0.55;
+        const cp     = easeOutExpo(invlerp(start, end, progress));
+
+        // Final position in px
+        const fx = toVPx(card.fx);
+        const fy = toVPy(card.fy);
+
+        // Float wobble (only when cards are out)
+        const wobble = cp > 0.8 ? fo.amp * Math.sin(now * fo.freq + fo.phase) : 0;
+
+        const tx  = fx * cp;
+        const ty  = fy * cp + wobble;
+        const rot = card.rot * cp;
+        const sc  = lerp(0.2, 1, cp);
+        const op  = clamp(cp * 3, 0, 1);
+
+        card.el.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(${sc})`;
+        card.el.style.opacity   = op;
+      });
+
+      // --- Text phase switching ---
+      // Phase 0: progress 0.00 – 0.35
+      // Phase 1: progress 0.35 – 0.65
+      // Phase 2: progress 0.65 – 1.00
+      const activePhase = progress < 0.35 ? 0 : progress < 0.65 ? 1 : 2;
+      phases.forEach((el, i) => {
+        const isActive = i === activePhase;
+        el.classList.toggle('active', isActive);
+      });
+
+      rafId = requestAnimationFrame(update);
+    }
+
+    // Only run rAF loop when section is near viewport
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(update);
+        } else {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        }
+      });
+    }, { rootMargin: '200px 0px 200px 0px' });
+    sectionObserver.observe(section);
+
+  })();
 
 </script>
 </body>
