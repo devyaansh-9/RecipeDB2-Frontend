@@ -455,7 +455,7 @@
     }
     .stat-block {
       background: var(--surface);
-      padding: 56px 40px;
+      padding: 56px 20px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -473,12 +473,13 @@
     .stat-block:hover { background: var(--surface-2); }
     .stat-number {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(48px, 5vw, 80px);
+      font-size: clamp(36px, 4vw, 64px);
       font-weight: 800;
       background: linear-gradient(135deg, var(--text-1), var(--text-2));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -2px; line-height: 1;
+      letter-spacing: -2px; line-height: 1.2;
+      padding: 0.1em 0;
     }
     .stat-number.counting {
       background: linear-gradient(135deg, var(--amber), var(--saffron));
