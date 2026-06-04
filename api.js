@@ -10,8 +10,8 @@ import {
 export const configStore = {
   get baseUrl() {
     let url = localStorage.getItem('recipedb_baseUrl');
-    if (!url || url === 'https://api.foodoscope.com') {
-      url = 'http://cosylab.iiitd.edu.in:6969';
+    if (!url || url.includes('cosylab.iiitd.edu.in')) {
+      url = 'https://api.foodoscope.com';
       localStorage.setItem('recipedb_baseUrl', url);
     }
     return url;
@@ -21,8 +21,8 @@ export const configStore = {
   },
   get apiKey() {
     let key = localStorage.getItem('recipedb_apiKey');
-    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00' || key === 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL') {
-      key = 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6';
+    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00' || key === 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6' || key === 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL' || key === 'ESL32hFBESL4RjiwN_0glmpSV9nBqlR4gdXKGF0ZOKWowzNc') {
+      key = '-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H';
       localStorage.setItem('recipedb_apiKey', key);
     }
     return key;
@@ -140,11 +140,10 @@ export async function executeApiRequest({ path, method = 'GET', queryParams = {}
       'x-error-cause': 'CORS policy blocked direct access or endpoint is offline'
     };
     
-    // Auto-fallback helper
-    console.warn('Live API request failed. Falling back to Mock Database Sandbox.', err);
-    resultMetrics.isMockUsed = true;
-    resultMetrics.statusText = 'CORS Blocked (Fallback to Mock)';
-    resultMetrics.data = getMockDataForPath(path, queryParams);
+    console.warn('Live API request failed.', err);
+    resultMetrics.isMockUsed = false;
+    resultMetrics.statusText = 'CORS/Network Error';
+    resultMetrics.data = null;
     return resultMetrics;
   }
 }
@@ -153,45 +152,9 @@ export async function executeApiRequest({ path, method = 'GET', queryParams = {}
  * Resolver for local mock data based on requested path
  */
 function getMockDataForPath(path, queryParams) {
-  if (path.includes('/recipe/recipesinfo')) {
-    // Simple pagination mock
-    const page = parseInt(queryParams.page) || 1;
-    const limit = parseInt(queryParams.limit) || 10;
-    const allData = mockRecipesInfo.payload.data;
-    
-    // Paginate mock data
-    const startIndex = (page - 1) * limit;
-    const paginatedData = allData.slice(startIndex, startIndex + limit);
-    
-    return {
-      ...mockRecipesInfo,
-      payload: {
-        data: paginatedData,
-        pagination: {
-          totalCount: allData.length,
-          totalPages: Math.ceil(allData.length / limit),
-          currentPage: page,
-          itemsPerPage: limit
-        }
-      }
-    };
-  }
-  
-  if (path.includes('/recipe/recipeofday')) {
-    return mockRecipeOfDay;
-  }
-  
-  if (path.includes('/recipe/recipe-day/with-ingredients-categories')) {
-    return mockRecipeWithExclusions;
-  }
-  
-  if (path.includes('/recipe-nutri/nutritioninfo')) {
-    return mockNutritionInfo;
-  }
-  
   return {
     success: false,
-    message: 'Unknown endpoint',
+    message: 'Mock sandbox disabled',
     payload: null
   };
 }
