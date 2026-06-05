@@ -1,0 +1,26 @@
+<USER_REQUEST>
+yes pls implement it and make sure the world map is proper first understand the below doc;
+{
+  "info": {
+    "_postman_id": "58e52d15-9745-4b8b-8962-ef48ea3cd088",
+    "name": "RecipeDB API Endpoint Playground",
+    "description": "This is a comprehensive documentation for all the API Endpoints of RecipeDB2 for accessing over 118,000 recipes, nutritional data, and meal planning features.\n\nThe documentation features example usage (with optional and required parameters) as well as example responses. For achieving a valid response for any API endpoint, the user is required to undergo authorization through an API key, which can be obtained at your Profile dashboard at [Foodoscope](https://www.foodoscope.com/).\n\nYou may also use the frontend variant of the RecipeDB API Endpoint Playground at [Foodoscope](https://www.foodoscope.com/) if you wish to, or directly try the API endpoints in cURL (or your desired terminal). The following is an example:\n\n```\ncurl -X GET \"http://cosylab.iiitd.edu.in:6969/recipe2-api/recipe/recipeofday\" \\\n  -H \"Authorization: Bearer <yourAPIkey>\" \\\n  -H \"Content-Type: application/json\"\n\n ```\n\nFor a detailed look at all the API endpoints and their parameters, please refer to the GET and POST methods below.\n\n```\nNote: While page and limit/page_size parameters are dynamic and can go up to an unlimited range, it is not recommended to put an extremely large value for either of the parameters. You might receive an empty response or a false success message.\nThe default values for both parameters are the recommended values.\n\n ```",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51536238",
+    "_collection_link": "https://go.postman.co/collection/51536238-58e52d15-9745-4b8b-8962-ef48ea3cd088?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET Method",
+      "item": [
+        {
+          "name": "Recipe Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+   
+<truncated 45216 bytes>
+otal polyunsaturated (g)\": \"0.1498\",\n                \"Fatty acids, total saturated (g)\": \"0.0474\",\n                \"Fatty acids, total saturated 14:0 (g)\": \"0.0\",\n                \"Fatty acids, total saturated 16:0 (g)\": \"0.0448\",\n                \"Fatty acids, total saturated 16:1 undifferentiated (g)\": \"0.0026\",\n                \"Fatty acids, total saturated 18:0 (g)\": \"0.0026\",\n                \"Fatty acids, total saturated 18:1 undifferentiated (g)\": \"0.0154\",\n                \"Fatty acids, total saturated 18:2 undifferentiated (g)\": \"0.1472\",\n                \"Fiber, total dietary (g)\": \"3.5839999999999996\",\n                \"Folate, DFE (g)\": \"24.32\",\n                \"Folate, food (g)\": \"24.32\",\n                \"Folate, total (g)\": \"24.32\",\n                \"Folic acid (g)\": \"0.0\",\n                \"Iron, Fe (mg)\": \"0.384\",\n                \"Magnesium, Mg (mg)\": \"15.36\",\n                \"Manganese, Mn (mg)\": \"0.183\",\n                \"Niacin (mg)\": \"1.2582\",\n                \"Phosphorus, P (mg)\": \"44.8\",\n                \"Potassium, K (mg)\": \"409.6\",\n                \"Protein (g)\": \"1.1904\",\n                \"Retinol (g)\": \"0.0\",\n                \"Riboflavin (mg)\": \"0.0742\",\n                \"Selenium, Se (g)\": \"0.128\",\n                \"Sodium, Na (mg)\": \"88.32\",\n                \"Thiamin (mg)\": \"0.0845\",\n                \"Total lipid (fat) (g)\": \"0.3072\",\n                \"Vitamin A, IU (IU)\": \"21383.68\",\n                \"Vitamin A, RAE (g)\": \"1068.8\",\n                \"Vitamin B-12 (g)\": \"0.0\",\n                \"Vitamin C, total ascorbic acid (mg)\": \"7.5520000000000005\",\n                \"Vitamin D (D2 + D3) (g)\": \"0.0\",\n                \"Vitamin D (IU)\": \"0.0\",\n                \"Water (g)\": \"113.0112\",\n        
+<truncated 416715 bytes>
+
+NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.
