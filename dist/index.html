@@ -215,6 +215,35 @@
       color: #8FBC8F;
     }
 
+    /* ─── Glassmorphism Content Box & 3D Tilt settings ─── */
+    .featured-box-card {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out, box-shadow 0.3s;
+    }
+    .featured-box-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 1.5rem 2.25rem !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(23, 35, 20, 0.45) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(190, 184, 161, 0.15) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4) !important;
+      max-width: 90% !important;
+      width: auto !important;
+      transform: translateZ(40px); /* 3D floating effect */
+      transition: transform 0.3s ease;
+    }
+    .featured-img-overlay {
+      transform: translateZ(0px);
+    }
+
     /* ─── Glass Panels ─── */
     .glass-panel {
       background: rgba(30, 47, 27, 0.55);
@@ -2256,6 +2285,45 @@
           }
         }, 4000);
       }
+
+      // ===== 3D TILT HOVER EFFECT =====
+      (function() {
+        const card = document.getElementById('featured-recipe-container');
+        if (!card) return;
+
+        card.style.transformStyle = 'preserve-3d';
+        card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s';
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const maxRotate = 10;
+
+          // Tilting angles mapping:
+          // rotateX is positive when mouse is at top (y < centerY), bringing top closer
+          // rotateY is negative when mouse is at right (x > centerX), bringing right closer
+          const rotateX = ((centerY - y) / centerY) * maxRotate;
+          const rotateY = -((x - centerX) / centerX) * maxRotate;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(143,188,143,0.25)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s';
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          card.style.boxShadow = '';
+          
+          setTimeout(() => {
+            card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s';
+          }, 500);
+        });
+      })();
     })();
   </script>
   <!-- ===== CURSOR SCRIPT ===== -->

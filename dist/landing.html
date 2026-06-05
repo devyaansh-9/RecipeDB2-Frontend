@@ -2238,6 +2238,46 @@
 
   })();
 
+  // ===== 3D TILT HOVER EFFECT FOR LANDING CARDS =====
+  (function() {
+    const cards = [
+      document.getElementById('rotd-card'),
+      document.getElementById('search-preview-card')
+    ].filter(Boolean);
+
+    cards.forEach(card => {
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const maxRotate = 8; // Slightly gentler for larger cards
+
+        const rotateX = ((centerY - y) / centerY) * maxRotate;
+        const rotateY = -((x - centerX) / centerX) * maxRotate;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+        card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.5), 0 0 30px rgba(143,188,143,0.15)';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s';
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        card.style.boxShadow = '';
+        
+        setTimeout(() => {
+          card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s';
+        }, 500);
+      });
+    });
+  })();
+
 </script>
 </body>
 </html>
