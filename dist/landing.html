@@ -1792,16 +1792,16 @@
     } catch (err) {
       console.warn('ROTD fetch failed:', err.message);
       // Fallback display
-      imgEl.src = 'assets/butter-chicken.png';
+      imgEl.src = 'assets/sushi_platter.png';
       imgEl.classList.remove('skeleton');
-      titleEl.textContent   = 'Butter Chicken';
-      regionEl.textContent  = 'South Asian · India';
-      metaEl.innerHTML      = `<span class="rotd-meta-item">Serves 4</span><span class="rotd-meta-item">North India</span>`;
-      macroEl.innerHTML     = ['310 kcal','28g Protein','18g Carbs','12g Fat'].map(v => {
+      titleEl.textContent   = 'Salmon Sushi Roll';
+      regionEl.textContent  = 'East Asian · Japan';
+      metaEl.innerHTML      = `<span class="rotd-meta-item">Serves 2</span><span class="rotd-meta-item">Japan</span>`;
+      macroEl.innerHTML     = ['280 kcal','14g Protein','40g Carbs','5g Fat'].map(v => {
         const [n,l] = v.split(' ');
         return `<div class="macro-pill"><div class="macro-pill-val">${n}</div><div class="macro-pill-name">${l||''}</div></div>`;
       }).join('');
-      ingEl.innerHTML       = ['Chicken','Butter','Cream','Tomato','Garlic','Ginger','Garam Masala','Cumin'].map(i =>
+      ingEl.innerHTML       = ['Sushi Rice','Nori','Fresh Salmon','Rice Vinegar','Soy Sauce','Wasabi'].map(i =>
         `<span class="ing-chip">${i}</span>`).join('');
     }
   }
