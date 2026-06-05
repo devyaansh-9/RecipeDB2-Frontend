@@ -205,7 +205,7 @@
       color: #0f1a0d;
     }
     .nav-tab.active {
-      color: #8FBC8F;
+      color: var(--bg-main) !important;
       border-bottom-color: #8FBC8F;
     }
     .nav-tab:hover { color: #A4CFA4; }
@@ -2134,10 +2134,34 @@
           return;
         }
 
-        console.log(`[Stability] Generating image for: "${title}" (${region})`);
-        
         imgEl.style.transition = 'opacity 0.6s ease';
         imgEl.style.opacity = '0';
+
+        // 1. Check Git Cache first
+        let useGitCache = false;
+        try {
+          const cacheRes = await fetch('assets/recipe_title.txt');
+          if (cacheRes.ok) {
+            const cachedTitle = (await cacheRes.text()).trim();
+            if (cachedTitle === title) {
+              useGitCache = true;
+            }
+          }
+        } catch (e) {
+          console.warn('[Git Cache] Check failed:', e);
+        }
+
+        if (useGitCache) {
+          console.log('[Git Cache] Loading cached image from Git...');
+          setTimeout(() => {
+            imgEl.src = 'assets/recipe_of_the_day.webp';
+            imgEl.onload = () => {
+              imgEl.style.opacity = '1';
+              if (loaderEl) loaderEl.style.display = 'none';
+            };
+          }, 600);
+          return;
+        }
 
         const blob = await generateRecipeImage(title, region);
         if (blob) {

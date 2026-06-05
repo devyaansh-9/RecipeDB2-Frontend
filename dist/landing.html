@@ -1906,12 +1906,31 @@
       imgEl.classList.remove('skeleton');
 
       if (title && title !== 'Persian Shish Kabob' && !title.toLowerCase().includes('loading')) {
-        console.log(`[Stability] Generating image for landing page: "${title}" (${region})`);
-        
         imgEl.style.transition = 'opacity 0.6s ease';
         imgEl.style.opacity = '0';
 
-        const blob = await generateRecipeImage(title, region);
+        // 1. Check Git Cache first
+        let useGitCache = false;
+        try {
+          const cacheRes = await fetch('assets/recipe_title.txt');
+          if (cacheRes.ok) {
+            const cachedTitle = (await cacheRes.text()).trim();
+            if (cachedTitle === title) {
+              useGitCache = true;
+            }
+          }
+        } catch (e) {
+          console.warn('[Git Cache] Check failed:', e);
+        }
+
+        if (useGitCache) {
+          console.log('[Git Cache] Loading cached image from Git...');
+          setTimeout(() => {
+            imgEl.src = 'assets/recipe_of_the_day.webp';
+            imgEl.onload = () => { imgEl.style.opacity = '1'; };
+          }, 600);
+        } else {
+          const blob = await generateRecipeImage(title, region);
         if (blob) {
           const dataUrl = URL.createObjectURL(blob);
           setTimeout(() => {
@@ -1951,6 +1970,7 @@
           }, 600);
         }
       }
+    }
 
       titleEl.textContent = title;
       regionEl.textContent = region + (country ? ` · ${country}` : '');
