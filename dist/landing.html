@@ -1315,8 +1315,8 @@
       <div class="rotd-meta" id="rotd-meta"></div>
       <div class="macro-pills" id="rotd-macros"></div>
       <div class="card-label" style="color:var(--text-2);margin-bottom:12px;">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-        Ingredients
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>
+        Cooking Process
       </div>
       <div class="ing-cloud" id="rotd-ingredients">
         <div class="ing-chip skeleton" style="width:70px;height:28px;"></div>
@@ -1700,7 +1700,7 @@
   const CUISINES_1 = [
     { name: 'Indian',         count: '~12K recipes', color: 'rgba(249,115,22,0.5)', img: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&auto=format&fit=crop&q=80' },
     { name: 'Italian',        count: '~9K recipes',  color: 'rgba(239,68,68,0.5)',  img: 'assets/italian_cuisine.png' },
-    { name: 'Japanese',       count: '~6K recipes',  color: 'rgba(168,85,247,0.5)', img: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=300&auto=format&fit=crop&q=80' },
+    { name: 'Japanese',       count: '~6K recipes',  color: 'rgba(168,85,247,0.5)', img: 'assets/sushi_platter.png' },
     { name: 'Mexican',        count: '~7K recipes',  color: 'rgba(16,185,129,0.5)', img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300&auto=format&fit=crop&q=80' },
     { name: 'Middle Eastern', count: '~5K recipes',  color: 'rgba(245,158,11,0.5)', img: 'https://images.unsplash.com/photo-1547058881-aa0edd92aab3?w=300&auto=format&fit=crop&q=80' },
     { name: 'French',         count: '~4K recipes',  color: 'rgba(59,130,246,0.5)', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&auto=format&fit=crop&q=80' },
@@ -1784,7 +1784,9 @@
       const fat     = recipe['Total lipid (fat) (g)'] || recipe.fat || '—';
       const carbs   = recipe['Carbohydrate, by difference (g)'] || recipe.carbs || '—';
       const servings= recipe.servings || '—';
-      const ings    = recipe.ingredients_list || recipe.ingredients || [];
+      const processes = recipe.Processes ? recipe.Processes.split('||').map(p => p.trim()).filter(Boolean) : [];
+      const utensils  = recipe.Utensils  ? recipe.Utensils.split('||').map(u => u.trim()).filter(Boolean)  : [];
+      const totalTime = recipe.total_time || '—';
 
       // Dynamic food image from API or fallback
       imgEl.src = recipe.img_url || FOOD_IMAGES[dayOfYear % FOOD_IMAGES.length];
@@ -1797,6 +1799,10 @@
         <span class="rotd-meta-item">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
           Serves ${servings}
+        </span>
+        <span class="rotd-meta-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          ${totalTime} mins
         </span>
         <span class="rotd-meta-item">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
@@ -1821,14 +1827,18 @@
           <div class="macro-pill-name">Fat</div>
         </div>`;
 
-      // Ingredients
-      if (Array.isArray(ings) && ings.length > 0) {
-        ingEl.innerHTML = ings.slice(0, 14).map(i => {
-          const name = typeof i === 'string' ? i : (i.ingredient || i.name || i);
-          return `<span class="ing-chip">${name}</span>`;
-        }).join('');
+      // Cooking Processes
+      if (processes.length > 0) {
+        const uniqueProcesses = [...new Set(processes)];
+        ingEl.innerHTML = uniqueProcesses.slice(0, 10).map(p =>
+          `<span class="ing-chip" style="text-transform:capitalize;">${p}</span>`
+        ).join('');
+      } else if (utensils.length > 0) {
+        ingEl.innerHTML = utensils.map(u =>
+          `<span class="ing-chip" style="text-transform:capitalize;">${u}</span>`
+        ).join('');
       } else {
-        ingEl.innerHTML = '<span style="color:var(--text-3);font-size:13px;">Ingredients not available</span>';
+        ingEl.innerHTML = '<span style="color:var(--text-3);font-size:13px;">Details available in the portal</span>';
       }
     } catch (err) {
       console.warn('ROTD fetch failed:', err.message);
