@@ -21,8 +21,8 @@ export const configStore = {
   },
   get apiKey() {
     let key = localStorage.getItem('recipedb_apiKey');
-    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00' || key === 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6' || key === 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL' || key === 'ESL32hFBESL4RjiwN_0glmpSV9nBqlR4gdXKGF0ZOKWowzNc') {
-      key = '-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H';
+    if (!key || key === 'undefined' || key === 'null' || key === 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00' || key === 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6' || key === 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL' || key === 'ESL32hFBESL4RjiwN_0glmpSV9nBqlR4gdXKGF0ZOKWowzNc' || key === '-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H') {
+      key = 'B9T3fCoeHaRKdHvPUm5k_hzzVMb7-xxLXNXpkydXeZg5-K7n';
       localStorage.setItem('recipedb_apiKey', key);
     }
     return key;
