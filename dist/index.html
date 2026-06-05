@@ -128,8 +128,187 @@
       accent-color: var(--accent-cyan);
     }
   </style>
+
+  <!-- ===== LANDING PAGE THEME + CURSOR OVERRIDE ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Theme Token Overrides ─── */
+    :root {
+      --bg-main:            #172314;
+      --bg-surface:         #1F2E1C;
+      --bg-panel:           rgba(30, 47, 27, 0.65);
+      --bg-input:           rgba(15, 25, 13, 0.88);
+      --border-color:       rgba(190, 184, 161, 0.10);
+      --border-hover:       rgba(190, 184, 161, 0.20);
+      --border-glow:        rgba(143, 188, 143, 0.18);
+
+      --text-primary:       #F5F1E1;
+      --text-secondary:     #BEB8A1;
+      --text-muted:         #7b7861;
+
+      --accent-cyan:        #8FBC8F;
+      --accent-cyan-rgb:    143, 188, 143;
+      --accent-emerald:     #A4CFA4;
+      --accent-emerald-rgb: 164, 207, 164;
+      --accent-orange:      #d97706;
+      --accent-orange-rgb:  217, 119, 6;
+      --accent-purple:      #9ab083;
+      --accent-red:         #92400e;
+
+      --shadow-glow:        0 0 20px rgba(143, 188, 143, 0.18);
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── Body Base ─── */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #172314;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(30, 80, 25, 0.45) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 15% 80%, rgba(20, 40, 15, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 80% at 50% 50%, #172314 0%, #0f1a0d 100%);
+      cursor: none;
+    }
+
+    /* ─── Dot Grid re-tint ─── */
+    .bg-grid {
+      background-image: radial-gradient(circle, rgba(143,188,143,0.18) 1px, transparent 1px);
+    }
+    .aurora {
+      background: conic-gradient(
+        from 200deg at 60% 40%,
+        transparent 0deg,
+        rgba(143,188,143,0.06) 40deg,
+        rgba(164,207,164,0.08) 80deg,
+        transparent 130deg,
+        rgba(155,176,131,0.05) 200deg,
+        transparent 260deg
+      );
+    }
+    .blob-1 { background: radial-gradient(circle, rgba(143,188,143,0.22) 0%, transparent 70%); }
+    .blob-2 { background: radial-gradient(circle, rgba(164,207,164,0.16) 0%, transparent 70%); }
+    .blob-3 { background: radial-gradient(circle, rgba(155,176,131,0.13) 0%, transparent 70%); }
+    .blob-4 { background: radial-gradient(circle, rgba(217,119,6,0.09)   0%, transparent 70%); }
+    .blob-5 { background: radial-gradient(circle, rgba(143,188,143,0.11) 0%, transparent 70%); }
+
+    /* ─── Navbar ─── */
+    .navbar {
+      background: rgba(23, 35, 20, 0.72);
+    }
+    .brand-icon {
+      background: linear-gradient(135deg, #8FBC8F, #5a8f5a);
+      color: #0f1a0d;
+    }
+    .nav-tab.active {
+      color: #8FBC8F;
+      border-bottom-color: #8FBC8F;
+    }
+    .nav-tab:hover { color: #A4CFA4; }
+    .badge-engine.live {
+      background: rgba(143,188,143,0.12);
+      border-color: rgba(143,188,143,0.35);
+      color: #8FBC8F;
+    }
+
+    /* ─── Glass Panels ─── */
+    .glass-panel {
+      background: rgba(30, 47, 27, 0.55);
+      border-color: rgba(190, 184, 161, 0.10);
+    }
+    .glass-panel:hover {
+      border-color: rgba(143,188,143,0.22);
+    }
+
+    /* ─── Buttons ─── */
+    .btn-action-panel {
+      background: linear-gradient(135deg, #8FBC8F, #5a8f5a);
+      color: #0f1a0d;
+    }
+    .btn-send {
+      background: linear-gradient(135deg, #8FBC8F, #5a8f5a);
+      color: #0f1a0d;
+    }
+    .search-tab-btn.active {
+      background: rgba(143,188,143,0.15);
+      border-color: rgba(143,188,143,0.4);
+      color: #8FBC8F;
+    }
+    .btn-arrow-nav:hover, .btn-arrow-nav:focus {
+      background: rgba(143,188,143,0.15);
+      border-color: rgba(143,188,143,0.4);
+      color: #8FBC8F;
+    }
+
+    /* ─── Table ─── */
+    .gastronomy-table thead th { color: #8FBC8F; }
+    .gastronomy-table tbody tr:hover td { background: rgba(143,188,143,0.06); }
+    .sortable:hover { color: #A4CFA4; }
+
+    /* ─── Carousel ─── */
+    .carousel-card.active { border-color: rgba(143,188,143,0.5); }
+    .carousel-card:hover  { border-color: rgba(143,188,143,0.3); }
+
+    /* ─── Progress bars ─── */
+    .macro-progress-fill.carbs   { background: linear-gradient(90deg, #8FBC8F, #5a8f5a); }
+    .macro-progress-fill.protein { background: linear-gradient(90deg, #A4CFA4, #8FBC8F); }
+    .macro-progress-fill.fat     { background: linear-gradient(90deg, #d97706, #92400e); }
+
+    /* ─── Console Panel ─── */
+    .console-tab.active { border-bottom-color: #8FBC8F; color: #8FBC8F; }
+    .method-tag { background: rgba(143,188,143,0.15); color: #8FBC8F; border-color: rgba(143,188,143,0.3); }
+
+    /* ─── Stat cards ─── */
+    .stat-card .stat-number { color: #8FBC8F; }
+
+    /* ─── Section titles ─── */
+    .panel-title, .section-title, h3, h4 { letter-spacing: -0.3px; }
+
+    /* ─── Loading spinner tint ─── */
+    .loading-spinner {
+      border-color: rgba(143,188,143,0.15);
+      border-top-color: #8FBC8F;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    #cursor {
+      width: 12px; height: 12px;
+      background: #8FBC8F;
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s;
+      mix-blend-mode: exclusion;
+    }
+    #cursor.cursor-hover { width: 24px; height: 24px; }
+    #cursor-ring {
+      width: 40px; height: 40px;
+      border: 1.5px solid rgba(143, 188, 143, 0.55);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.38s var(--ease-out-expo),
+                  width 0.4s var(--ease-out-expo),
+                  height 0.4s var(--ease-out-expo),
+                  border-color 0.3s;
+    }
+    #cursor-ring.cursor-hover { width: 56px; height: 56px; border-color: rgba(143,188,143,0.35); }
+    .cursor-trail {
+      position: fixed; pointer-events: none; z-index: 99997;
+      width: 4px; height: 4px;
+      background: #8FBC8F;
+      border-radius: 50%;
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
   <!-- Background Decorative Glowing Blobs -->
   <div class="glow-blob blob-1"></div>
@@ -1828,5 +2007,91 @@
       drawFrame();
     }
   </script>
+
+  <!-- ===== CURSOR SCRIPT ===== -->
+  <script>
+    (function() {
+      const cursor     = document.getElementById('cursor');
+      const cursorRing = document.getElementById('cursor-ring');
+      if (!cursor || !cursorRing) return;
+
+      let mouseX = -100, mouseY = -100;
+      let ringX  = -100, ringY  = -100;
+
+      // Trail pool
+      const TRAIL_COUNT = 10;
+      const trails = [];
+      for (let i = 0; i < TRAIL_COUNT; i++) {
+        const t = document.createElement('div');
+        t.className = 'cursor-trail';
+        document.body.appendChild(t);
+        trails.push({ el: t, x: -100, y: -100, life: 0 });
+      }
+      let trailIdx = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top  = mouseY + 'px';
+
+        // Spawn trail particle
+        const t = trails[trailIdx % TRAIL_COUNT];
+        t.x = mouseX; t.y = mouseY; t.life = 1;
+        t.el.style.left    = mouseX + 'px';
+        t.el.style.top     = mouseY + 'px';
+        t.el.style.opacity = '0.55';
+        t.el.style.transform = 'translate(-50%,-50%) scale(1)';
+        trailIdx++;
+
+        // Fade trail
+        setTimeout(() => {
+          t.el.style.transition = 'opacity 0.5s, transform 0.5s';
+          t.el.style.opacity  = '0';
+          t.el.style.transform = 'translate(-50%,-50%) scale(0.3)';
+        }, 30);
+        setTimeout(() => { t.el.style.transition = 'none'; }, 560);
+      });
+
+      // Lag ring behind cursor
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top  = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      // Expand on hover
+      document.querySelectorAll('a, button, input, select, [role="button"], .carousel-card, .nav-tab, .recipe-row').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.classList.add('cursor-hover');
+          cursorRing.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.classList.remove('cursor-hover');
+          cursorRing.classList.remove('cursor-hover');
+        });
+      });
+
+      // Also handle dynamically added elements
+      document.addEventListener('mouseover', (e) => {
+        const el = e.target.closest('a, button, input, select, [role="button"], tr, .carousel-card');
+        if (el) {
+          cursor.classList.add('cursor-hover');
+          cursorRing.classList.add('cursor-hover');
+        }
+      });
+      document.addEventListener('mouseout', (e) => {
+        const el = e.target.closest('a, button, input, select, [role="button"], tr, .carousel-card');
+        if (el) {
+          cursor.classList.remove('cursor-hover');
+          cursorRing.classList.remove('cursor-hover');
+        }
+      });
+    })();
+  </script>
 </body>
+
 </html>
