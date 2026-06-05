@@ -1788,8 +1788,15 @@
       const utensils  = recipe.Utensils  ? recipe.Utensils.split('||').map(u => u.trim()).filter(Boolean)  : [];
       const totalTime = recipe.total_time || '—';
 
-      // Dynamic food image from API or fallback
-      imgEl.src = recipe.img_url || FOOD_IMAGES[dayOfYear % FOOD_IMAGES.length];
+      // Dynamic food image from API or fallback (use local chef_cooking.png for logo/generic placeholders)
+      const rawImg = recipe.img_url || '';
+      const isPlaceholder = !rawImg || 
+                            rawImg.toLowerCase().includes('geniuskitchen') || 
+                            rawImg.toLowerCase().includes('food.com') || 
+                            rawImg.toLowerCase().includes('logo') || 
+                            rawImg.toLowerCase().includes('placeholder');
+      
+      imgEl.src = isPlaceholder ? 'assets/chef_cooking.png' : rawImg;
       imgEl.classList.remove('skeleton');
 
       titleEl.textContent = title;
