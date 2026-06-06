@@ -1406,7 +1406,7 @@ function j() {
     const c = o + (r / 4) * l,
       g = Math.round(u - (u / 4) * l);
     p += `
-      <line x1="${o}" y1="${c}" x2="${a - o}" y2="${c}" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4" />
+      <line x1="${o}" y1="${c}" x2="${a - o}" y2="${c}" stroke="var(--border-color)" stroke-width="1" />
       <text x="${o - 8}" y="${c + 4}" fill="var(--text-muted)" font-size="9" text-anchor="end" font-family="var(--font-sans)">${g}</text>
     `;
   }
@@ -1415,21 +1415,22 @@ function j() {
     const g = o + (s / e.length) * c + 6,
       h = (l.calories / u) * r,
       f = n - o - h,
-      m = `bar-grad-${c}`;
+      isMax = l.calories === u,
+      gradId = `bar-grad-${c}`;
     p += `
       <defs>
-        <linearGradient id="${m}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="var(--accent-cyan)" />
-          <stop offset="100%" stop-color="rgba(6, 182, 212, 0.2)" />
+        <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${isMax ? "var(--accent-cyan)" : "#3F3F46"}" />
+          <stop offset="100%" stop-color="${isMax ? "rgba(34,197,94,0.15)" : "#27272A"}" />
         </linearGradient>
       </defs>
-      <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${m})" rx="4" ry="4" style="transition: all 0.3s;" />
-      <text x="${g + d / 2}" y="${f - 6}" fill="var(--text-primary)" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
+      <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "var(--accent-cyan)" : "var(--border-color)"}" stroke-width="1" rx="4" ry="4" style="transition: all 0.3s;" />
+      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "var(--accent-cyan)" : "var(--text-primary)"}" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
       <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="9.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
     `;
   }),
     (p += `
-    <line x1="${o}" y1="${n - o}" x2="${a - o}" y2="${n - o}" stroke="rgba(255,255,255,0.12)" />
+    <line x1="${o}" y1="${n - o}" x2="${a - o}" y2="${n - o}" stroke="var(--border-color)" stroke-width="1.5" />
   </svg>`),
     (t.caloriesBarChart.innerHTML = p));
 }
