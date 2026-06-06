@@ -26,6 +26,7 @@
       position: relative;
       width: 140px; height: 140px;
       margin-bottom: 20px;
+      perspective: 500px;
     }
     .pan-container {
       position: absolute;
@@ -48,12 +49,13 @@
     }
     .pizza {
       position: absolute;
-      bottom: 35px; left: 60px;
-      width: 60px; height: 60px;
+      bottom: 25px; left: 55px;
+      width: 70px; height: 70px;
       background: #fbbd08;
       border: 5px solid #d97706;
       border-radius: 50%;
       box-shadow: inset 0 0 8px rgba(217, 119, 6, 0.4);
+      transform-style: preserve-3d;
       animation: pizza-flip 1.8s ease-in-out infinite;
     }
     .pepperoni {
@@ -61,10 +63,10 @@
       background: #b91c1c;
       border-radius: 50%;
     }
-    .p1 { width: 12px; height: 12px; top: 12px; left: 10px; }
-    .p2 { width: 10px; height: 10px; top: 30px; left: 18px; }
-    .p3 { width: 14px; height: 14px; top: 16px; left: 30px; }
-    .p4 { width: 8px; height: 8px; top: 35px; left: 35px; }
+    .p1 { width: 12px; height: 12px; top: 15px; left: 15px; }
+    .p2 { width: 10px; height: 10px; top: 35px; left: 20px; }
+    .p3 { width: 14px; height: 14px; top: 20px; left: 40px; }
+    .p4 { width: 8px; height: 8px; top: 45px; left: 45px; }
 
     @keyframes pan-toss {
       0% { transform: rotate(0deg); }
@@ -74,10 +76,10 @@
       100% { transform: rotate(0deg); }
     }
     @keyframes pizza-flip {
-      0% { transform: translateY(0) rotateY(0deg) rotateZ(0deg) scale(1); }
-      15% { transform: translateY(-70px) rotateY(180deg) rotateZ(45deg) scale(1.1); }
-      30% { transform: translateY(0) rotateY(360deg) rotateZ(90deg) scale(1); }
-      100% { transform: translateY(0) rotateY(360deg) rotateZ(90deg) scale(1); }
+      0% { transform: translateY(0) rotateX(65deg) rotateZ(0deg) scale(1); }
+      15% { transform: translateY(-70px) rotateX(245deg) rotateZ(45deg) scale(1.1); }
+      30% { transform: translateY(0) rotateX(425deg) rotateZ(90deg) scale(1); }
+      100% { transform: translateY(0) rotateX(425deg) rotateZ(90deg) scale(1); }
     }
     .loader-text {
       font-family: 'Inter', sans-serif;
