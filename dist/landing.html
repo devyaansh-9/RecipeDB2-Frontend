@@ -1938,35 +1938,10 @@
             imgEl.onload = () => { imgEl.style.opacity = '1'; };
           }, 600);
         } else {
-          // Fallback to Pollinations AI
-          console.warn('[Stability] Failed. Trying Pollinations fallback...');
-          const prompt = `Stunning professional food photography of ${title}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
-          const pollinationsUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=600&height=380&nologo=true&seed=${Math.floor(Math.random() * 100000)}`;
-          
-          // Extract clean keywords for LoremFlickr search
-          const cleanKeywords = title.toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')
-            .split(/\s+/)
-            .filter(w => w.length > 3 && !['with', 'that', 'this', 'style', 'recipe', 'and', 'for', 'from'].includes(w))
-            .join(',');
-          const loremFlickrUrl = `https://loremflickr.com/600/380/food,${cleanKeywords.split(',').map(encodeURIComponent).join(',')}?lock=${Math.floor(Math.random() * 100000)}`;
-
+          console.warn('[Stability] Failed. Falling back directly to chef cooking placeholder...');
           setTimeout(() => {
-            imgEl.src = pollinationsUrl;
+            imgEl.src = 'assets/chef_cooking.png';
             imgEl.onload = () => { imgEl.style.opacity = '1'; };
-            
-            let triedFlickr = false;
-            imgEl.onerror = () => {
-              if (!triedFlickr) {
-                triedFlickr = true;
-                console.warn('[Pollinations] Failed. Trying LoremFlickr fallback...');
-                imgEl.src = loremFlickrUrl;
-              } else {
-                console.warn('[LoremFlickr] Failed. Showing chef cooking placeholder...');
-                imgEl.src = 'assets/chef_cooking.png';
-                imgEl.style.opacity = '1';
-              }
-            };
           }, 600);
         }
       }
