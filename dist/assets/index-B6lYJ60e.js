@@ -76,8 +76,9 @@ const $ = {
           e === "ESL32hFBESL4RjiwN_0glmpSV9nBqlR4gdXKGF0ZOKWowzNc" ||
           e === "-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H" ||
           e === "B9T3fCoeHaRKdHvPUm5k_hzzVMb7-xxLXNXpkydXeZg5-K7n" ||
-          e === "kvfuHfYLxZjFrnsHyfEc7Za-kjj0LH3hhaqxB8WI12qkTB7R") &&
-          ((e = "k6Hprs-yAwqx4e7Lpovpe3z-V8cGHObIqnZryOsNGvzkXIpE"),
+          e === "kvfuHfYLxZjFrnsHyfEc7Za-kjj0LH3hhaqxB8WI12qkTB7R" ||
+          e === "k6Hprs-yAwqx4e7Lpovpe3z-V8cGHObIqnZryOsNGvzkXIpE") &&
+          ((e = "LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz"),
           localStorage.setItem("recipedb_apiKey", e)),
         e
       );
