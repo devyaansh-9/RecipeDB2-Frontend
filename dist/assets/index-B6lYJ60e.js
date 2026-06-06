@@ -77,8 +77,9 @@ const $ = {
           e === "-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H" ||
           e === "B9T3fCoeHaRKdHvPUm5k_hzzVMb7-xxLXNXpkydXeZg5-K7n" ||
           e === "kvfuHfYLxZjFrnsHyfEc7Za-kjj0LH3hhaqxB8WI12qkTB7R" ||
-          e === "k6Hprs-yAwqx4e7Lpovpe3z-V8cGHObIqnZryOsNGvzkXIpE") &&
-          ((e = "LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz"),
+          e === "k6Hprs-yAwqx4e7Lpovpe3z-V8cGHObIqnZryOsNGvzkXIpE" ||
+          e === "LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz") &&
+          ((e = "NxsURcu19CM40-SpOsS_O53vS--skidnCNHzmv8KLsIHt9eM"),
           localStorage.setItem("recipedb_apiKey", e)),
         e
       );
@@ -703,6 +704,40 @@ function checkActiveFilters() {
   return false;
 }
 
+async function populateInstructionsForRecipes(recipes) {
+  const batchSize = 3;
+  for (let idx = 0; idx < recipes.length; idx += batchSize) {
+    const batch = recipes.slice(idx, idx + batchSize);
+    await Promise.all(batch.map(async (recipe) => {
+      if (!recipe.Recipe_id) return;
+      const cacheKey = `recipedb_instructions_${recipe.Recipe_id}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        recipe.instructions = cached;
+        return;
+      }
+      try {
+        const res = await T({
+          path: `/recipe2-api/instructions/${recipe.Recipe_id}`
+        });
+        if (res && res.data && res.data.steps) {
+          const stepsStr = res.data.steps.join(". ");
+          localStorage.setItem(cacheKey, stepsStr);
+          recipe.instructions = stepsStr;
+        } else {
+          recipe.instructions = "";
+        }
+      } catch (err) {
+        recipe.instructions = "";
+      }
+    }));
+    const hasUncached = batch.some(r => !localStorage.getItem(`recipedb_instructions_${r.Recipe_id}`));
+    if (hasUncached && idx + batchSize < recipes.length) {
+      await new Promise(resolve => setTimeout(resolve, 250));
+    }
+  }
+}
+
 async function v() {
   const e = i.recipesList.length !== i.allFetchedRecipes.length,
     a = t.tableSearchInput.value.trim().toLowerCase();
@@ -877,6 +912,8 @@ async function v() {
             p--;
           }
         }
+
+        await populateInstructionsForRecipes(allRecipes);
 
         let data = [...allRecipes];
         if (i.activeSearchTab === "tab-cuisine") {
@@ -1322,7 +1359,27 @@ function J() {
         (t.btnSubmitSearch.style.opacity = "1"));
     }, 350));
 }
-function _(e) {
+async function _(e) {
+  if (e.Recipe_id && (!e.instructions || e.instructions.trim() === "")) {
+    const cacheKey = `recipedb_instructions_${e.Recipe_id}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      e.instructions = cached;
+    } else {
+      try {
+        const res = await T({
+          path: `/recipe2-api/instructions/${e.Recipe_id}`
+        });
+        if (res && res.data && res.data.steps) {
+          const stepsStr = res.data.steps.join(". ");
+          localStorage.setItem(cacheKey, stepsStr);
+          e.instructions = stepsStr;
+        }
+      } catch (err) {
+        console.warn("Could not load instructions", err);
+      }
+    }
+  }
   ((t.detModalTitle.textContent = e.Recipe_title),
     (t.detTime.textContent = `${e.total_time || 30} mins`),
     (t.detServings.textContent = e.servings || "4 servings"),
