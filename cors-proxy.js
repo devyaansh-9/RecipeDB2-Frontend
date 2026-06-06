@@ -1,8 +1,8 @@
 // Simple CORS proxy for RecipeDB2 API
 const http = require('http');
 
-const TARGET = 'cosylab.iiitd.edu.in';
-const TARGET_PORT = 6969;
+const TARGET = '192.168.1.92';
+const TARGET_PORT = 3030;
 const PROXY_PORT = 3001;
 
 const server = http.createServer((req, res) => {
