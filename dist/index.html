@@ -6,16 +6,29 @@
   <title>RecipeDB2 Gastronomy Portal & API Playground</title>
   <meta name="description" content="A comprehensive interactive client and developer console for accessing over 128,942 recipes, nutritional metrics, and meal planning features of RecipeDB2.">
   <script>
+    // Early diagnostics setup
+    (function() {
+      window.consoleErrors = [];
+      const originalError = console.error;
+      console.error = function(...args) {
+        originalError.apply(console, args);
+        window.consoleErrors.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' '));
+      };
+      window.addEventListener('error', function(e) {
+        window.consoleErrors.push('Error: ' + e.message + ' at ' + e.filename + ':' + e.lineno);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        window.consoleErrors.push('Unhandled Rejection: ' + (e.reason ? e.reason.message || e.reason.stack || e.reason : e));
+      });
+    })();
+  </script>
+  <script>
     (function() {
       const baseUrl = localStorage.getItem('recipedb_baseUrl');
       if (!baseUrl || baseUrl.includes('cosylab.iiitd.edu.in')) {
         localStorage.setItem('recipedb_baseUrl', 'https://api.foodoscope.com');
       }
-      const apiKey = localStorage.getItem('recipedb_apiKey');
-      const depletedKeys = ['undefined', 'null', 'v5cwjQotMtbTnlq3-bV2VPotjdR-UJaLDNQzbRhGzky99D00', 'YqC-5Yc3J3sfoFEZhFtLjPztv9uVh8juKqYhlE7_sSInaCj6', 'CnLZys6hZiEzvl-aPlurxqyMKNUUdwuTzWsxjwd7ASIvKqLL', 'ESL32hFBESL4RjiwN_0glmpSV9nBqlR4gdXKGF0ZOKWowzNc', '-BQKD4dXZR6WFf5pzP3icei3DvcBDE0KR--M6GdyIwp0UA5H'];
-      if (!apiKey || depletedKeys.includes(apiKey)) {
-        localStorage.setItem('recipedb_apiKey', 'B9T3fCoeHaRKdHvPUm5k_hzzVMb7-xxLXNXpkydXeZg5-K7n');
-      }
+      localStorage.setItem('recipedb_apiKey', 'kvfuHfYLxZjFrnsHyfEc7Za-kjj0LH3hhaqxB8WI12qkTB7R');
       const engine = localStorage.getItem('recipedb_engine');
       if (!engine || engine === 'mock') {
         localStorage.setItem('recipedb_engine', 'live');
@@ -26,8 +39,8 @@
       }
     })();
   </script>
-  <script type="module" crossorigin src="/assets/index-B6lYJ60e.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css">
+  <script type="module" crossorigin src="/assets/index-B6lYJ60e.js?v=2"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css?v=2">
   <style>
     /* ===== LAB GRID & VIZ STYLING ===== */
     #lab-pane {
@@ -719,7 +732,7 @@
             </div>
             
             <div class="table-pagination-nav">
-              <span class="footer-label" id="footer-item-counter">1-10 of 128942</span>
+              <span class="footer-label" id="footer-item-counter">Loading...</span>
               
               <div class="pagination-arrows">
                 <button class="btn-arrow-nav" id="btn-nav-first" title="First page">&laquo;</button>
@@ -2410,6 +2423,7 @@
       });
     })();
   </script>
+
 </body>
 
 </html>
