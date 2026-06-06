@@ -22,15 +22,62 @@
       transition: opacity 0.6s ease, visibility 0.6s;
     }
     #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-logo {
-      width: 100px; height: 100px;
-      object-fit: contain;
-      animation: pan-flip 1.6s ease-in-out infinite;
+    .pan-loader {
+      position: relative;
+      width: 140px; height: 140px;
+      margin-bottom: 20px;
     }
-    @keyframes pan-flip {
-      0% { transform: translateY(0) rotateX(0deg); }
-      50% { transform: translateY(-40px) rotateX(-180deg); }
-      100% { transform: translateY(0) rotateX(-360deg); }
+    .pan-container {
+      position: absolute;
+      bottom: 20px; left: 10px;
+      width: 120px; height: 30px;
+      display: flex; align-items: center;
+      transform-origin: 20px center;
+      animation: pan-toss 1.8s ease-in-out infinite;
+    }
+    .handle {
+      width: 40px; height: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+    .pan {
+      width: 80px; height: 16px;
+      background: #3a3a3a;
+      border-radius: 0 0 16px 16px;
+      box-shadow: inset -4px -4px 8px rgba(0,0,0,0.4);
+    }
+    .pizza {
+      position: absolute;
+      bottom: 35px; left: 60px;
+      width: 60px; height: 60px;
+      background: #fbbd08;
+      border: 5px solid #d97706;
+      border-radius: 50%;
+      box-shadow: inset 0 0 8px rgba(217, 119, 6, 0.4);
+      animation: pizza-flip 1.8s ease-in-out infinite;
+    }
+    .pepperoni {
+      position: absolute;
+      background: #b91c1c;
+      border-radius: 50%;
+    }
+    .p1 { width: 12px; height: 12px; top: 12px; left: 10px; }
+    .p2 { width: 10px; height: 10px; top: 30px; left: 18px; }
+    .p3 { width: 14px; height: 14px; top: 16px; left: 30px; }
+    .p4 { width: 8px; height: 8px; top: 35px; left: 35px; }
+
+    @keyframes pan-toss {
+      0% { transform: rotate(0deg); }
+      15% { transform: rotate(-20deg); }
+      30% { transform: rotate(5deg); }
+      45% { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes pizza-flip {
+      0% { transform: translateY(0) rotateY(0deg) rotateZ(0deg) scale(1); }
+      15% { transform: translateY(-70px) rotateY(180deg) rotateZ(45deg) scale(1.1); }
+      30% { transform: translateY(0) rotateY(360deg) rotateZ(90deg) scale(1); }
+      100% { transform: translateY(0) rotateY(360deg) rotateZ(90deg) scale(1); }
     }
     .loader-text {
       font-family: 'Inter', sans-serif;
@@ -1045,7 +1092,18 @@
 
 <!-- Loading Screen -->
 <div id="loader">
-  <img src="assets/logo.png?v=3" class="loader-logo" alt="R2 Logo">
+  <div class="pan-loader">
+    <div class="pan-container">
+      <div class="handle"></div>
+      <div class="pan"></div>
+    </div>
+    <div class="pizza">
+      <div class="pepperoni p1"></div>
+      <div class="pepperoni p2"></div>
+      <div class="pepperoni p3"></div>
+      <div class="pepperoni p4"></div>
+    </div>
+  </div>
   <div class="loader-text">Loading Culinary Intelligence</div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
