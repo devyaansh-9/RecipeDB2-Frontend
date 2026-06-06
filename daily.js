@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const API_KEY = 'kvfuHfYLxZjFrnsHyfEc7Za-kjj0LH3hhaqxB8WI12qkTB7R';
+const API_KEY = 'k6Hprs-yAwqx4e7Lpovpe3z-V8cGHObIqnZryOsNGvzkXIpE';
 const BASE_URL = 'https://api.foodoscope.com';
 const STABILITY_KEY = 'sk-' + '04PvwE0b55M5fxM3zHSMtID8dwXPmXr5JJaimYfMSta58wMv';
 
