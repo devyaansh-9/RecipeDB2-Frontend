@@ -995,7 +995,10 @@ async function v() {
             );
           });
         } else if (i.activeSearchTab === "tab-advanced") {
-          const titleVal = t.advTitle.value.trim().toLowerCase(),
+          const contVal = t.advContinent.value.trim().toLowerCase(),
+            regVal = t.advRegion.value.trim().toLowerCase(),
+            countryVal = t.advCountry.value.trim().toLowerCase(),
+            titleVal = t.advTitle.value.trim().toLowerCase(),
             usedIng = t.advIngUsed.value
               .trim()
               .toLowerCase()
@@ -1010,6 +1013,22 @@ async function v() {
               .filter(Boolean),
             procVal = t.advProcess.value.trim().toLowerCase(),
             utVal = t.advUtensil.value.trim().toLowerCase();
+          if (contVal) {
+            data = data.filter((item) =>
+              (item.Continent || "").toLowerCase().includes(contVal),
+            );
+          }
+          if (regVal) {
+            data = data.filter((item) =>
+              (item.Region || "").toLowerCase().includes(regVal),
+            );
+          }
+          if (countryVal) {
+            data = data.filter((item) => {
+              const sr = (item.Sub_region || "").toLowerCase();
+              return sr && sr.includes(countryVal);
+            });
+          }
           if (titleVal) {
             data = data.filter((item) =>
               item.Recipe_title.toLowerCase().includes(titleVal),
