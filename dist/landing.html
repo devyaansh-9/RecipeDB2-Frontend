@@ -23,23 +23,14 @@
     }
     #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .loader-logo {
-      width: 80px; height: 80px;
-      background: linear-gradient(135deg, #f59e0b, #d97706, #92400e);
-      border-radius: 22px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 28px; color: #000;
-      letter-spacing: -1px;
-      animation: loader-pulse 1.6s ease-in-out infinite, loader-rotate 2.4s ease-in-out infinite;
-      box-shadow: 0 0 60px rgba(245,158,11,0.4), 0 0 120px rgba(245,158,11,0.15);
+      width: 100px; height: 100px;
+      object-fit: contain;
+      animation: pan-flip 1.6s ease-in-out infinite;
     }
-    @keyframes loader-pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(245,158,11,0.4); }
-      50% { transform: scale(1.08); box-shadow: 0 0 80px rgba(245,158,11,0.6); }
-    }
-    @keyframes loader-rotate {
-      0% { border-radius: 22px; }
-      50% { border-radius: 32px; }
-      100% { border-radius: 22px; }
+    @keyframes pan-flip {
+      0% { transform: translateY(0) rotateX(0deg); }
+      50% { transform: translateY(-40px) rotateX(-180deg); }
+      100% { transform: translateY(0) rotateX(-360deg); }
     }
     .loader-text {
       font-family: 'Inter', sans-serif;
@@ -1054,7 +1045,7 @@
 
 <!-- Loading Screen -->
 <div id="loader">
-  <div class="loader-logo">R2</div>
+  <img src="assets/logo.png?v=3" class="loader-logo" alt="R2 Logo">
   <div class="loader-text">Loading Culinary Intelligence</div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
