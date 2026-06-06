@@ -883,7 +883,7 @@ async function v() {
 
       if (isFiltering) {
         let allRecipes = [];
-        const numPagesToFetch = 4;
+        const numPagesToFetch = 1;
         const limitKey = responseKey === "root" ? "page_size" : "limit";
         
         for (let p = 1; p <= numPagesToFetch; p++) {
