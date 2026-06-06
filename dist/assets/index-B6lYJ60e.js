@@ -54,14 +54,29 @@ const $ = {
   y = {
     get baseUrl() {
       let e = localStorage.getItem("recipedb_baseUrl");
-      return (
-        (!e || e.includes("cosylab.iiitd.edu.in")) &&
-          ((e = "https://api.foodoscope.com"),
-          localStorage.setItem("recipedb_baseUrl", e)),
-        e
-      );
+      if (!e || e.includes("cosylab.iiitd.edu.in")) {
+        e = "https://api.foodoscope.com";
+        localStorage.setItem("recipedb_baseUrl", e);
+      } else {
+        try {
+          const u = new URL(e);
+          if (e !== u.origin) {
+            e = u.origin;
+            localStorage.setItem("recipedb_baseUrl", e);
+          }
+        } catch (_) {}
+      }
+      return e;
     },
     set baseUrl(e) {
+      if (e) {
+        try {
+          const u = new URL(e);
+          e = u.origin;
+        } catch (_) {
+          e = e.trim();
+        }
+      }
       localStorage.setItem("recipedb_baseUrl", e);
     },
     get apiKey() {

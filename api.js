@@ -13,10 +13,26 @@ export const configStore = {
     if (!url || url.includes('cosylab.iiitd.edu.in')) {
       url = 'https://api.foodoscope.com';
       localStorage.setItem('recipedb_baseUrl', url);
+    } else {
+      try {
+        const urlObj = new URL(url);
+        if (url !== urlObj.origin) {
+          url = urlObj.origin;
+          localStorage.setItem('recipedb_baseUrl', url);
+        }
+      } catch (e) {}
     }
     return url;
   },
   set baseUrl(val) {
+    if (val) {
+      try {
+        const urlObj = new URL(val);
+        val = urlObj.origin;
+      } catch (e) {
+        val = val.trim();
+      }
+    }
     localStorage.setItem('recipedb_baseUrl', val);
   },
   get apiKey() {

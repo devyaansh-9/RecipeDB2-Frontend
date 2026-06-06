@@ -24,9 +24,18 @@
   </script>
   <script>
     (function() {
-      const baseUrl = localStorage.getItem('recipedb_baseUrl');
+      let baseUrl = localStorage.getItem('recipedb_baseUrl');
       if (!baseUrl || baseUrl.includes('cosylab.iiitd.edu.in')) {
-        localStorage.setItem('recipedb_baseUrl', 'https://api.foodoscope.com');
+        baseUrl = 'https://api.foodoscope.com';
+        localStorage.setItem('recipedb_baseUrl', baseUrl);
+      } else {
+        try {
+          const urlObj = new URL(baseUrl);
+          if (baseUrl !== urlObj.origin) {
+            baseUrl = urlObj.origin;
+            localStorage.setItem('recipedb_baseUrl', baseUrl);
+          }
+        } catch (e) {}
       }
       const storedKey = localStorage.getItem('recipedb_apiKey');
       const blacklistedKeys = [
