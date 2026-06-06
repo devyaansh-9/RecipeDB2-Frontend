@@ -97,7 +97,7 @@
       --text-1:       #F5F1E1;
       --text-2:       #BEB8A1;
       --text-3:       #7b7861;
-      --nav-h:        72px;
+      --nav-h:        110px;
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -160,19 +160,23 @@
       border-color: var(--border);
     }
     .nav-logo {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; align-items: center; gap: 16px;
       text-decoration: none;
     }
-    .nav-logo-icon {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--amber), var(--saffron));
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 14px; color: #000;
-      letter-spacing: -0.5px;
+    .nav-logo-img {
+      width: 90px; height: 90px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid rgba(245,158,11,0.25);
+      box-shadow: 0 0 15px rgba(245,158,11,0.2);
+      transition: transform 0.25s var(--ease-out-expo);
+    }
+    .nav-logo:hover .nav-logo-img {
+      transform: scale(1.08);
+      border-color: var(--amber);
       box-shadow: 0 0 20px rgba(245,158,11,0.4);
     }
-    .nav-logo-text { font-weight: 700; font-size: 16px; color: var(--text-1); letter-spacing: -0.3px; }
+    .nav-logo-text { font-weight: 800; font-size: 32px; color: var(--text-1); letter-spacing: -0.6px; }
     .nav-logo-text span { color: var(--amber); }
     .nav-links { display: flex; gap: 36px; }
     .nav-links a {
@@ -1071,7 +1075,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="#">
-    <div class="nav-logo-icon">R2</div>
+    <img src="assets/logo.jpg" alt="RecipeDB2 Logo" class="nav-logo-img">
     <span class="nav-logo-text">Recipe<span>DB2</span></span>
   </a>
   <div class="nav-links">
@@ -1481,7 +1485,7 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <a class="nav-logo" href="#" style="text-decoration:none">
-        <div class="nav-logo-icon">R2</div>
+        <img src="assets/logo.jpg" alt="RecipeDB2 Logo" class="nav-logo-img">
         <span class="nav-logo-text">Recipe<span>DB2</span></span>
       </a>
       <p>A structured compilation of recipes, ingredients, and nutritional profiles by the Complex Systems Lab (CoSyLab) at IIIT Delhi.</p>
