@@ -76,16 +76,20 @@ export async function executeApiRequest({ path, method = 'GET', queryParams = {}
   });
 
   const url = urlObj.toString();
-  const headers = {
-    'Content-Type': 'application/json'
-  };
+  const headers = {};
+  if (method !== 'GET') {
+    headers['Content-Type'] = 'application/json';
+  }
   
   if (configStore.apiKey) {
     headers['Authorization'] = `Bearer ${configStore.apiKey}`;
   }
 
   // Generate equivalent curl command
-  let curlCmd = `curl -X ${method} "${url}" \\\n  -H "Content-Type: ${headers['Content-Type']}"`;
+  let curlCmd = `curl -X ${method} "${url}"`;
+  if (headers['Content-Type']) {
+    curlCmd += ` \\\n  -H "Content-Type: ${headers['Content-Type']}"`;
+  }
   if (configStore.apiKey) {
     curlCmd += ` \\\n  -H "Authorization: Bearer ${configStore.apiKey.substring(0, 12)}..."`;
   }

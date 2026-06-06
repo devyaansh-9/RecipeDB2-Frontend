@@ -127,10 +127,11 @@ async function T({
     h != null && h !== "" && u.searchParams.append(g, h);
   });
   const p = u.toString(),
-    d = { "Content-Type": "application/json" };
+    d = {};
+  a !== "GET" && (d["Content-Type"] = "application/json");
   y.apiKey && (d.Authorization = `Bearer ${y.apiKey}`);
-  let l = `curl -X ${a} "${p}" \\
-  -H "Content-Type: ${d["Content-Type"]}"`;
+  let l = `curl -X ${a} "${p}"`;
+  d["Content-Type"] && (l += ` \\\n  -H "Content-Type: ${d["Content-Type"]}"`);
   y.apiKey &&
     (l += ` \\
   -H "Authorization: Bearer ${y.apiKey.substring(0, 12)}..."`);
