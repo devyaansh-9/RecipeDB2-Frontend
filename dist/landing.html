@@ -165,16 +165,12 @@
     }
     .nav-logo-img {
       width: 90px; height: 90px;
-      border-radius: 18px;
       object-fit: cover;
-      border: 1px solid rgba(245,158,11,0.25);
-      box-shadow: 0 0 15px rgba(245,158,11,0.2);
       transition: transform 0.25s var(--ease-out-expo);
+      mix-blend-mode: screen;
     }
     .nav-logo:hover .nav-logo-img {
       transform: scale(1.08);
-      border-color: var(--amber);
-      box-shadow: 0 0 20px rgba(245,158,11,0.4);
     }
     .nav-logo-text { font-weight: 800; font-size: 32px; color: var(--text-1); letter-spacing: -0.6px; }
     .nav-logo-text span { color: var(--amber); }
