@@ -21,68 +21,180 @@
       flex-direction: column; gap: 24px;
       transition: opacity 0.6s ease, visibility 0.6s;
     }
-    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-logo-container {
-      position: relative;
-      width: 200px; height: 200px;
+    #loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #050505;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 24px;
-      border-radius: 50%;
-      box-shadow: 0 0 40px rgba(245,158,11,0.1);
+      flex-direction: column;
+      transition: opacity 0.6s ease, visibility 0.6s;
+      overflow: hidden;
+      perspective: 1000px;
     }
-    .premium-spinner {
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    
+    .hud-grid {
+      position: absolute;
+      width: 200vw; height: 200vh;
+      top: -50vh; left: -50vw;
+      background-image: 
+        linear-gradient(rgba(245, 158, 11, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: rotateX(70deg) translateY(-200px) translateZ(-400px);
+      animation: grid-move 4s linear infinite;
+      z-index: 0;
+      opacity: 0.6;
+    }
+    @keyframes grid-move {
+      0% { transform: rotateX(70deg) translateY(0) translateZ(-400px); }
+      100% { transform: rotateX(70deg) translateY(50px) translateZ(-400px); }
+    }
+
+    .cyber-core-container {
+      position: relative;
+      width: 250px; height: 250px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 50px;
+      z-index: 10;
+    }
+    .shockwave {
+      position: absolute;
+      width: 100%; height: 100%;
+      border: 2px solid rgba(245,158,11,0.8);
+      border-radius: 50%;
+      animation: ping-boom 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+    .shockwave.delay { animation-delay: 1.25s; }
+    
+    @keyframes ping-boom {
+      0% { transform: scale(0.4); opacity: 1; box-shadow: 0 0 20px #f59e0b, inset 0 0 20px #f59e0b; }
+      100% { transform: scale(1.8); opacity: 0; box-shadow: 0 0 50px transparent; }
+    }
+
+    .cyber-ring {
+      position: absolute;
+      border-radius: 50%;
+    }
+    .outer-ring {
+      width: 220px; height: 220px;
+      border: 4px dashed rgba(245, 158, 11, 0.5);
+      border-top: 4px solid #f59e0b;
+      border-bottom: 4px solid #f59e0b;
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.2), inset 0 0 20px rgba(245, 158, 11, 0.2);
+      animation: cyber-spin 6s linear infinite;
+    }
+    .inner-ring {
+      width: 170px; height: 170px;
+      border: 6px solid transparent;
+      border-top-color: #f59e0b;
+      border-right-color: rgba(245,158,11,0.6);
+      border-bottom-color: rgba(245,158,11,0.2);
+      animation: cyber-spin-reverse 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      filter: drop-shadow(0 0 15px #f59e0b);
+    }
+
+    @keyframes cyber-spin {
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes cyber-spin-reverse {
+      100% { transform: rotate(-360deg); }
+    }
+
+    .cyber-logo {
+      width: 120px; height: 120px;
+      object-fit: contain;
+      z-index: 20;
+      animation: float-hologram 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 25px rgba(245,158,11,1));
+    }
+
+    @keyframes float-hologram {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 25px rgba(245,158,11,1)) hue-rotate(0deg); }
+      50% { transform: translateY(-15px); filter: drop-shadow(0 0 40px rgba(245,158,11,1)) hue-rotate(20deg); }
+      90% { opacity: 1; transform: translateY(0) skewX(0); }
+      92% { opacity: 0.8; transform: translateY(0) skewX(10deg); filter: drop-shadow(0 0 50px rgba(245,158,11,1)) invert(0.2); }
+      94% { opacity: 1; transform: translateY(0) skewX(0); }
+    }
+
+    .cyber-text {
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 800;
+      letter-spacing: 0.4em;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      z-index: 10;
+      text-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 0 0 20px rgba(245, 158, 11, 0.4);
+      animation: text-flicker 4s infinite;
+    }
+    .cyber-text::before, .cyber-text::after {
+      content: attr(data-text);
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, transparent 0%, transparent 60%, #f59e0b 100%);
-      animation: spin-orbit 1.5s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
     }
-    .premium-spinner-inner {
-      position: absolute;
-      inset: 2px;
-      background: #0f1710;
-      border-radius: 50%;
-      z-index: 1;
+    .cyber-text::before {
+      color: #0ff;
+      z-index: -1;
+      animation: glitch-anim 2s infinite linear alternate-reverse;
     }
-    .loader-logo {
-      width: 120px; height: 120px;
-      object-fit: contain;
+    .cyber-text::after {
+      color: #f0f;
+      z-index: -2;
+      animation: glitch-anim2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes text-flicker {
+      0%, 10%, 12%, 100% { opacity: 1; }
+      11% { opacity: 0.3; }
+    }
+    @keyframes glitch-anim {
+      0% { clip-path: inset(20% 0 80% 0); transform: translateX(-2px); }
+      20% { clip-path: inset(60% 0 10% 0); transform: translateX(2px); }
+      40% { clip-path: inset(40% 0 50% 0); transform: translateX(-2px); }
+      60% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
+      80% { clip-path: inset(10% 0 70% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip-path: inset(10% 0 60% 0); transform: translateX(2px); }
+      20% { clip-path: inset(30% 0 20% 0); transform: translateX(-2px); }
+      40% { clip-path: inset(70% 0 10% 0); transform: translateX(2px); }
+      60% { clip-path: inset(20% 0 50% 0); transform: translateX(-2px); }
+      80% { clip-path: inset(50% 0 30% 0); transform: translateX(2px); }
+      100% { clip-path: inset(5% 0 80% 0); transform: translateX(-2px); }
+    }
+
+    .cyber-progress {
+      width: 300px; height: 4px;
+      background: rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
       z-index: 10;
-      animation: float-logo 2.5s ease-in-out infinite;
-      filter: drop-shadow(0 0 10px rgba(245,158,11,0.6));
+      box-shadow: 0 0 10px rgba(245,158,11,0.2);
     }
-
-    @keyframes float-logo {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-5px) scale(1.03); filter: drop-shadow(0 0 20px rgba(245,158,11,0.9)); }
+    .cyber-progress-bar {
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      width: 0%;
+      background: #f59e0b;
+      box-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b;
+      transition: width 0.1s linear;
     }
-    @keyframes spin-orbit {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .cyber-progress-glow {
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      animation: progress-sweep 1.5s infinite;
     }
-
-    .loader-text.shimmer-text {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 0.25em; text-transform: uppercase;
-      background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, #fff 50%, rgba(255,255,255,0.2) 100%);
-      background-size: 200% auto;
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation: shimmer 2s linear infinite;
-      margin-bottom: 20px;
+    @keyframes progress-sweep {
+      100% { left: 200%; }
     }
-    @keyframes shimmer {
-      to { background-position: 200% center; }
-    }
-    .loader-bar {
-      width: 180px; height: 2px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px; overflow: hidden;
-    }
-    .loader-bar-fill {
       height: 100%; width: 0;
       background: linear-gradient(90deg, #f59e0b, #d97706);
       border-radius: 2px;
@@ -1078,14 +1190,22 @@
 <body>
 
 <!-- Loading Screen -->
-<div id="loader">
-  <div class="loader-logo-container">
-    <div class="premium-spinner"></div>
-    <div class="premium-spinner-inner"></div>
-    <img src="assets/logo.png?v=3" class="loader-logo" alt="RecipeDB Logo">
+<div id="loader" class="cyber-loader">
+  <div class="hud-grid"></div>
+  <div class="cyber-core-container">
+    <div class="shockwave"></div>
+    <div class="shockwave delay"></div>
+    <div class="cyber-ring outer-ring"></div>
+    <div class="cyber-ring inner-ring"></div>
+    <img src="assets/logo.png?v=3" class="cyber-logo" alt="RecipeDB Logo">
   </div>
-  <div class="loader-text shimmer-text">Loading Culinary Intelligence</div>
-  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  <div class="cyber-text" data-text="LOADING CULINARY INTELLIGENCE">
+    LOADING CULINARY INTELLIGENCE
+  </div>
+  <div class="cyber-progress">
+    <div class="loader-bar-fill cyber-progress-bar"></div>
+    <div class="cyber-progress-glow"></div>
+  </div>
 </div>
 
 <!-- Scroll progress -->
