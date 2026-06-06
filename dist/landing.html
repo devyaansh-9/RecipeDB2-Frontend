@@ -116,6 +116,49 @@
       94% { opacity: 1; transform: translateY(0) skewX(0); }
     }
 
+    .cyber-title {
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      color: transparent;
+      -webkit-text-stroke: 2px #f59e0b;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
+      z-index: 10;
+      animation: title-pulse 3s infinite;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+    
+    .cyber-title::before, .cyber-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      -webkit-text-stroke: 0px transparent;
+    }
+    .cyber-title::before {
+      color: rgba(245, 158, 11, 0.8);
+      z-index: -1;
+      transform: translateX(4px) translateY(-2px);
+      filter: blur(4px);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+    .cyber-title::after {
+      color: rgba(0, 255, 255, 0.6);
+      z-index: -2;
+      transform: translateX(-4px) translateY(2px);
+      filter: blur(2px);
+      animation: glitch-anim2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes title-pulse {
+      0%, 100% { letter-spacing: 0.1em; filter: brightness(1); }
+      50% { letter-spacing: 0.25em; filter: brightness(1.5) drop-shadow(0 0 30px #f59e0b); }
+    }
+
     .cyber-text {
       position: relative;
       font-family: 'Inter', sans-serif;
@@ -1199,6 +1242,7 @@
     <div class="cyber-ring inner-ring"></div>
     <img src="assets/logo.png?v=3" class="cyber-logo" alt="RecipeDB Logo">
   </div>
+  <h1 class="cyber-title" data-text="RECIPEDB 2.0">RECIPEDB 2.0</h1>
   <div class="cyber-text" data-text="LOADING CULINARY INTELLIGENCE">
     LOADING CULINARY INTELLIGENCE
   </div>
