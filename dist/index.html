@@ -543,18 +543,53 @@
             <div class="search-tab-pane active" id="tab-cuisine">
               <div class="search-form-row">
                 <div class="param-input-group">
-                  <label class="param-label" for="search-region">Region</label>
-                  <input type="text" class="param-field" id="search-region" placeholder="Enter any region (e.g., Egyptian, North Indian)">
+                  <label class="param-label" for="search-region">Region <span style="color:var(--text-muted);font-size:0.7rem;font-weight:400;">(broad cuisine group)</span></label>
+                  <select class="param-field" id="search-region" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Region --</option>
+                    <option value="Canadian">Canadian</option>
+                    <option value="Caribbean">Caribbean</option>
+                    <option value="Eastern European">Eastern European</option>
+                    <option value="French">French</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Indian Subcontinent">Indian Subcontinent</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Middle Eastern">Middle Eastern</option>
+                    <option value="South American">South American</option>
+                    <option value="Thai">Thai</option>
+                    <option value="US">US</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
-                  <label class="param-label" for="search-country">Country</label>
-                  <input type="text" class="param-field" id="search-country" placeholder="Enter any country (e.g., Egypt, India, Canada)">
+                  <label class="param-label" for="search-country">Country / Sub-region <span style="color:var(--text-muted);font-size:0.7rem;font-weight:400;">(specific country style)</span></label>
+                  <select class="param-field" id="search-country" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Country --</option>
+                    <option value="Argentine">Argentine 🇦🇷</option>
+                    <option value="Bangladeshi">Bangladeshi 🇧🇩</option>
+                    <option value="Canadian">Canadian 🇨🇦</option>
+                    <option value="Egyptian">Egyptian 🇪🇬</option>
+                    <option value="French">French 🇫🇷</option>
+                    <option value="Greek">Greek 🇬🇷</option>
+                    <option value="Italian">Italian 🇮🇹</option>
+                    <option value="Japanese">Japanese 🇯🇵</option>
+                    <option value="Korean">Korean 🇰🇷</option>
+                    <option value="Mexican">Mexican 🇲🇽</option>
+                    <option value="Rest Caribbean">Caribbean 🏝️</option>
+                    <option value="Russian">Russian 🇷🇺</option>
+                    <option value="Thai">Thai 🇹🇭</option>
+                    <option value="US">American (US) 🇺🇸</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="search-title">Recipe Title</label>
                   <input type="text" class="param-field" id="search-title" placeholder="Enter any recipe title...">
                 </div>
               </div>
+              <p style="margin:0.75rem 0 0 0;font-size:0.75rem;color:var(--text-muted);text-align:center;">
+                💡 <strong>Tip:</strong> Use <em>Region</em> to browse a whole cuisine (e.g. Indian Subcontinent = all 6,463 Indian recipes). Use <em>Country</em> to narrow to a specific country style within that region.
+              </p>
             </div>
 
             <!-- Pane 2: Ingredient Filters -->
