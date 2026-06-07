@@ -68,7 +68,13 @@ const server = http.createServer((req, res) => {
             res.writeHead(500);
             res.end('Error loading index.html');
           } else {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.writeHead(200, { 
+              'Content-Type': 'text/html',
+              'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+              'Surrogate-Control': 'no-store'
+            });
             res.end(content2);
           }
         });
@@ -77,7 +83,15 @@ const server = http.createServer((req, res) => {
         res.end('Server Error: ' + err.code);
       }
     } else {
-      res.writeHead(200, { 'Content-Type': contentType });
+      const headers = { 'Content-Type': contentType };
+      // Force no-cache for HTML files
+      if (contentType === 'text/html') {
+        headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
+        headers['Pragma'] = 'no-cache';
+        headers['Expires'] = '0';
+        headers['Surrogate-Control'] = 'no-store';
+      }
+      res.writeHead(200, headers);
       res.end(content);
     }
   });

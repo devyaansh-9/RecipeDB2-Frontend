@@ -199,19 +199,38 @@
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    @keyframes panBackground {
+      0% { background-position: 0px 0px; }
+      100% { background-position: -2000px -2000px; }
+    }
+
     /* ─── Body Base ─── */
+    html {
+      background-color: #0C0A09 !important;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0C0A09 !important;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(229, 169, 59, 0.07) 0px, transparent 50%),
-        radial-gradient(at 50% 0%, rgba(249, 115, 22, 0.04) 0px, transparent 60%),
-        radial-gradient(at 100% 0%, rgba(217, 119, 6, 0.04) 0px, transparent 50%),
-        linear-gradient(to bottom, #0C0A09, #050404) !important;
+      background-color: transparent !important;
       background-attachment: fixed !important;
       cursor: auto !important;
       color: var(--text-primary);
       position: relative;
+    }
+
+    body::after {
+      content: "" !important;
+      position: fixed !important;
+      top: 0 !important; 
+      left: 0 !important; 
+      width: 100vw !important; 
+      height: 100vh !important;
+      background-image: url('assets/portal_bg.png') !important;
+      background-repeat: repeat !important;
+      animation: panBackground 180s linear infinite !important;
+      filter: grayscale(1) brightness(0.3) contrast(1.5) !important;
+      z-index: -3 !important;
+      pointer-events: none !important;
     }
 
     body::before {
@@ -1206,6 +1225,7 @@
   </style>
 </head>
 <body>
+  <canvas id="particle-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.85;"></canvas>
 
   <!-- Custom Cursor -->
   <div id="cursor"></div>
@@ -1234,7 +1254,11 @@
     <nav class="navbar">
       <div class="brand" id="brand-home" style="cursor: pointer;">
         <img src="assets/logo.png?v=3" alt="RecipeDB2 Logo" class="brand-logo-img">
-        <span class="brand-title">Recipe<span style="color: #8FBC8F !important;">DB2</span> Portal</span>
+        <div style="display: flex; align-items: center; gap: 0;">
+          <span class="brand-title" style="padding-right: 0 !important; margin-right: 0 !important;">Recipe</span>
+          <span style="font-family: var(--font-sans, 'Inter', sans-serif); font-size: 32px; font-weight: 800; letter-spacing: -0.6px; color: #8FBC8F; padding: 0; margin: 0; line-height: 1;">DB2</span>
+          <span class="brand-title" style="margin-left: 8px !important;">Portal</span>
+        </div>
       </div>
       
       <!-- Primary Tab Toggles -->
@@ -1374,13 +1398,13 @@
           
           <!-- Left Panel: About RecipeDB2 -->
           <div class="glass-panel about-panel">
-            <h2 class="about-title">About RecipeDB2</h2>
+            <h2 class="about-title">About Recipe<span style="color: #8FBC8F;">DB2</span></h2>
             <div class="about-divider"></div>
             <p class="about-text">
               Cooking is the act of turning nature into a culture that has enabled the advent of the omnivorous human diet. The cultural wisdom of processing raw ingredients into delicious dishes is embodied in their cuisines. Recipes, thus, are the cultural capsules that encode elaborate cooking protocols for evoking sensory satiation as well as providing nourishment. As we stand on the verge of an epidemic of diet-linked disorders, it is important to investigate the culinary correlates of dietary elements to probe their association with sensory responses and consequences for nutrition and health.
             </p>
             <p class="about-text" style="margin-top: 0.75rem;">
-              <strong>RecipeDB2</strong> is an extensive, structured compilation of recipes and their nutritional profiles. This repertoire comprises <strong>118,083 recipes</strong> with <strong>19,019 ingredients</strong> from <strong>6 continents, 26 regions, 75 countries, and 34 states</strong>, further linked to nutritional profiles (USDA). This resource aims to facilitate scientific explorations of the culinary space (recipe, ingredients, cooking processes, dietary styles, etc.), seeking divergent applications.
+              <strong>Recipe<span style="color: #8FBC8F;">DB2</span></strong> is an extensive, structured compilation of recipes and their nutritional profiles. This repertoire comprises <strong>118,083 recipes</strong> with <strong>19,019 ingredients</strong> from <strong>6 continents, 26 regions, 75 countries, and 34 states</strong>, further linked to nutritional profiles (USDA). This resource aims to facilitate scientific explorations of the culinary space (recipe, ingredients, cooking processes, dietary styles, etc.), seeking divergent applications.
             </p>
 
             <!-- Database Stats Banner -->
@@ -1702,7 +1726,7 @@
           
           <!-- Column 1: Analytics Center (7 columns span) -->
           <div class="glass-panel">
-            <h3 class="panel-title">RecipeDB2 Statistics</h3>
+            <h3 class="panel-title">Recipe<span style="color: #8FBC8F;">DB2</span> Statistics</h3>
             
             <div class="exclusion-section">
               <h4 class="exclusion-subtitle">Average Calories by Continent</h4>
@@ -2340,7 +2364,7 @@
           <span style="font-weight: 800; font-size: 0.95rem; color: var(--text-primary);">IIIT Delhi CoSyLab</span>
         </div>
         <p style="margin-top: 0.75rem; font-size: 0.75rem; font-weight: 500;">
-          Copyright &copy; 2026 All rights reserved. RecipeDB2 Portal.
+          Copyright &copy; 2026 All rights reserved. Recipe<span style="color: #8FBC8F;">DB2</span> Portal.
         </p>
         <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.4;">
           This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. All material on this website is a product of research and is provided for your information only and may not be construed as medical advice or instruction. Instead, readers should consult appropriate health professionals.
@@ -3485,6 +3509,85 @@
     })();
   </script>
 
+
+  
+
+  
+
+  <script>
+    const canvas = document.getElementById('particle-bg');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let width, height, particles;
+
+      const shapes = ['🥦', '🌽', '🥬', '🍄', '🥑', '🍆', '🍋', '🍇', '🥕', '🍏', '🌶️', '🧀'];
+      const colors = ['#A78BFA', '#F472B6', '#34D399', '#FBBF24', '#60A5FA', '#F87171'];
+
+      function initParticles() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        
+        particles = [];
+        const numParticles = Math.floor(width * height / 15000); // Dense field like confetti
+        
+        for (let i = 0; i < numParticles; i++) {
+          const isEmoji = Math.random() > 0.4;
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: Math.random() * 0.4 + 0.2, // Drift right
+            vy: Math.random() * 0.4 + 0.2, // Drift down
+            rotation: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.02,
+            size: Math.random() * 12 + 10, // Small veggies (10px to 22px)
+            isEmoji: isEmoji,
+            emoji: isEmoji ? shapes[Math.floor(Math.random() * shapes.length)] : null,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.5 + 0.3
+          });
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+        
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rotation += p.rotSpeed;
+          
+          if (p.x > width + 20) { p.x = -20; p.y = Math.random() * height; }
+          if (p.y > height + 20) { p.y = -20; p.x = Math.random() * width; }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.globalAlpha = p.alpha;
+          
+          if (p.isEmoji) {
+            ctx.font = `${p.size}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(p.emoji, 0, 0);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 3, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+          }
+          
+          ctx.restore();
+        }
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      window.addEventListener('resize', initParticles);
+      initParticles();
+      animateParticles();
+    }
+  </script>
 </body>
 
 </html>
