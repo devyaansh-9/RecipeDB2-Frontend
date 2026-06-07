@@ -696,7 +696,8 @@ function checkActiveFilters() {
   }
   if (i.activeSearchTab === "tab-category") {
     return (
-      t.searchCatNotUsed.value.trim() !== ""
+      t.searchCatNotUsed.value.trim() !== "" ||
+      t.searchCatUsed.value.trim() !== ""
     );
   }
   if (i.activeSearchTab === "tab-nutrition") {
@@ -797,7 +798,7 @@ async function v() {
       
       let activeCuisineQuery = "";
       const fullCountryToRegionMap = {
-        "Moroccan": "Northern Africa", "Egyptian": "Middle Eastern", "Nigerian": "Rest Africa", "Rest Middle Eastern": "Middle Eastern", "Chinese": "Chinese and Mongolian", "Thai": "Thai", "Indonesian": "Southeast Asian", "Bangladeshi": "Indian Subcontinent", "Vietnamese": "Southeast Asian", "Lebanese": "Middle Eastern", "Israeli": "Middle Eastern", "Filipino": "Southeast Asian", "Indian": "Indian Subcontinent", "Korean": "Korean", "Malaysian": "Southeast Asian", "Turkish": "Middle Eastern", "Japanese": "Japanese", "Australian": "Australian", "Pakistani": "Indian Subcontinent", "Mexican": "Mexican", "Rest Caribbean": "Caribbean", "Puerto Rican": "Caribbean", "Jamaican": "Caribbean", "Cuban": "Caribbean", "Argentine": "South American", "Brazilian": "South American", "Peruvian": "South American", "Chilean": "South American", "Russian": "Eastern European", "Colombian": "South American", "Danish": "Scandinavian", "English": "UK", "Hungarian": "Eastern European", "Swedish": "Scandinavian", "Scottish": "UK", "UK": "UK", "Belgian": "Belgian", "Welsh": "UK", "Norwegian": "Scandinavian", "Austrian": "Deutschland", "Greek": "Greek", "French": "French", "Swiss": "Deutschland", "Portuguese": "Spanish and Portuguese", "Italian": "Italian", "Polish": "Eastern European", "Dutch": "Belgian", "Irish": "Irish", "German": "Deutschland", "Rest Eastern European": "Eastern European", "Spanish": "Spanish and Portuguese", "Finnish": "Scandinavian", "Czech": "Eastern European", "US": "US", "Canadian": "Canadian", "Somalian": "Rest Africa", "Namibian": "Rest Africa", "Angolan": "Rest Africa", "Libyan": "Northern Africa", "Sudanese": "Rest Africa", "Ethiopian": "Rest Africa", "Laotian": "Southeast Asian", "Nepalese": "Indian Subcontinent", "Cambodian": "Southeast Asian", "Palestinian": "Middle Eastern", "Saudi Arabian": "Middle Eastern", "Mongolian": "Chinese and Mongolian", "Iraqi": "Middle Eastern", "New Zealander": "Australian", "Honduran": "Central American", "Costa Rican": "Central American", "Guatemalan": "Central American", "Ecuadorean": "South American", "Venezuelan": "South American", "Icelandic": "Scandinavian"
+        "Moroccan": "Northern Africa", "Egyptian": "Middle Eastern", "Nigerian": "Rest Africa", "Rest Middle Eastern": "Middle Eastern", "Chinese": "Chinese and Mongolian", "Thai": "Thai", "Indonesian": "Southeast Asian", "Bangladeshi": "Indian Subcontinent", "Vietnamese": "Southeast Asian", "Lebanese": "Middle Eastern", "Israeli": "Middle Eastern", "Filipino": "Southeast Asian", "Indian": "Indian Subcontinent", "Korean": "Korean", "Malaysian": "Southeast Asian", "Turkish": "Middle Eastern", "Japanese": "Japanese", "Australian": "Australian", "Pakistani": "Indian Subcontinent", "Mexican": "Mexican", "Rest Caribbean": "Caribbean", "Puerto Rican": "Caribbean", "Jamaican": "Caribbean", "Cuban": "Caribbean", "Argentine": "South American", "Brazilian": "South American", "Peruvian": "South American", "Chilean": "South American", "Russian": "Eastern European", "Colombian": "South American", "Danish": "Scandinavian", "English": "UK", "Hungarian": "Eastern European", "Swedish": "Scandinavian", "Scottish": "UK", "UK": "UK", "Belgian": "Belgian", "Welsh": "UK", "Norwegian": "Scandinavian", "Austrian": "Deutschland", "Greek": "Greek", "French": "French", "Swiss": "Deutschland", "Portuguese": "Spanish and Portuguese", "Italian": "Italian", "Polish": "Eastern European", "Dutch": "Belgian", "Irish": "Irish", "German": "Deutschland", "Rest Eastern European": "Eastern European", "Spanish": "Spanish and Portuguese", "Finnish": "Scandinavian", "Czech": "Eastern European", "US": "US", "Canadian": "Canadian", "Somalian": "Rest Africa", "Namibian": "Rest Africa", "Angolan": "Rest Africa", "Libyan": "Northern Africa", "Sudanese": "Rest Africa", "Ethiopian": "Rest Africa", "Laotian": "Middle Eastern", "Nepalese": "Indian Subcontinent", "Cambodian": "Southeast Asian", "Palestinian": "Middle Eastern", "Saudi Arabian": "Middle Eastern", "Mongolian": "Chinese and Mongolian", "Iraqi": "Middle Eastern", "New Zealander": "Australian", "Honduran": "Central American", "Costa Rican": "Central American", "Guatemalan": "Central American", "Ecuadorean": "South American", "Venezuelan": "South American", "Icelandic": "Scandinavian"
       };
       const continentToDefaultRegionMap = {
         "Asian": "Indian Subcontinent",
@@ -840,7 +841,7 @@ async function v() {
       } else if (i.searchType === "cuisine" && (i.searchValType === "region" || i.searchValType === "country")) {
         let cuisineVal = i.searchVal || "US";
         const fullCountryToRegionMap = {
-          "Moroccan": "Northern Africa", "Egyptian": "Middle Eastern", "Nigerian": "Rest Africa", "Rest Middle Eastern": "Middle Eastern", "Chinese": "Chinese and Mongolian", "Thai": "Thai", "Indonesian": "Southeast Asian", "Bangladeshi": "Indian Subcontinent", "Vietnamese": "Southeast Asian", "Lebanese": "Middle Eastern", "Israeli": "Middle Eastern", "Filipino": "Southeast Asian", "Indian": "Indian Subcontinent", "Korean": "Korean", "Malaysian": "Southeast Asian", "Turkish": "Middle Eastern", "Japanese": "Japanese", "Australian": "Australian", "Pakistani": "Indian Subcontinent", "Mexican": "Mexican", "Rest Caribbean": "Caribbean", "Puerto Rican": "Caribbean", "Jamaican": "Caribbean", "Cuban": "Caribbean", "Argentine": "South American", "Brazilian": "South American", "Peruvian": "South American", "Chilean": "South American", "Russian": "Eastern European", "Colombian": "South American", "Danish": "Scandinavian", "English": "UK", "Hungarian": "Eastern European", "Swedish": "Scandinavian", "Scottish": "UK", "UK": "UK", "Belgian": "Belgian", "Welsh": "UK", "Norwegian": "Scandinavian", "Austrian": "Deutschland", "Greek": "Greek", "French": "French", "Swiss": "Deutschland", "Portuguese": "Spanish and Portuguese", "Italian": "Italian", "Polish": "Eastern European", "Dutch": "Belgian", "Irish": "Irish", "German": "Deutschland", "Rest Eastern European": "Eastern European", "Spanish": "Spanish and Portuguese", "Finnish": "Scandinavian", "Czech": "Eastern European", "US": "US", "Canadian": "Canadian", "Somalian": "Rest Africa", "Namibian": "Rest Africa", "Angolan": "Rest Africa", "Libyan": "Northern Africa", "Sudanese": "Rest Africa", "Ethiopian": "Rest Africa", "Laotian": "Southeast Asian", "Nepalese": "Indian Subcontinent", "Cambodian": "Southeast Asian", "Palestinian": "Middle Eastern", "Saudi Arabian": "Middle Eastern", "Mongolian": "Chinese and Mongolian", "Iraqi": "Middle Eastern", "New Zealander": "Australian", "Honduran": "Central American", "Costa Rican": "Central American", "Guatemalan": "Central American", "Ecuadorean": "South American", "Venezuelan": "South American", "Icelandic": "Scandinavian"
+          "Moroccan": "Northern Africa", "Egyptian": "Middle Eastern", "Nigerian": "Rest Africa", "Rest Middle Eastern": "Middle Eastern", "Chinese": "Chinese and Mongolian", "Thai": "Thai", "Indonesian": "Southeast Asian", "Bangladeshi": "Indian Subcontinent", "Vietnamese": "Southeast Asian", "Lebanese": "Middle Eastern", "Israeli": "Middle Eastern", "Filipino": "Southeast Asian", "Indian": "Indian Subcontinent", "Korean": "Korean", "Malaysian": "Southeast Asian", "Turkish": "Middle Eastern", "Japanese": "Japanese", "Australian": "Australian", "Pakistani": "Indian Subcontinent", "Mexican": "Mexican", "Rest Caribbean": "Caribbean", "Puerto Rican": "Caribbean", "Jamaican": "Caribbean", "Cuban": "Caribbean", "Argentine": "South American", "Brazilian": "South American", "Peruvian": "South American", "Chilean": "South American", "Russian": "Eastern European", "Colombian": "South American", "Danish": "Scandinavian", "English": "UK", "Hungarian": "Eastern European", "Swedish": "Scandinavian", "Scottish": "UK", "UK": "UK", "Belgian": "Belgian", "Welsh": "UK", "Norwegian": "Scandinavian", "Austrian": "Deutschland", "Greek": "Greek", "French": "French", "Swiss": "Deutschland", "Portuguese": "Spanish and Portuguese", "Italian": "Italian", "Polish": "Eastern European", "Dutch": "Belgian", "Irish": "Irish", "German": "Deutschland", "Rest Eastern European": "Eastern European", "Spanish": "Spanish and Portuguese", "Finnish": "Scandinavian", "Czech": "Eastern European", "US": "US", "Canadian": "Canadian", "Somalian": "Rest Africa", "Namibian": "Rest Africa", "Angolan": "Rest Africa", "Libyan": "Northern Africa", "Sudanese": "Rest Africa", "Ethiopian": "Rest Africa", "Laotian": "Middle Eastern", "Nepalese": "Indian Subcontinent", "Cambodian": "Southeast Asian", "Palestinian": "Middle Eastern", "Saudi Arabian": "Middle Eastern", "Mongolian": "Chinese and Mongolian", "Iraqi": "Middle Eastern", "New Zealander": "Australian", "Honduran": "Central American", "Costa Rican": "Central American", "Guatemalan": "Central American", "Ecuadorean": "South American", "Venezuelan": "South American", "Icelandic": "Scandinavian"
         };
         const continentToDefaultRegionMap = {
           "Asian": "Indian Subcontinent",
@@ -866,19 +867,13 @@ async function v() {
         }
         responseKey = "root";
       } else if (i.searchType === "category") {
-        const cat = i.searchVal || "Dairy";
-        path = "/recipe2-api/category";
-        queryParams = {
-          category: cat,
-          page: i.currentPage,
-          page_size: i.itemsPerPage,
-        };
-        responseKey = "payload";
+        path = "/recipe2-api/recipe/recipesinfo";
+        queryParams = { page: i.currentPage, limit: 10 };
       }
 
       if (isFiltering) {
         let allRecipes = [];
-        const numPagesToFetch = 1;
+        const numPagesToFetch = 100;
         const limitKey = responseKey === "root" ? "page_size" : "limit";
         
         for (let p = 1; p <= numPagesToFetch; p++) {
@@ -890,7 +885,7 @@ async function v() {
           if (qParams.category === "") delete qParams.category;
           
           if (p > 1) {
-            await new Promise(resolve => setTimeout(resolve, 300));
+            await new Promise(resolve => setTimeout(resolve, 20));
           }
           const r = await T({ path, queryParams: qParams });
           if (r && r.data) {
@@ -964,11 +959,31 @@ async function v() {
             );
           }
         } else if (i.activeSearchTab === "tab-category") {
+          const usedCat = t.searchCatUsed.value.trim().toLowerCase();
           const exCat = t.searchCatNotUsed.value.trim().toLowerCase();
-          if (exCat)
-            data = data.filter(
-              (item) => !(item.Region || "").toLowerCase().includes(exCat),
-            );
+          if (usedCat) {
+            data = data.filter((item) => {
+              const reg = (item.Region || "").toLowerCase();
+              const title = (item.Recipe_title || "").toLowerCase();
+              const instr = (item.instructions || "").toLowerCase();
+              const isDairy = usedCat === "dairy" || usedCat === "diary";
+              const isLacto = parseFloat(item.lacto_vegetarian) === 1 || parseFloat(item.ovo_lacto_vegetarian) === 1;
+              return reg.includes(usedCat) || 
+                     title.includes(usedCat) ||
+                     instr.includes(usedCat) ||
+                     (parseFloat(item.vegan) === 1 && usedCat === "vegan") || 
+                     (isLacto && usedCat.includes("veg")) ||
+                     (isDairy && isLacto);
+            });
+          }
+          if (exCat) {
+            data = data.filter((item) => {
+              const reg = (item.Region || "").toLowerCase();
+              const title = (item.Recipe_title || "").toLowerCase();
+              const instr = (item.instructions || "").toLowerCase();
+              return !(reg.includes(exCat) || title.includes(exCat) || instr.includes(exCat));
+            });
+          }
         } else if (i.activeSearchTab === "tab-nutrition") {
           const maxCal = parseInt(t.searchNutCal.value),
             maxCarbs = parseInt(t.searchNutCarbs.value),
@@ -1199,7 +1214,8 @@ function J() {
   if (y.engine === "live") {
     if (i.activeSearchTab === "tab-cuisine") {
       const a = t.searchRegion.value.trim(),
-        n = t.searchCountry.value.trim();
+        n = t.searchCountry.value.trim(),
+        title = t.searchTitle.value.trim();
       if (n) {
         i.searchType = "cuisine";
         i.searchValType = "country";
@@ -1213,9 +1229,12 @@ function J() {
         i.searchValType = null;
         i.searchVal = null;
       }
-      t.resultsTableTitle.textContent = `Showing Cuisine matches (Region: "${n || a || "any"}")`;
+      t.resultsTableTitle.textContent = title 
+        ? `Showing Cuisine matches (Region: "${n || a || "any"}", Title: "${title}")`
+        : `Showing Cuisine matches (Region: "${n || a || "any"}")`;
     } else if (i.activeSearchTab === "tab-category") {
       const a = t.searchCatUsed.value.trim();
+      const ex = t.searchCatNotUsed.value.trim();
       if (a) {
         i.searchType = "category";
         i.searchVal = a;
@@ -1223,7 +1242,13 @@ function J() {
         i.searchType = null;
         i.searchVal = null;
       }
-      t.resultsTableTitle.textContent = `Diet categories filtered results: "${a || "any"}"`;
+      t.resultsTableTitle.textContent = `Filtered Category (Used: "${a || "any"}", Excluded: "${ex || "none"}")`;
+    } else if (i.activeSearchTab === "tab-ingredient") {
+      const a = t.searchIngUsed.value.trim().split(",").filter(Boolean),
+        n = t.searchIngNotUsed.value.trim().split(",").filter(Boolean);
+      i.searchType = "ingredient";
+      i.searchVal = t.searchIngUsed.value.trim() || "any";
+      t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length}, Excluded: ${n.length})`;
     } else {
       i.searchType = null;
       i.searchVal = null;
