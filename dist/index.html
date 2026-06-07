@@ -1452,44 +1452,21 @@
             <div class="search-tab-pane active" id="tab-cuisine">
               <div class="search-form-row">
                 <div class="param-input-group">
-                  <label class="param-label" for="search-region">Region <span style="color:var(--text-muted);font-size:0.7rem;font-weight:400;">(broad cuisine group)</span></label>
+                  <label class="param-label" for="search-region">Continent <span style="color:var(--text-muted);font-size:0.7rem;font-weight:400;">(broad geocultural region)</span></label>
                   <select class="param-field" id="search-region" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
-                    <option value="">-- Any Region --</option>
-                    <option value="Canadian">Canadian</option>
-                    <option value="Caribbean">Caribbean</option>
-                    <option value="Eastern European">Eastern European</option>
-                    <option value="French">French</option>
-                    <option value="Greek">Greek</option>
-                    <option value="Indian Subcontinent">Indian Subcontinent</option>
-                    <option value="Italian">Italian</option>
-                    <option value="Japanese">Japanese</option>
-                    <option value="Korean">Korean</option>
-                    <option value="Mexican">Mexican</option>
-                    <option value="Middle Eastern">Middle Eastern</option>
-                    <option value="South American">South American</option>
-                    <option value="Thai">Thai</option>
-                    <option value="US">US</option>
+                    <option value="">-- Any Continent --</option>
+                    <option value="African">African</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Australasian">Australasian</option>
+                    <option value="European">European</option>
+                    <option value="Latin American">Latin American</option>
+                    <option value="North American">North American</option>
                   </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="search-country">Country / Sub-region <span style="color:var(--text-muted);font-size:0.7rem;font-weight:400;">(specific country style)</span></label>
                   <select class="param-field" id="search-country" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
                     <option value="">-- Any Country --</option>
-                    <option value="Argentine">Argentine 🇦🇷</option>
-                    <option value="Bangladeshi">Bangladeshi 🇧🇩</option>
-                    <option value="Indian">Indian 🇮🇳</option>
-                    <option value="Canadian">Canadian 🇨🇦</option>
-                    <option value="Egyptian">Egyptian 🇪🇬</option>
-                    <option value="French">French 🇫🇷</option>
-                    <option value="Greek">Greek 🇬🇷</option>
-                    <option value="Italian">Italian 🇮🇹</option>
-                    <option value="Japanese">Japanese 🇯🇵</option>
-                    <option value="Korean">Korean 🇰🇷</option>
-                    <option value="Mexican">Mexican 🇲🇽</option>
-                    <option value="Rest Caribbean">Caribbean 🏝️</option>
-                    <option value="Russian">Russian 🇷🇺</option>
-                    <option value="Thai">Thai 🇹🇭</option>
-                    <option value="US">American (US) 🇺🇸</option>
                   </select>
                 </div>
                 <div class="param-input-group">
@@ -2685,6 +2662,19 @@
           
           // 4. Set search value and trigger search submit
           if (type === 'country' && countryInput) {
+            const countryToContinentMap = {
+              "Moroccan": "African", "Egyptian": "African", "Nigerian": "African", "Somalian": "African", "Namibian": "African", "Angolan": "African", "Libyan": "African", "Sudanese": "African", "Ethiopian": "African",
+              "Bangladeshi": "Asian", "Chinese": "Asian", "Filipino": "Asian", "Indian": "Asian", "Indonesian": "Asian", "Iraqi": "Asian", "Israeli": "Asian", "Japanese": "Asian", "Korean": "Asian", "Laotian": "Asian", "Lebanese": "Asian", "Malaysian": "Asian", "Mongolian": "Asian", "Nepalese": "Asian", "Pakistani": "Asian", "Palestinian": "Asian", "Saudi Arabian": "Asian", "Thai": "Asian", "Turkish": "Asian", "Vietnamese": "Asian",
+              "Australian": "Australasian", "New Zealander": "Australasian",
+              "Mexican": "Latin American", "Rest Caribbean": "Latin American", "Puerto Rican": "Latin American", "Jamaican": "Latin American", "Cuban": "Latin American", "Argentine": "Latin American", "Brazilian": "Latin American", "Peruvian": "Latin American", "Chilean": "Latin American", "Colombian": "Latin American", "Honduran": "Latin American", "Costa Rican": "Latin American", "Guatemalan": "Latin American", "Ecuadorean": "Latin American", "Venezuelan": "Latin American",
+              "Russian": "European", "Danish": "European", "English": "European", "Hungarian": "European", "Swedish": "European", "Scottish": "European", "UK": "European", "Belgian": "European", "Welsh": "European", "Norwegian": "European", "Austrian": "European", "Greek": "European", "French": "European", "Swiss": "European", "Portuguese": "European", "Italian": "European", "Polish": "European", "Dutch": "European", "Irish": "European", "German": "European", "Rest Eastern European": "European", "Spanish": "European", "Finnish": "European", "Czech": "European", "Icelandic": "European",
+              "US": "North American", "Canadian": "North American"
+            };
+            const contVal = countryToContinentMap[name];
+            if (contVal && regionInput) {
+              regionInput.value = contVal;
+              regionInput.dispatchEvent(new Event('change'));
+            }
             countryInput.value = name;
           } else if (regionInput) {
             regionInput.value = name;
@@ -3416,6 +3406,82 @@
           cursorRing.classList.remove('cursor-hover');
         }
       });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      const continentCountryMap = {
+        "African": [
+          "Moroccan", "Egyptian", "Nigerian", "Somalian", "Namibian", "Angolan", "Libyan", "Sudanese", "Ethiopian"
+        ],
+        "Asian": [
+          "Bangladeshi", "Chinese", "Filipino", "Indian", "Indonesian", "Iraqi", "Israeli", "Japanese", "Korean", "Laotian", "Lebanese", "Malaysian", "Mongolian", "Nepalese", "Pakistani", "Palestinian", "Rest Middle Eastern", "Saudi Arabian", "Thai", "Turkish", "Vietnamese"
+        ],
+        "Australasian": [
+          "Australian", "New Zealander"
+        ],
+        "Latin American": [
+          "Mexican", "Rest Caribbean", "Puerto Rican", "Jamaican", "Cuban", "Argentine", "Brazilian", "Peruvian", "Chilean", "Colombian", "Honduran", "Costa Rican", "Guatemalan", "Ecuadorean", "Venezuelan"
+        ],
+        "European": [
+          "Russian", "Danish", "English", "Hungarian", "Swedish", "Scottish", "UK", "Belgian", "Welsh", "Norwegian", "Austrian", "Greek", "French", "Swiss", "Portuguese", "Italian", "Polish", "Dutch", "Irish", "German", "Rest Eastern European", "Spanish", "Finnish", "Czech", "Icelandic"
+        ],
+        "North American": [
+          "US", "Canadian"
+        ]
+      };
+
+      const countryEmojis = {
+        "Moroccan": "Moroccan 🇲🇦", "Egyptian": "Egyptian 🇪🇬", "Nigerian": "Nigerian 🇳🇬", "Somalian": "Somalian 🇸🇴", "Namibian": "Namibian 🇳🇦", "Angolan": "Angolan 🇦🇴", "Libyan": "Libyan 🇱🇾", "Sudanese": "Sudanese 🇸🇩", "Ethiopian": "Ethiopian 🇪🇹",
+        "Bangladeshi": "Bangladeshi 🇧🇩", "Chinese": "Chinese 🇨🇳", "Filipino": "Filipino 🇵🇭", "Indian": "Indian 🇮🇳", "Indonesian": "Indonesian 🇮🇩", "Iraqi": "Iraqi 🇮🇶", "Israeli": "Israeli 🇮🇱", "Japanese": "Japanese 🇯🇵", "Korean": "Korean 🇰🇷", "Laotian": "Laotian 🇱🇦", "Lebanese": "Lebanese 🇱🇧", "Malaysian": "Malaysian 🇲🇾", "Mongolian": "Mongolian 🇲🇳", "Nepalese": "Nepalese 🇳🇵", "Pakistani": "Pakistani 🇵🇰", "Palestinian": "Palestinian 🇵🇸", "Rest Middle Eastern": "Middle Eastern 🕌", "Saudi Arabian": "Saudi Arabian 🇸🇦", "Thai": "Thai 🇹🇭", "Turkish": "Turkish 🇹🇷", "Vietnamese": "Vietnamese 🇻🇳",
+        "Australian": "Australian 🇦🇺", "New Zealander": "New Zealander 🇳🇿",
+        "Mexican": "Mexican 🇲🇽", "Rest Caribbean": "Caribbean 🏝️", "Puerto Rican": "Puerto Rican 🇵🇷", "Jamaican": "Jamaican 🇯🇲", "Cuban": "Cuban 🇨🇺", "Argentine": "Argentine 🇦🇷", "Brazilian": "Brazilian 🇧🇷", "Peruvian": "Peruvian 🇵🇪", "Chilean": "Chilean 🇨🇱", "Colombian": "Colombian 🇨🇴", "Honduran": "Honduran 🇭🇳", "Costa Rican": "Costa Rican 🇨🇷", "Guatemalan": "Guatemalan 🇬🇹", "Ecuadorean": "Ecuadorean 🇪🇨", "Venezuelan": "Venezuelan 🇻🇪",
+        "Russian": "Russian 🇷🇺", "Danish": "Danish 🇩🇰", "English": "English 🇬🇧", "Hungarian": "Hungarian 🇭🇺", "Swedish": "Swedish 🇸🇪", "Scottish": "Scottish 🏴󠁧󠁢󠁳󠁣󠁴󠁿", "UK": "British (UK) 🇬🇧", "Belgian": "Belgian 🇧🇪", "Welsh": "Welsh 🏴󠁧󠁢󠁷󠁬󠁳󠁿", "Norwegian": "Norwegian 🇳🇴", "Austrian": "Austrian 🇦🇹", "Greek": "Greek 🇬🇷", "French": "French 🇫🇷", "Swiss": "Swiss 🇨🇭", "Portuguese": "Portuguese 🇵🇹", "Italian": "Italian 🇮🇹", "Polish": "Polish 🇵🇱", "Dutch": "Dutch 🇳🇱", "Irish": "Irish 🇮🇪", "German": "German 🇩🇪", "Rest Eastern European": "Eastern European 🇪🇺", "Spanish": "Spanish 🇪🇸", "Finnish": "Finnish 🇫🇮", "Czech": "Czech 🇨🇿", "Icelandic": "Icelandic 🇮🇸",
+        "US": "American (US) 🇺🇸", "Canadian": "Canadian 🇨🇦"
+      };
+
+      const regionSelect = document.getElementById('search-region'); // Continent select
+      const countrySelect = document.getElementById('search-country');
+
+      function updateCountries() {
+        const selectedCont = regionSelect.value;
+        const currentVal = countrySelect.value;
+        
+        // Clear all except first option
+        countrySelect.innerHTML = '<option value="">-- Any Country --</option>';
+        
+        let countries = [];
+        if (selectedCont) {
+          countries = continentCountryMap[selectedCont] || [];
+        } else {
+          // If no continent is selected, show all countries
+          Object.values(continentCountryMap).forEach(list => {
+            countries = countries.concat(list);
+          });
+        }
+        
+        // Sort alphabetically
+        countries.sort();
+        
+        countries.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c;
+          opt.textContent = countryEmojis[c] || c;
+          countrySelect.appendChild(opt);
+        });
+        
+        // Restore previous value if it is still valid
+        if (countries.includes(currentVal)) {
+          countrySelect.value = currentVal;
+        }
+      }
+
+      if (regionSelect && countrySelect) {
+        regionSelect.addEventListener('change', updateCountries);
+        // Initial population
+        updateCountries();
+      }
     })();
   </script>
 
