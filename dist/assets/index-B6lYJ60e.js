@@ -1163,13 +1163,48 @@ async function v() {
   }
   (M(p), L(r, u, s));
 }
-function M(e) {
-  (e.forEach((a) => {
+async function populateDetailsForSlice(slice) {
+  if (y.engine === "mock") return;
+  const needsFetch = slice.filter(
+    (recipe) => recipe.Recipe_id && (recipe.Calories === undefined || recipe.servings === undefined)
+  );
+  if (needsFetch.length === 0) return;
+  await Promise.all(
+    needsFetch.map(async (recipe) => {
+      try {
+        const res = await T({
+          path: `/recipe2-api/search-recipe/${recipe.Recipe_id}`
+        });
+        if (res && res.data && res.data.recipe) {
+          Object.assign(recipe, res.data.recipe);
+        }
+      } catch (err) {
+        console.warn("Failed to populate detailed recipe:", recipe.Recipe_id, err);
+      }
+    })
+  );
+}
+async function M(e) {
+  const renderPage = i.currentPage;
+  await populateDetailsForSlice(e);
+  if (renderPage !== i.currentPage) return;
+  t.tableBodyContainer.innerHTML = "";
+  if (e.length === 0) {
+    t.tableBodyContainer.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          No data matches search parameters.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+  e.forEach((a) => {
     const n = document.createElement("tr"),
       o = parseFloat(a.vegan) === 1 || parseFloat(a.lacto_vegetarian) === 1,
       s = a["Protein (g)"] || 10,
       r = a["Total lipid (fat) (g)"] || 5;
-    ((n.innerHTML = `
+    n.innerHTML = `
       <td style="font-weight: 700; color: var(--text-primary);">
         ${a.Recipe_title}
         <span style="display:block; font-size:0.7rem; color:var(--text-muted); font-weight:normal;">
@@ -1180,22 +1215,18 @@ function M(e) {
       <td>${a.Sub_region || a.Region || "Global"}</td>
       <td>${a.servings || "4"}</td>
       <td style="font-weight:700; color:var(--accent-orange);">${parseFloat(a.Calories || 100).toFixed(0)}</td>
-      
       <td class="nutri-col hidable-col">${parseFloat(s).toFixed(1)}g</td>
       <td class="nutri-col hidable-col">${parseFloat(r).toFixed(1)}g</td>
-      
       <td>
         <button class="btn-view-details" style="padding: 0.25rem 0.5rem; font-size:0.75rem;">
           Details
         </button>
       </td>
-    `),
-      n
-        .querySelector(".btn-view-details")
-        .addEventListener("click", () => _(a)),
-      t.tableBodyContainer.appendChild(n));
-  }),
-    I());
+    `;
+    n.querySelector(".btn-view-details").addEventListener("click", () => _(a));
+    t.tableBodyContainer.appendChild(n);
+  });
+  I();
 }
 function L(e, a, n) {
   ((t.footerItemCounter.textContent =

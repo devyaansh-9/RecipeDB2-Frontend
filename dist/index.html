@@ -1555,11 +1555,115 @@
               <div class="search-form-row col-2">
                 <div class="param-input-group">
                   <label class="param-label" for="search-ing-used">Used</label>
-                  <input type="text" class="param-field" id="search-ing-used" placeholder="Enter ingredients to include (comma separated)">
+                  <select class="param-field" id="search-ing-used" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Ingredient --</option>
+                    <option value="Garlic">Garlic 🧄</option>
+                    <option value="Ginger">Ginger 🫚</option>
+                    <option value="Cumin">Cumin 🌶️</option>
+                    <option value="Cayenne">Cayenne 🌶️</option>
+                    <option value="Basil">Basil 🌿</option>
+                    <option value="Tomato">Tomato 🍅</option>
+                    <option value="Lemon">Lemon 🍋</option>
+                    <option value="Olive Oil">Olive Oil 🫒</option>
+                    <option value="Butter">Butter 🧈</option>
+                    <option value="Paneer">Paneer 🧀</option>
+                    <option value="Yogurt">Yogurt 🥛</option>
+                    <option value="Lentils">Lentils 🫘</option>
+                    <option value="Soy Sauce">Soy Sauce 🧴</option>
+                    <option value="Chicken">Chicken 🍗</option>
+                    <option value="Parmesan">Parmesan 🧀</option>
+                    <option value="Onion">Onion 🧅</option>
+                    <option value="Potato">Potato 🥔</option>
+                    <option value="Carrot">Carrot 🥕</option>
+                    <option value="Cilantro">Cilantro 🌿</option>
+                    <option value="Beef">Beef 🥩</option>
+                    <option value="Pork">Pork 🥓</option>
+                    <option value="Fish">Fish 🐟</option>
+                    <option value="Egg">Egg 🥚</option>
+                    <option value="Milk">Milk 🥛</option>
+                    <option value="Cheese">Cheese 🧀</option>
+                    <option value="Rice">Rice 🌾</option>
+                    <option value="Flour">Flour 🌾</option>
+                    <option value="Sugar">Sugar 🍬</option>
+                    <option value="Cinnamon">Cinnamon 🪵</option>
+                    <option value="Bell Pepper">Bell Pepper 🫑</option>
+                    <option value="Mushroom">Mushroom 🍄</option>
+                    <option value="Spinach">Spinach 🥬</option>
+                    <option value="Broccoli">Broccoli 🥦</option>
+                    <option value="Mustard">Mustard 🍯</option>
+                    <option value="Oregano">Oregano 🌿</option>
+                    <option value="Pepper">Pepper 🧂</option>
+                    <option value="Salt">Salt 🧂</option>
+                    <option value="Coconut Milk">Coconut Milk 🥥</option>
+                    <option value="Coriander">Coriander 🌿</option>
+                    <option value="Turmeric">Turmeric 🫚</option>
+                    <option value="Cardamom">Cardamom 🟢</option>
+                    <option value="Cloves">Cloves 🪵</option>
+                    <option value="Honey">Honey 🍯</option>
+                    <option value="Vinegar">Vinegar 🧪</option>
+                    <option value="Parsley">Parsley 🌿</option>
+                    <option value="Rosemary">Rosemary 🌿</option>
+                    <option value="Thyme">Thyme 🌿</option>
+                    <option value="Mint">Mint 🌿</option>
+                    <option value="Shrimp">Shrimp 🍤</option>
+                    <option value="Tofu">Tofu ⬜</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="search-ing-notused">Not Used</label>
-                  <input type="text" class="param-field" id="search-ing-notused" placeholder="Enter ingredients to exclude (comma separated)">
+                  <select class="param-field" id="search-ing-notused" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- None Excluded --</option>
+                    <option value="Garlic">Garlic 🧄</option>
+                    <option value="Ginger">Ginger 🫚</option>
+                    <option value="Cumin">Cumin 🌶️</option>
+                    <option value="Cayenne">Cayenne 🌶️</option>
+                    <option value="Basil">Basil 🌿</option>
+                    <option value="Tomato">Tomato 🍅</option>
+                    <option value="Lemon">Lemon 🍋</option>
+                    <option value="Olive Oil">Olive Oil 🫒</option>
+                    <option value="Butter">Butter 🧈</option>
+                    <option value="Paneer">Paneer 🧀</option>
+                    <option value="Yogurt">Yogurt 🥛</option>
+                    <option value="Lentils">Lentils 🫘</option>
+                    <option value="Soy Sauce">Soy Sauce 🧴</option>
+                    <option value="Chicken">Chicken 🍗</option>
+                    <option value="Parmesan">Parmesan 🧀</option>
+                    <option value="Onion">Onion 🧅</option>
+                    <option value="Potato">Potato 🥔</option>
+                    <option value="Carrot">Carrot 🥕</option>
+                    <option value="Cilantro">Cilantro 🌿</option>
+                    <option value="Beef">Beef 🥩</option>
+                    <option value="Pork">Pork 🥓</option>
+                    <option value="Fish">Fish 🐟</option>
+                    <option value="Egg">Egg 🥚</option>
+                    <option value="Milk">Milk 🥛</option>
+                    <option value="Cheese">Cheese 🧀</option>
+                    <option value="Rice">Rice 🌾</option>
+                    <option value="Flour">Flour 🌾</option>
+                    <option value="Sugar">Sugar 🍬</option>
+                    <option value="Cinnamon">Cinnamon 🪵</option>
+                    <option value="Bell Pepper">Bell Pepper 🫑</option>
+                    <option value="Mushroom">Mushroom 🍄</option>
+                    <option value="Spinach">Spinach 🥬</option>
+                    <option value="Broccoli">Broccoli 🥦</option>
+                    <option value="Mustard">Mustard 🍯</option>
+                    <option value="Oregano">Oregano 🌿</option>
+                    <option value="Pepper">Pepper 🧂</option>
+                    <option value="Salt">Salt 🧂</option>
+                    <option value="Coconut Milk">Coconut Milk 🥥</option>
+                    <option value="Coriander">Coriander 🌿</option>
+                    <option value="Turmeric">Turmeric 🫚</option>
+                    <option value="Cardamom">Cardamom 🟢</option>
+                    <option value="Cloves">Cloves 🪵</option>
+                    <option value="Honey">Honey 🍯</option>
+                    <option value="Vinegar">Vinegar 🧪</option>
+                    <option value="Parsley">Parsley 🌿</option>
+                    <option value="Rosemary">Rosemary 🌿</option>
+                    <option value="Thyme">Thyme 🌿</option>
+                    <option value="Mint">Mint 🌿</option>
+                    <option value="Shrimp">Shrimp 🍤</option>
+                    <option value="Tofu">Tofu ⬜</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -1623,15 +1727,57 @@
               <div class="search-form-row">
                 <div class="param-input-group">
                   <label class="param-label" for="adv-continent">Continent</label>
-                  <input type="text" class="param-field" id="adv-continent" placeholder="Enter continent...">
+                  <select class="param-field" id="adv-continent" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Continent --</option>
+                    <option value="African">African 🌍</option>
+                    <option value="Asian">Asian 🌏</option>
+                    <option value="European">European 🇪🇺</option>
+                    <option value="North American">North American 🇺🇸</option>
+                    <option value="South American">South American 🌎</option>
+                    <option value="Caribbean">Caribbean 🏝️</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="adv-region">Region</label>
-                  <input type="text" class="param-field" id="adv-region" placeholder="Enter region...">
+                  <select class="param-field" id="adv-region" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Region --</option>
+                    <option value="African">African</option>
+                    <option value="American">American</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Caribbean">Caribbean</option>
+                    <option value="Central American">Central American</option>
+                    <option value="East Asian">East Asian</option>
+                    <option value="European">European</option>
+                    <option value="French">French</option>
+                    <option value="Indian Subcontinent">Indian Subcontinent</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Middle Eastern">Middle Eastern</option>
+                    <option value="South American">South American</option>
+                    <option value="Thai">Thai</option>
+                    <option value="US">US</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="adv-country">Country</label>
-                  <input type="text" class="param-field" id="adv-country" placeholder="Enter country...">
+                  <select class="param-field" id="adv-country" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Country --</option>
+                    <option value="Argentine">Argentine 🇦🇷</option>
+                    <option value="Bangladeshi">Bangladeshi 🇧🇩</option>
+                    <option value="Indian">Indian 🇮🇳</option>
+                    <option value="Canadian">Canadian 🇨🇦</option>
+                    <option value="Egyptian">Egyptian 🇪🇬</option>
+                    <option value="French">French 🇫🇷</option>
+                    <option value="Greek">Greek 🇬🇷</option>
+                    <option value="Italian">Italian 🇮🇹</option>
+                    <option value="Japanese">Japanese 🇯🇵</option>
+                    <option value="Korean">Korean 🇰🇷</option>
+                    <option value="Mexican">Mexican 🇲🇽</option>
+                    <option value="Rest Caribbean">Caribbean 🏝️</option>
+                    <option value="Russian">Russian 🇷🇺</option>
+                    <option value="Thai">Thai 🇹🇭</option>
+                    <option value="US">American (US) 🇺🇸</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="adv-title">Recipe Title</label>
@@ -1642,22 +1788,147 @@
               <div class="search-form-row col-2" style="margin-top: 1rem;">
                 <div class="param-input-group">
                   <label class="param-label" for="adv-ing-used">Used Ingredients</label>
-                  <input type="text" class="param-field" id="adv-ing-used" placeholder="Used ingredients...">
+                  <select class="param-field" id="adv-ing-used" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Ingredient --</option>
+                    <option value="Garlic">Garlic 🧄</option>
+                    <option value="Ginger">Ginger 🫚</option>
+                    <option value="Cumin">Cumin 🌶️</option>
+                    <option value="Cayenne">Cayenne 🌶️</option>
+                    <option value="Basil">Basil 🌿</option>
+                    <option value="Tomato">Tomato 🍅</option>
+                    <option value="Lemon">Lemon 🍋</option>
+                    <option value="Olive Oil">Olive Oil 🫒</option>
+                    <option value="Butter">Butter 🧈</option>
+                    <option value="Paneer">Paneer 🧀</option>
+                    <option value="Yogurt">Yogurt 🥛</option>
+                    <option value="Lentils">Lentils 🫘</option>
+                    <option value="Soy Sauce">Soy Sauce 🧴</option>
+                    <option value="Chicken">Chicken 🍗</option>
+                    <option value="Parmesan">Parmesan 🧀</option>
+                    <option value="Onion">Onion 🧅</option>
+                    <option value="Potato">Potato 🥔</option>
+                    <option value="Carrot">Carrot 🥕</option>
+                    <option value="Cilantro">Cilantro 🌿</option>
+                    <option value="Beef">Beef 🥩</option>
+                    <option value="Pork">Pork 🥓</option>
+                    <option value="Fish">Fish 🐟</option>
+                    <option value="Egg">Egg 🥚</option>
+                    <option value="Milk">Milk 🥛</option>
+                    <option value="Cheese">Cheese 🧀</option>
+                    <option value="Rice">Rice 🌾</option>
+                    <option value="Flour">Flour 🌾</option>
+                    <option value="Sugar">Sugar 🍬</option>
+                    <option value="Cinnamon">Cinnamon 🪵</option>
+                    <option value="Bell Pepper">Bell Pepper 🫑</option>
+                    <option value="Mushroom">Mushroom 🍄</option>
+                    <option value="Spinach">Spinach 🥬</option>
+                    <option value="Broccoli">Broccoli 🥦</option>
+                    <option value="Mustard">Mustard 🍯</option>
+                    <option value="Oregano">Oregano 🌿</option>
+                    <option value="Pepper">Pepper 🧂</option>
+                    <option value="Salt">Salt 🧂</option>
+                    <option value="Coconut Milk">Coconut Milk 🥥</option>
+                    <option value="Coriander">Coriander 🌿</option>
+                    <option value="Turmeric">Turmeric 🫚</option>
+                    <option value="Cardamom">Cardamom 🟢</option>
+                    <option value="Cloves">Cloves 🪵</option>
+                    <option value="Honey">Honey 🍯</option>
+                    <option value="Vinegar">Vinegar 🧪</option>
+                    <option value="Parsley">Parsley 🌿</option>
+                    <option value="Rosemary">Rosemary 🌿</option>
+                    <option value="Thyme">Thyme 🌿</option>
+                    <option value="Mint">Mint 🌿</option>
+                    <option value="Shrimp">Shrimp 🍤</option>
+                    <option value="Tofu">Tofu ⬜</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="adv-ing-notused">Not Used Ingredients</label>
-                  <input type="text" class="param-field" id="adv-ing-notused" placeholder="Excluded ingredients...">
+                  <select class="param-field" id="adv-ing-notused" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- None Excluded --</option>
+                    <option value="Garlic">Garlic 🧄</option>
+                    <option value="Ginger">Ginger 🫚</option>
+                    <option value="Cumin">Cumin 🌶️</option>
+                    <option value="Cayenne">Cayenne 🌶️</option>
+                    <option value="Basil">Basil 🌿</option>
+                    <option value="Tomato">Tomato 🍅</option>
+                    <option value="Lemon">Lemon 🍋</option>
+                    <option value="Olive Oil">Olive Oil 🫒</option>
+                    <option value="Butter">Butter 🧈</option>
+                    <option value="Paneer">Paneer 🧀</option>
+                    <option value="Yogurt">Yogurt 🥛</option>
+                    <option value="Lentils">Lentils 🫘</option>
+                    <option value="Soy Sauce">Soy Sauce 🧴</option>
+                    <option value="Chicken">Chicken 🍗</option>
+                    <option value="Parmesan">Parmesan 🧀</option>
+                    <option value="Onion">Onion 🧅</option>
+                    <option value="Potato">Potato 🥔</option>
+                    <option value="Carrot">Carrot 🥕</option>
+                    <option value="Cilantro">Cilantro 🌿</option>
+                    <option value="Beef">Beef 🥩</option>
+                    <option value="Pork">Pork 🥓</option>
+                    <option value="Fish">Fish 🐟</option>
+                    <option value="Egg">Egg 🥚</option>
+                    <option value="Milk">Milk 🥛</option>
+                    <option value="Cheese">Cheese 🧀</option>
+                    <option value="Rice">Rice 🌾</option>
+                    <option value="Flour">Flour 🌾</option>
+                    <option value="Sugar">Sugar 🍬</option>
+                    <option value="Cinnamon">Cinnamon 🪵</option>
+                    <option value="Bell Pepper">Bell Pepper 🫑</option>
+                    <option value="Mushroom">Mushroom 🍄</option>
+                    <option value="Spinach">Spinach 🥬</option>
+                    <option value="Broccoli">Broccoli 🥦</option>
+                    <option value="Mustard">Mustard 🍯</option>
+                    <option value="Oregano">Oregano 🌿</option>
+                    <option value="Pepper">Pepper 🧂</option>
+                    <option value="Salt">Salt 🧂</option>
+                    <option value="Coconut Milk">Coconut Milk 🥥</option>
+                    <option value="Coriander">Coriander 🌿</option>
+                    <option value="Turmeric">Turmeric 🫚</option>
+                    <option value="Cardamom">Cardamom 🟢</option>
+                    <option value="Cloves">Cloves 🪵</option>
+                    <option value="Honey">Honey 🍯</option>
+                    <option value="Vinegar">Vinegar 🧪</option>
+                    <option value="Parsley">Parsley 🌿</option>
+                    <option value="Rosemary">Rosemary 🌿</option>
+                    <option value="Thyme">Thyme 🌿</option>
+                    <option value="Mint">Mint 🌿</option>
+                    <option value="Shrimp">Shrimp 🍤</option>
+                    <option value="Tofu">Tofu ⬜</option>
+                  </select>
                 </div>
               </div>
 
               <div class="search-form-row col-2" style="margin-top: 1rem;">
                 <div class="param-input-group">
                   <label class="param-label" for="adv-process">Cooking Process</label>
-                  <input type="text" class="param-field" id="adv-process" placeholder="Enter cooking process (e.g., boil, roast)">
+                  <select class="param-field" id="adv-process" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Process --</option>
+                    <option value="bake">Bake 🍰</option>
+                    <option value="boil">Boil 🍲</option>
+                    <option value="fry">Fry 🍳</option>
+                    <option value="roast">Roast 🍖</option>
+                    <option value="grill">Grill 🍢</option>
+                    <option value="simmer">Simmer 🥣</option>
+                    <option value="steam">Steam 🥟</option>
+                    <option value="saute">Sauté 🥘</option>
+                    <option value="broil">Broil 🥩</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="adv-utensil">Utensil</label>
-                  <input type="text" class="param-field" id="adv-utensil" placeholder="Enter utensil used (e.g., saucepan, pot)">
+                  <select class="param-field" id="adv-utensil" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Utensil --</option>
+                    <option value="saucepan">Saucepan 🍳</option>
+                    <option value="pot">Cooking Pot 🍲</option>
+                    <option value="pan">Frying Pan 🍳</option>
+                    <option value="oven">Oven 🎛️</option>
+                    <option value="bowl">Mixing Bowl 🥣</option>
+                    <option value="skillet">Skillet 🍳</option>
+                    <option value="grill">Grill Rack 🍢</option>
+                    <option value="blender">Blender 🌪️</option>
+                  </select>
                 </div>
               </div>
 
@@ -3125,8 +3396,15 @@
               input.value = '';
             });
             
-            // 4. Fill values and click search
-            ingInput.value = clicked.label;
+             // 4. Fill values and click search
+             let optionExists = Array.from(ingInput.options).some(opt => opt.value === clicked.label);
+             if (!optionExists) {
+               const opt = document.createElement('option');
+               opt.value = clicked.label;
+               opt.textContent = clicked.label;
+               ingInput.appendChild(opt);
+             }
+             ingInput.value = clicked.label;
             const submitBtn = document.getElementById('btn-submit-search');
             if (submitBtn) {
               setTimeout(() => {
