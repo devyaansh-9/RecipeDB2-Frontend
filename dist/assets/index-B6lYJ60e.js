@@ -268,73 +268,263 @@ const i = {
       name: "Recipe Info",
       path: "/recipe2-api/recipe/recipesinfo",
       method: "GET",
-      description:
-        "Retrieves a comprehensive list of all available recipes in the database.",
+      description: "Retrieves a comprehensive list of all available recipes in the database.",
       params: [
-        {
-          key: "page",
-          default: "1",
-          type: "number",
-          desc: "Filter by page number.",
-        },
-        {
-          key: "limit",
-          default: "10",
-          type: "number",
-          desc: "Number of recipes shown per page.",
-        },
-      ],
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of recipes shown per page." }
+      ]
     },
     recipeofday: {
       name: "Recipe of Day",
       path: "/recipe2-api/recipe/recipeofday",
       method: "GET",
-      description:
-        'Returns a single, randomly selected recipe to be featured as the "Recipe of the Day".',
-      params: [],
+      description: 'Returns a single, randomly selected recipe to be featured as the "Recipe of the Day".',
+      params: []
     },
     "with-ingredients-categories": {
       name: "Recipe with Exclusions",
       path: "/recipe2-api/recipe/recipe-day/with-ingredients-categories",
       method: "GET",
-      description:
-        "Generates a featured recipe of the day while excluding specific ingredients or categories.",
+      description: "Generates a featured recipe of the day while excluding specific ingredients or categories.",
       params: [
-        {
-          key: "excludeIngredients",
-          default: "water,flour",
-          type: "text",
-          desc: "Comma-separated ingredients to exclude.",
-        },
-        {
-          key: "excludeCategories",
-          default: "Dairy",
-          type: "text",
-          desc: "Comma-separated categories to exclude.",
-        },
-      ],
+        { key: "excludeIngredients", default: "water,flour", type: "text", desc: "Comma-separated ingredients to exclude." },
+        { key: "excludeCategories", default: "Dairy", type: "text", desc: "Comma-separated categories to exclude." }
+      ]
     },
     nutritioninfo: {
       name: "Recipe Nutrition Info",
       path: "/recipe2-api/recipe-nutri/nutritioninfo",
       method: "GET",
-      description:
-        "Provides detailed macronutrient details (calories, fat, protein, carbohydrates) for recipes.",
+      description: "Provides detailed macronutrient details (calories, fat, protein, carbohydrates) for recipes.",
       params: [
-        {
-          key: "page",
-          default: "1",
-          type: "number",
-          desc: "Filter by page number.",
-        },
-        {
-          key: "limit",
-          default: "10",
-          type: "number",
-          desc: "Number of items per page.",
-        },
-      ],
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
     },
+    micronutritioninfo: {
+      name: "Recipe Micronutrition Info",
+      path: "/recipe2-api/recipe-micronutri/micronutritioninfo",
+      method: "GET",
+      description: "Provides micronutrient composition (minerals, vitamins) for recipes.",
+      params: [
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    range: {
+      name: "Recipes Nutrient Range",
+      path: "/recipe2-api/recipes/range",
+      method: "GET",
+      description: "Retrieve recipes by range of nutrient thresholds.",
+      params: [
+        { key: "nutrient", default: "Protein (g)", type: "text", desc: "Target nutrient type." },
+        { key: "min", default: "5", type: "number", desc: "Minimum nutrient threshold." },
+        { key: "max", default: "15", type: "number", desc: "Maximum nutrient threshold." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipes-cuisine": {
+      name: "Recipes by Cuisine",
+      path: "/recipe2-api/recipes_cuisine/cuisine/{region}",
+      method: "GET",
+      description: "Find recipes from a specific cuisine region.",
+      params: [
+        { key: "region", default: "Indian Subcontinent", type: "text", desc: "Cuisine region parameter." },
+        { key: "subRegion", default: "", type: "text", desc: "Optional sub-region/country filter." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "page_size", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipe-bytitle": {
+      name: "Recipes by Title",
+      path: "/recipe2-api/recipe-bytitle/recipeByTitle",
+      method: "GET",
+      description: "Search for recipes by their title.",
+      params: [
+        { key: "title", default: "Chicken", type: "text", desc: "Recipe title search query." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipes-calories": {
+      name: "Recipes by Calories",
+      path: "/recipe2-api/recipes-calories/calories",
+      method: "GET",
+      description: "Find recipes by energy/calorie range.",
+      params: [
+        { key: "min", default: "100", type: "number", desc: "Minimum calories." },
+        { key: "max", default: "300", type: "number", desc: "Maximum calories." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "region-diet": {
+      name: "Region Diet Mappings",
+      path: "/recipe2-api/recipe/region-diet/region-diet",
+      method: "GET",
+      description: "List region-diet mappings.",
+      params: [
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipe-diet": {
+      name: "Recipes by Diet",
+      path: "/recipe2-api/recipe-diet/recipe-diet",
+      method: "GET",
+      description: "Query recipes based on diet specifications.",
+      params: [
+        { key: "diet", default: "vegan", type: "text", desc: "Diet type (e.g. vegan, vegetarian)." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipe-carbo": {
+      name: "Recipes by Carbohydrates",
+      path: "/recipe2-api/recipe-carbo/recipes-by-carbs",
+      method: "GET",
+      description: "Query recipes by carbohydrate content range.",
+      params: [
+        { key: "min", default: "10", type: "number", desc: "Minimum carbohydrate content (g)." },
+        { key: "max", default: "50", type: "number", desc: "Maximum carbohydrate content (g)." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    instructions: {
+      name: "Recipe Instructions",
+      path: "/recipe2-api/instructions/{recipe_id}",
+      method: "GET",
+      description: "Fetch step-by-step cooking instructions for a recipe.",
+      params: [
+        { key: "recipe_id", default: "2000", type: "number", desc: "Target Recipe ID." }
+      ]
+    },
+    mealplan: {
+      name: "Generate Meal Plan",
+      path: "/recipe2-api/mealplan/meal-plan",
+      method: "POST",
+      description: "Generate a custom daily/weekly meal plan based on calorie targets.",
+      params: [
+        { key: "calories", default: "2000", type: "number", desc: "Total target calories." },
+        { key: "diet", default: "vegan", type: "text", desc: "Target diet specification." }
+      ]
+    },
+    "ingredients-flavor": {
+      name: "Flavor Associations",
+      path: "/recipe2-api/ingredients/flavor/{flavor}",
+      method: "GET",
+      description: "Get ingredients associated with a flavor profile.",
+      params: [
+        { key: "flavor", default: "sweet", type: "text", desc: "Flavor type query." }
+      ]
+    },
+    byutensils: {
+      name: "Recipes by Utensil",
+      path: "/recipe2-api/byutensils/utensils",
+      method: "GET",
+      description: "Find recipes that use specified cooking utensils.",
+      params: [
+        { key: "utensil", default: "saucepan", type: "text", desc: "Target cooking utensil." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipes-method": {
+      name: "Recipes by Cooking Method",
+      path: "/recipe2-api/recipes-method/{method}",
+      method: "GET",
+      description: "List recipes by their preparation or cooking method.",
+      params: [
+        { key: "method", default: "bake", type: "text", desc: "Cooking method parameter." }
+      ]
+    },
+    byenergy: {
+      name: "Recipes by Energy",
+      path: "/recipe2-api/byenergy/energy",
+      method: "GET",
+      description: "Query recipes filtered by energy range.",
+      params: [
+        { key: "min", default: "100", type: "number", desc: "Minimum energy (kcal)." },
+        { key: "max", default: "300", type: "number", desc: "Maximum energy (kcal)." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "byingredient-categories-title": {
+      name: "Search by Ingredients/Categories",
+      path: "/recipe2-api/recipebyingredient/by-ingredients-categories-title",
+      method: "GET",
+      description: "Search recipes using multiple categories, ingredients, and title filters.",
+      params: [
+        { key: "ingredients", default: "salt", type: "text", desc: "Comma-separated ingredients filter." },
+        { key: "categories", default: "Dairy", type: "text", desc: "Comma-separated categories filter." },
+        { key: "title", default: "Cheese", type: "text", desc: "Recipe title filter." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    category: {
+      name: "Recipe Categories",
+      path: "/recipe2-api/category/",
+      method: "GET",
+      description: "List recipe categories.",
+      params: []
+    },
+    "search-recipe": {
+      name: "Search Recipe by ID",
+      path: "/recipe2-api/search-recipe/{id}",
+      method: "GET",
+      description: "Find a single recipe by its unique database ID.",
+      params: [
+        { key: "id", default: "2000", type: "number", desc: "Unique recipe database ID." }
+      ]
+    },
+    "protein-range": {
+      name: "Recipes by Protein Range",
+      path: "/recipe2-api/protein/protein-range",
+      method: "GET",
+      description: "Filter recipes by protein content range.",
+      params: [
+        { key: "min", default: "5", type: "number", desc: "Minimum protein content (g)." },
+        { key: "max", default: "20", type: "number", desc: "Maximum protein content (g)." },
+        { key: "page", default: "1", type: "number", desc: "Filter by page number." },
+        { key: "limit", default: "10", type: "number", desc: "Number of items per page." }
+      ]
+    },
+    "recipe-Day-category": {
+      name: "Daily Category",
+      path: "/recipe2-api/recipe-Day-category/",
+      method: "GET",
+      description: "Get featured daily category mappings.",
+      params: []
+    },
+    "recipe-nutri-ingredient": {
+      name: "Ingredient Nutritional Profile",
+      path: "/recipe2-api/recipe-nutri-ingredient/nutrition/{ingredient}",
+      method: "GET",
+      description: "Retrieve nutritional profile of a raw ingredient.",
+      params: [
+        { key: "ingredient", default: "salt", type: "text", desc: "Target ingredient name." }
+      ]
+    },
+    "connections-links": {
+      name: "Cross-Database Links",
+      path: "/recipe2-api/connections/links",
+      method: "GET",
+      description: "Retrieve mappings linking recipes to FlavorDB ingredients.",
+      params: [
+        { key: "recipeId", default: "1", type: "number", desc: "Target Recipe ID." }
+      ]
+    },
+    "connections-dropdowns": {
+      name: "Cross-Database Dropdowns",
+      path: "/recipe2-api/connections/dropdowns",
+      method: "GET",
+      description: "Get database options for dropdown prepopulation.",
+      params: []
+    }
   },
   t = {
     brandHome: document.getElementById("brand-home"),
@@ -1740,28 +1930,40 @@ function R() {
 async function X() {
   const e = w[i.activeEndpoint],
     a = {};
-  (e.params.forEach((s) => {
+  e.params.forEach((s) => {
     const r = document.getElementById(`pg-param-${s.key}`);
     r && (a[s.key] = r.value);
-  }),
-    (t.pgConsoleOutput.textContent =
-      "// Dispatching request to live systems..."),
-    (t.pgConsoleOutput.className = "code-block"),
-    (t.consoleMetricStatus.querySelector("span").textContent = "PND"),
-    (t.consoleMetricStatus.querySelector("span").style.color =
-      "var(--text-muted)"),
-    (t.consoleMetricTime.querySelector("span").textContent = "--"));
-  const n = await T({ path: e.path, queryParams: a, method: e.method });
+  });
+  t.pgConsoleOutput.textContent = "// Dispatching request to live systems...";
+  t.pgConsoleOutput.className = "code-block";
+  t.consoleMetricStatus.querySelector("span").textContent = "PND";
+  t.consoleMetricStatus.querySelector("span").style.color = "var(--text-muted)";
+  t.consoleMetricTime.querySelector("span").textContent = "--";
+
+  let requestPath = e.path;
+  const queryParams = { ...a };
+  Object.keys(queryParams).forEach((k) => {
+    const placeholder = `{${k}}`;
+    if (requestPath.includes(placeholder)) {
+      requestPath = requestPath.replace(placeholder, encodeURIComponent(queryParams[k]));
+      delete queryParams[k];
+    }
+  });
+
+  const n = await T({ path: requestPath, queryParams, method: e.method });
   i.lastResponse = n;
+  t.pgUrlInput.value = n.url;
   const o = t.consoleMetricStatus.querySelector("span");
-  ((o.textContent = `${n.status} ${n.statusText}`),
-    n.status >= 200 && n.status < 300
-      ? ((o.style.color = "var(--accent-emerald)"),
-        b(`Request successful: ${n.status} ${n.statusText}`, "success"))
-      : ((o.style.color = "var(--accent-red)"),
-        b(`Request failed: ${n.status} ${n.statusText}`, "error")),
-    (t.consoleMetricTime.querySelector("span").textContent = `${n.timeMs}ms`),
-    P(i.consoleTab));
+  o.textContent = `${n.status} ${n.statusText}`;
+  if (n.status >= 200 && n.status < 300) {
+    o.style.color = "var(--accent-emerald)";
+    b(`Request successful: ${n.status} ${n.statusText}`, "success");
+  } else {
+    o.style.color = "var(--accent-red)";
+    b(`Request failed: ${n.status} ${n.statusText}`, "error");
+  }
+  t.consoleMetricTime.querySelector("span").textContent = `${n.timeMs}ms`;
+  P(i.consoleTab);
 }
 function P(e) {
   if (
