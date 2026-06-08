@@ -1534,46 +1534,184 @@
   </div>
 </section>
 
-<!-- ADVANCED CAPABILITIES SHOWCASE -->
-<section id="advanced-features" style="padding: 120px 48px; max-width: 1400px; margin: 0 auto; overflow: hidden; border-top: 1px solid var(--border);">
-  <div class="section-label reveal">Advanced Capabilities</div>
-  <h2 class="section-heading reveal reveal-delay-1" style="margin-bottom: 80px;">Unleash the full potential<br>of <em>gastronomic data</em></h2>
-  
-  <div class="story-body" style="margin-top: 0; gap: 60px;">
-    <!-- Feature 1: Food Science Lab -->
-    <div class="story-text reveal reveal-delay-2" style="grid-column: 1;">
-      <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 20px; color: var(--text-1);">Food Science Lab & Flavor Galaxy</h3>
-      <p style="font-size: 16px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">Explore our interactive, physics-based network of flavor chemical compounds. Dive deep into the <strong>Ingredient Flavor Galaxy</strong> to visualize shared flavor profiles between staple ingredients across the globe, or use the <strong>Global Cuisine Atlas</strong> to map out authentic geographic culinary relationships.</p>
-      <span class="highlight-pill" style="font-size: 12px; padding: 6px 14px; background: rgba(20,184,166,0.1); color: var(--teal); border-color: rgba(20,184,166,0.2);">Physics-Based Visualizer</span>
-    </div>
-    <div class="story-visual reveal reveal-delay-3" style="grid-column: 2;">
-      <img src="assets/food_science_lab.png" alt="Food Science Lab">
-      <div class="float-tag float-tag-1" style="top: 15px; left: 15px;"><span class="ft-dot" style="background: var(--amber); box-shadow: 0 0 8px var(--amber);"></span> Flavor Network Active</div>
-    </div>
 
-    <!-- Feature 2: Nutri-Planner -->
-    <div class="story-visual reveal reveal-delay-1" style="grid-column: 1;">
-      <img src="assets/nutri_planner.png" alt="Nutri-Planner Calculator">
-      <div class="float-tag float-tag-2" style="bottom: 15px; right: 15px; border-color: rgba(244,63,94,0.3);"><span class="ft-dot" style="background: #f43f5e; box-shadow: 0 0 8px #f43f5e;"></span> Real-time Solvers</div>
-    </div>
-    <div class="story-text reveal reveal-delay-2" style="grid-column: 2;">
-      <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 20px; color: var(--text-1);">Dynamic Nutri-Planner</h3>
-      <p style="font-size: 16px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">Transform 128K+ recipes into actionable meal plans. Set strict <strong>macronutrient thresholds</strong>—calories, carbs, protein, and fat—and let our real-time database solver recommend precise, culturally diverse recipes that perfectly match your dietary goals.</p>
-      <span class="highlight-pill" style="font-size: 12px; padding: 6px 14px; background: rgba(244,63,94,0.1); color: #f43f5e; border-color: rgba(244,63,94,0.2);">USDA Nutritional Data</span>
-    </div>
+<!-- HOW TO USE GUIDE -->
+<section id="how-to-use-section" style="padding: 120px 48px; max-width: 1400px; margin: 0 auto; overflow: hidden; border-top: 1px solid var(--border);">
+  <div class="section-label reveal">Documentation</div>
+  <h2 class="section-heading reveal reveal-delay-1" style="margin-bottom: 80px;">How to navigate<br><em>RecipeDB2</em></h2>
 
-    <!-- Feature 3: API Playground -->
+  <!-- 1. Overview -->
+  <div class="story-body" style="margin-top: 0; gap: 60px; margin-bottom: 100px;">
     <div class="story-text reveal reveal-delay-2" style="grid-column: 1;">
-      <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 20px; color: var(--text-1);">Developer API Playground</h3>
-      <p style="font-size: 16px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">Build the future of food-tech with zero setup. Our integrated <strong>API Console</strong> lets you query the REST API directly from your browser. Inspect JSON responses, test query parameters, and copy ready-to-use cURL commands straight into your terminal.</p>
-      <span class="highlight-pill" style="font-size: 12px; padding: 6px 14px; background: rgba(139,92,246,0.1); color: #a78bfa; border-color: rgba(139,92,246,0.2);">Interactive Endpoints</span>
+      <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 20px; color: var(--text-1);">RecipeDB2 Overview</h3>
+      <p style="font-size: 16px; color: var(--text-2); line-height: 1.6; margin-bottom: 16px;">
+        Cooking is the act of turning nature into a culture that has enabled the advent of the omnivorous human diet. Recipes are the cultural capsules that encode elaborate cooking protocols.
+      </p>
+      <p style="font-size: 16px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">
+        RecipeDB2 is an extensive, structured compilation of 128,942 recipes with 35,474 ingredients from 7 continents, linked directly to USDA nutritional profiles to facilitate scientific explorations of the culinary space.
+      </p>
+      <span class="highlight-pill" style="font-size: 12px; padding: 6px 14px; background: rgba(20,184,166,0.1); color: var(--teal); border-color: rgba(20,184,166,0.2);">System Architecture</span>
     </div>
-    <div class="story-visual reveal reveal-delay-3" style="grid-column: 2;">
-      <img src="assets/api_playground.png" alt="Developer API Playground">
-      <div class="float-tag float-tag-3" style="top: auto; bottom: 15px; left: 15px; transform: none; border-color: rgba(139,92,246,0.3);"><span class="ft-dot" style="background: #a78bfa; box-shadow: 0 0 8px #a78bfa;"></span> Status 200 OK</div>
+    <div class="story-visual reveal reveal-delay-3" style="grid-column: 2; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--border); padding: 40px;">
+      <!-- CSS Flowchart Mockup -->
+      <div style="display:flex; flex-direction:row; gap: 20px; width: 100%; height: 100%; align-items: center; justify-content: center;">
+        
+        <!-- Left Blocks -->
+        <div style="display:flex; flex-direction:column; gap: 15px;">
+          <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Cuisines (99 Countries)</div>
+          <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Dietary Styles (5)</div>
+          <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Categories (34)</div>
+        </div>
+
+        <div style="color: var(--text-3);">→</div>
+
+        <!-- Center Block (Recipes) -->
+        <div style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
+          <div style="color: #a78bfa; font-size: 16px; font-weight: 800; margin-bottom: 12px;">128,942 Recipes</div>
+          <div style="display:flex; flex-direction:column; gap: 8px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Recipe Title</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Ingredient Phrases</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Cooking Procedure</div>
+          </div>
+        </div>
+
+        <div style="color: var(--text-3);">→</div>
+
+        <!-- Right Block (Nutrition) -->
+        <div style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
+          <div style="color: #34d399; font-size: 14px; font-weight: 800; margin-bottom: 12px;">USDA Nutritional Profile</div>
+          <div style="display:flex; flex-direction:column; gap: 8px;">
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Macro-nutrients (Protein, Fat)</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Micro-nutrients (Vitamins)</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
+
+  <!-- 2. Search Overview Grid -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+    
+    <!-- Cuisine Search -->
+    <div class="glass-card reveal" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--text-1); margin-bottom: 12px;">Cuisine Search</h3>
+        <p style="font-size: 15px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">
+          RecipeDB2 offers extensive coverage of over 100,000 recipes across 32 world regions. Query and browse through traditional recipes, regional classifications, and ingredient compositions instantly.
+        </p>
+      </div>
+      <!-- Mock Portal UI -->
+      <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 20px;">
+        <div style="display:flex; gap: 8px; margin-bottom: 16px;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+        </div>
+        <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--teal); font-weight: 700; border-bottom: 2px solid var(--teal); padding-bottom: 4px;">CUISINE</div>
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">INGREDIENT</div>
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">NUTRITION</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: var(--text-2);">Region: Indian Subcontinent</div>
+          <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: var(--text-2);">Country: India</div>
+        </div>
+        <div style="margin-top: 16px; background: var(--teal); color: #000; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; border-radius: 6px;">Submit</div>
+      </div>
+    </div>
+
+    <!-- Ingredient Search -->
+    <div class="glass-card reveal reveal-delay-1" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--text-1); margin-bottom: 12px;">Ingredient Search</h3>
+        <p style="font-size: 15px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">
+          Facilitates querying RecipeDB2 based on specifically targeted ingredients. You can precisely filter the database by specifying ingredients that must be 'Used' and ingredients that must be 'Not Used'.
+        </p>
+      </div>
+      <!-- Mock Portal UI -->
+      <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 20px;">
+        <div style="display:flex; gap: 8px; margin-bottom: 16px;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+        </div>
+        <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">CUISINE</div>
+          <div style="font-size: 11px; color: var(--teal); font-weight: 700; border-bottom: 2px solid var(--teal); padding-bottom: 4px;">INGREDIENT</div>
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">NUTRITION</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: var(--text-2); border-left: 3px solid #10b981;">Used: Garlic, Tomato</div>
+          <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: var(--text-2); border-left: 3px solid #ef4444;">Not Used: Peanut</div>
+        </div>
+        <div style="margin-top: 16px; background: var(--teal); color: #000; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; border-radius: 6px;">Submit</div>
+      </div>
+    </div>
+
+    <!-- Nutrition Search -->
+    <div class="glass-card reveal" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--text-1); margin-bottom: 12px;">Nutrition Search</h3>
+        <p style="font-size: 15px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">
+          Search recipes by configuring strict sliders for calories, carbohydrates, protein, and fat. RecipeDB2 will instantly filter its 128K+ recipes to match your precise diet restrictions.
+        </p>
+      </div>
+      <!-- Mock Portal UI -->
+      <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 20px;">
+        <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">CUISINE</div>
+          <div style="font-size: 11px; color: var(--teal); font-weight: 700; border-bottom: 2px solid var(--teal); padding-bottom: 4px;">NUTRITION</div>
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">ADVANCED</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display:flex; justify-content: space-between; align-items:center;">
+            <div style="font-size: 11px; color: var(--text-2);">Calories</div>
+            <div style="width: 60%; height: 6px; background: #333; border-radius: 3px; position:relative;">
+              <div style="position:absolute; left:20%; right:30%; height:100%; background: var(--teal); border-radius:3px;"></div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content: space-between; align-items:center;">
+            <div style="font-size: 11px; color: var(--text-2);">Protein</div>
+            <div style="width: 60%; height: 6px; background: #333; border-radius: 3px; position:relative;">
+              <div style="position:absolute; left:40%; right:10%; height:100%; background: #3b82f6; border-radius:3px;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; background: var(--teal); color: #000; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; border-radius: 6px;">Submit</div>
+      </div>
+    </div>
+
+    <!-- Advanced Search -->
+    <div class="glass-card reveal reveal-delay-1" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--text-1); margin-bottom: 12px;">Advanced & Combined Search</h3>
+        <p style="font-size: 15px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px;">
+          Advanced Search combines parameters from all modular searches. Conjunction filtering allows extremely tailored queries (e.g. "Mexican, high protein, no dairy, under 500 calories").
+        </p>
+      </div>
+      <!-- Mock Portal UI -->
+      <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 20px;">
+        <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">CUISINE</div>
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 700;">INGREDIENT</div>
+          <div style="font-size: 11px; color: var(--teal); font-weight: 700; border-bottom: 2px solid var(--teal); padding-bottom: 4px;">ADVANCED</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 10px; color: var(--text-3); text-transform: uppercase;">Combined Filters</div>
+          <div style="display:flex; gap: 6px; flex-wrap: wrap;">
+            <div style="background: rgba(20,184,166,0.2); color: var(--teal); padding: 4px 8px; border-radius: 4px; font-size: 10px;">Mexican</div>
+            <div style="background: rgba(59,130,246,0.2); color: #60a5fa; padding: 4px 8px; border-radius: 4px; font-size: 10px;">Protein > 20g</div>
+            <div style="background: rgba(239,68,68,0.2); color: #f87171; padding: 4px 8px; border-radius: 4px; font-size: 10px;">No Dairy</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; background: var(--teal); color: #000; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; border-radius: 6px;">Submit Advanced Query</div>
+      </div>
+    </div>
+
+  </div>
 </section>
+
 
 <!-- CTA SECTION -->
 <section id="cta-section">
