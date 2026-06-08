@@ -2008,11 +2008,18 @@
      API HELPER
   ======================================================== */
   async function apiFetch(path, params = {}) {
-    const base = BASE_URL ? BASE_URL : window.location.origin;
+    let base = localStorage.getItem('recipedb_baseUrl') || BASE_URL;
+    if (!base || base === '/' || base.includes('localhost:3000')) {
+      base = 'https://api.foodoscope.com';
+    }
+    let key = localStorage.getItem('recipedb_apiKey') || API_KEY;
+    if (!key || key === 'undefined' || key === 'null') {
+      key = API_KEY;
+    }
     const url = new URL(base + path);
     Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
     const res = await fetch(url, {
-      headers: { 'Authorization': `Bearer ${API_KEY}` }
+      headers: { 'Authorization': `Bearer ${key}` }
     });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
