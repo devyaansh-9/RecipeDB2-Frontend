@@ -723,7 +723,38 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 0 0 2rem 0 !important;
+      padding: 0 0 3rem 0 !important;
+    }
+
+    /* Dramatic sizing and styling for the carousel cards */
+    .carousel-card {
+      min-width: 240px !important;
+      width: 240px !important;
+      height: 160px !important;
+      border-radius: 20px !important;
+      padding: 1.5rem !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+      border: 1px solid rgba(255,255,255,0.05) !important;
+    }
+    .carousel-card-info h4 {
+      font-size: 1.4rem !important;
+      font-weight: 900 !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9) !important;
+      letter-spacing: -0.02em !important;
+      margin-bottom: 0.3rem !important;
+    }
+    .carousel-card-info p {
+      font-size: 0.85rem !important;
+      color: rgba(255,255,255,0.8) !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9) !important;
+    }
+    .carousel-card:hover {
+      transform: translateY(-8px) scale(1.03) !important;
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    .carousel-card::after {
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 5%, rgba(0,0,0,0.4) 50%, transparent 80%) !important;
     }
     
     /* Use white/light accent instead of green for active marquee card */
@@ -1321,65 +1352,81 @@
             <div class="cuisine-marquee-track" id="cuisine-marquee-track">
 
               <div class="carousel-card active" data-cuisine="">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(34,197,94,0.35), rgba(16,124,65,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&auto=format&fit=crop&q=80')"></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&q=80')"></div>
                 <div class="carousel-card-info"><h4>All Cuisines</h4><p>Browse entire catalog</p></div>
               </div>
-
-              <div class="carousel-card" data-cuisine="Indian">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(249,115,22,0.3), rgba(234,179,8,0.6)), url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇮🇳 Indian</h4><p>Spiced & rich</p></div>
-              </div>
-
-              <div class="carousel-card" data-cuisine="Japanese">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(99,102,241,0.6)), url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇯🇵 Japanese</h4><p>Umami & delicate</p></div>
-              </div>
-
               <div class="carousel-card" data-cuisine="Italian">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(234,88,12,0.6)), url('https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇮🇹 Italian</h4><p>Herbs & cheese</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Italian</h4><p>Herbs & cheese</p></div>
               </div>
-
               <div class="carousel-card" data-cuisine="Mexican">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(101,163,13,0.6)), url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇲🇽 Mexican</h4><p>Fiery & vibrant</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Mexican</h4><p>Fiery & vibrant</p></div>
               </div>
-
               <div class="carousel-card" data-cuisine="French">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(34,197,94,0.6)), url('https://images.unsplash.com/photo-1608855238293-a8853e7f7c98?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇫🇷 French</h4><p>Classic & elegant</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1608855238293-a8853e7f7c98?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>French</h4><p>Classic & elegant</p></div>
               </div>
-
-              <div class="carousel-card" data-cuisine="Middle Eastern">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(245,158,11,0.3), rgba(217,119,6,0.6)), url('https://images.unsplash.com/photo-1547058881-aa0edd92aab3?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🌙 Middle Eastern</h4><p>Aromatic & savory</p></div>
+              <div class="carousel-card" data-cuisine="Japanese">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Japanese</h4><p>Umami & delicate</p></div>
               </div>
-
               <div class="carousel-card" data-cuisine="Chinese">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(220,38,38,0.3), rgba(234,179,8,0.6)), url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇨🇳 Chinese</h4><p>Wok & dim sum</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Chinese</h4><p>Wok & dim sum</p></div>
               </div>
-
+              <div class="carousel-card" data-cuisine="Indian Subcontinent">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Indian</h4><p>Spiced & rich</p></div>
+              </div>
               <div class="carousel-card" data-cuisine="Thai">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(234,179,8,0.6)), url('https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇹🇭 Thai</h4><p>Sweet, sour & spicy</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Thai</h4><p>Sweet, sour & spicy</p></div>
               </div>
-
+              <div class="carousel-card" data-cuisine="Middle Eastern">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1547058881-aa0edd92aab3?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Middle Eastern</h4><p>Aromatic & savory</p></div>
+              </div>
               <div class="carousel-card" data-cuisine="Greek">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(255,255,255,0.25)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇬🇷 Greek</h4><p>Fresh & Mediterranean</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Greek</h4><p>Fresh & Mediterranean</p></div>
               </div>
-
+              <div class="carousel-card" data-cuisine="Spanish and Portuguese">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1515443961218-a51367888e4b?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Spanish</h4><p>Tapas & paella</p></div>
+              </div>
               <div class="carousel-card" data-cuisine="Korean">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(220,38,38,0.3), rgba(168,85,247,0.5)), url('https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇰🇷 Korean</h4><p>Fermented & bold</p></div>
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Korean</h4><p>Fermented & bold</p></div>
               </div>
-
-              <div class="carousel-card" data-cuisine="Spanish">
-                <div class="carousel-card-img" style="background-image: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(249,115,22,0.6)), url('https://images.unsplash.com/photo-1515443961218-a51367888e4b?w=400&auto=format&fit=crop&q=80')"></div>
-                <div class="carousel-card-info"><h4>🇪🇸 Spanish</h4><p>Tapas & paella</p></div>
+              <div class="carousel-card" data-cuisine="Rest Africa">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>African</h4><p>Hearty & earthy</p></div>
               </div>
-
+              <div class="carousel-card" data-cuisine="Caribbean">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1620580415391-7667232230a1?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Caribbean</h4><p>Tropical & spicy</p></div>
+              </div>
+              <div class="carousel-card" data-cuisine="South American">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1601314002592-b8734bca6604?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>South American</h4><p>Grilled meats & corn</p></div>
+              </div>
+              <div class="carousel-card" data-cuisine="UK">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>UK & Irish</h4><p>Pub classics & roasts</p></div>
+              </div>
+              <div class="carousel-card" data-cuisine="Scandinavian">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Scandinavian</h4><p>Cured fish & dill</p></div>
+              </div>
+              <div class="carousel-card" data-cuisine="Eastern European">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1565251610996-0ab2fbd850a1?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>Eastern European</h4><p>Dumplings & stews</p></div>
+              </div>
+              <div class="carousel-card" data-cuisine="US">
+                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80')"></div>
+                <div class="carousel-card-info"><h4>American</h4><p>Burgers & BBQ</p></div>
+              </div>
             </div>
           </div>
           <script>
