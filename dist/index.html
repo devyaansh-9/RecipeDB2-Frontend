@@ -65,6 +65,26 @@
   <script type="module" crossorigin src="/assets/index-B6lYJ60e.js?v=3"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css?v=3">
   <style>
+    /* ===== API CONSOLE SIDEBAR SCROLLBAR ===== */
+    #endpoint-sidebar {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(6, 182, 212, 0.3) rgba(255, 255, 255, 0.02);
+    }
+    #endpoint-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    #endpoint-sidebar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-full);
+    }
+    #endpoint-sidebar::-webkit-scrollbar-thumb {
+      background: rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-full);
+    }
+    #endpoint-sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-cyan);
+    }
+
     /* ===== LAB GRID & VIZ STYLING ===== */
     #lab-pane {
       display: none;
@@ -2184,9 +2204,9 @@
         <div class="playground-grid">
           
           <!-- Left Column: Endpoint Directory -->
-          <div class="glass-panel" style="height: fit-content;">
-            <h3 class="panel-title">API Endpoints</h3>
-            <div class="endpoint-list" id="endpoint-sidebar">
+          <div class="glass-panel" style="height: calc(100vh - 220px); min-height: 600px; max-height: 850px; display: flex; flex-direction: column;">
+            <h3 class="panel-title" style="flex-shrink: 0;">API Endpoints</h3>
+            <div class="endpoint-list" id="endpoint-sidebar" style="flex: 1; overflow-y: auto; padding-right: 0.25rem;">
               <!-- Loaded Dynamically -->
             </div>
           </div>
