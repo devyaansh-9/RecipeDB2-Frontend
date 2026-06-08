@@ -78,6 +78,7 @@ const $ = {
         }
       }
       localStorage.setItem("recipedb_baseUrl", e);
+      clearApiCache();
     },
     get apiKey() {
       let e = localStorage.getItem("recipedb_apiKey");
@@ -101,6 +102,7 @@ const $ = {
     },
     set apiKey(e) {
       localStorage.setItem("recipedb_apiKey", e);
+      clearApiCache();
     },
     get engine() {
       let e = localStorage.getItem("recipedb_engine");
@@ -114,6 +116,39 @@ const $ = {
       localStorage.setItem("recipedb_engine", e);
     },
   };
+
+const API_CACHE_PREFIX = "recipedb_api_cache_";
+function getCachedResponse(url) {
+  try {
+    const cached = sessionStorage.getItem(API_CACHE_PREFIX + url);
+    if (cached) return JSON.parse(cached);
+  } catch (err) {
+    console.warn("Cache read error:", err);
+  }
+  return null;
+}
+function setCachedResponse(url, data) {
+  try {
+    sessionStorage.setItem(API_CACHE_PREFIX + url, JSON.stringify(data));
+  } catch (err) {
+    console.warn("Cache write error, clearing cache:", err);
+    clearApiCache();
+    try {
+      sessionStorage.setItem(API_CACHE_PREFIX + url, JSON.stringify(data));
+    } catch (e) {}
+  }
+}
+function clearApiCache() {
+  try {
+    for (let idx = sessionStorage.length - 1; idx >= 0; idx--) {
+      const key = sessionStorage.key(idx);
+      if (key && key.startsWith(API_CACHE_PREFIX)) {
+        sessionStorage.removeItem(key);
+      }
+    }
+  } catch (err) {}
+}
+
 async function T({
   path: e,
   method: a = "GET",
@@ -126,8 +161,15 @@ async function T({
   Object.entries(n).forEach(([g, h]) => {
     h != null && h !== "" && u.searchParams.append(g, h);
   });
-  const p = u.toString(),
-    d = {};
+  const p = u.toString();
+  if (a === "GET" && !s) {
+    const cached = getCachedResponse(p);
+    if (cached) {
+      console.log(`[API Cache Hit] ${p}`);
+      return cached;
+    }
+  }
+  const d = {};
   a !== "GET" && (d["Content-Type"] = "application/json");
   y.apiKey && (d.Authorization = `Bearer ${y.apiKey}`);
   let l = `curl -X ${a} "${p}"`;
@@ -178,6 +220,9 @@ async function T({
       c.data = JSON.parse(m);
     } catch {
       c.data = m;
+    }
+    if (a === "GET" && !s && g.status === 200) {
+      setCachedResponse(p, c);
     }
     return c;
   } catch (g) {
@@ -719,7 +764,7 @@ function checkActiveFilters() {
 }
 
 async function populateInstructionsForRecipes(recipes) {
-  const batchSize = 3;
+  const batchSize = 15;
   for (let idx = 0; idx < recipes.length; idx += batchSize) {
     const batch = recipes.slice(idx, idx + batchSize);
     await Promise.all(batch.map(async (recipe) => {
@@ -747,7 +792,7 @@ async function populateInstructionsForRecipes(recipes) {
     }));
     const hasUncached = batch.some(r => !localStorage.getItem(`recipedb_instructions_${r.Recipe_id}`));
     if (hasUncached && idx + batchSize < recipes.length) {
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await new Promise(resolve => setTimeout(resolve, 150));
     }
   }
 }
@@ -876,34 +921,73 @@ async function v() {
         const numPagesToFetch = 100;
         const limitKey = responseKey === "root" ? "page_size" : "limit";
         
-        for (let p = 1; p <= numPagesToFetch; p++) {
+        async function fetchPageWithRetry(pIndex) {
           const qParams = {
             ...queryParams,
-            page: p,
+            page: pIndex,
             [limitKey]: 10
           };
           if (qParams.category === "") delete qParams.category;
           
-          if (p > 1) {
-            await new Promise(resolve => setTimeout(resolve, 20));
-          }
-          const r = await T({ path, queryParams: qParams });
-          if (r && r.data) {
-            let data = [];
-            if (responseKey === "root") {
-              data = r.data.data || [];
-            } else {
-              const payload = r.data.payload || {};
-              data = payload.data || [];
+          let attempts = 0;
+          while (attempts < 5) {
+            const r = await T({ path, queryParams: qParams });
+            if (r && r.status === 429) {
+              attempts++;
+              await new Promise(res => setTimeout(res, 300 * attempts));
+              continue;
             }
-            allRecipes = allRecipes.concat(data);
-          } else if (r && r.status === 429) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            p--;
+            return r;
+          }
+          return null;
+        }
+
+        const batchSize = 10;
+        let shouldStop = false;
+        for (let batchStart = 1; batchStart <= numPagesToFetch; batchStart += batchSize) {
+          if (shouldStop) break;
+          const batchEnd = Math.min(batchStart + batchSize - 1, numPagesToFetch);
+          const promises = [];
+          for (let p = batchStart; p <= batchEnd; p++) {
+            promises.push(fetchPageWithRetry(p));
+          }
+          const results = await Promise.all(promises);
+          for (let idx = 0; idx < results.length; idx++) {
+            const r = results[idx];
+            if (r && r.data) {
+              let data = [];
+              if (responseKey === "root") {
+                data = r.data.data || [];
+              } else {
+                const payload = r.data.payload || {};
+                data = payload.data || [];
+              }
+              allRecipes = allRecipes.concat(data);
+              if (data.length === 0) {
+                shouldStop = true;
+              }
+            } else {
+              shouldStop = true;
+            }
           }
         }
 
-        await populateInstructionsForRecipes(allRecipes);
+        const needsInstr = (() => {
+          if (i.activeSearchTab === "tab-ingredient") {
+            return t.searchIngUsed.value.trim() !== "" || t.searchIngNotUsed.value.trim() !== "";
+          }
+          if (i.activeSearchTab === "tab-category") {
+            return t.searchCatUsed.value.trim() !== "" || t.searchCatNotUsed.value.trim() !== "";
+          }
+          if (i.activeSearchTab === "tab-advanced") {
+            return t.advIngUsed.value.trim() !== "" || t.advIngNotUsed.value.trim() !== "";
+          }
+          return false;
+        })();
+
+        if (needsInstr) {
+          await populateInstructionsForRecipes(allRecipes);
+        }
 
         let data = [...allRecipes];
         if (i.activeSearchTab === "tab-cuisine") {
