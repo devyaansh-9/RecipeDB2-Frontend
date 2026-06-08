@@ -1673,11 +1673,32 @@
               <div class="search-form-row col-2">
                 <div class="param-input-group">
                   <label class="param-label" for="search-cat-used">Used</label>
-                  <input type="text" class="param-field" id="search-cat-used" placeholder="Enter food groups to include (e.g., Dairy, Meat)">
+                  <select class="param-field" id="search-cat-used" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Category --</option>
+                    <option value="vegan">Vegan 🌱</option>
+                    <option value="veg">Vegetarian 🥦</option>
+                    <option value="dairy">Dairy 🥛</option>
+                    <option value="meat">Meat 🥩</option>
+                    <option value="seafood">Seafood 🐟</option>
+                    <option value="chicken">Chicken 🍗</option>
+                    <option value="egg">Egg 🥚</option>
+                    <option value="dessert">Dessert 🍰</option>
+                    <option value="nuts">Nuts 🥜</option>
+                    <option value="gluten">Gluten 🌾</option>
+                  </select>
                 </div>
                 <div class="param-input-group">
                   <label class="param-label" for="search-cat-notused">Not Used</label>
-                  <input type="text" class="param-field" id="search-cat-notused" placeholder="Enter food groups to exclude (e.g., Nuts, Gluten)">
+                  <select class="param-field" id="search-cat-notused" style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- None Excluded --</option>
+                    <option value="nuts">Nuts 🥜</option>
+                    <option value="gluten">Gluten 🌾</option>
+                    <option value="dairy">Dairy 🥛</option>
+                    <option value="meat">Meat 🥩</option>
+                    <option value="seafood">Seafood 🐟</option>
+                    <option value="egg">Egg 🥚</option>
+                    <option value="sugar">Sugar 🍬</option>
+                  </select>
                 </div>
               </div>
             </div>
