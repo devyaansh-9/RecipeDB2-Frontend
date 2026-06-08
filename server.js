@@ -19,7 +19,75 @@ const MIME_TYPES = {
   '.webp': 'image/webp'
 };
 
+const https = require('https');
+
+// Load GROQ_API_KEY from .env file (never committed to GitHub)
+const envPath = path.join(__dirname, '.env');
+let GROQ_API_KEY = '';
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const match = envContent.match(/GROQ_API_KEY=(.+)/);
+  if (match) GROQ_API_KEY = match[1].trim();
+}
+
+function fetchGroqNews(callback) {
+  const prompt = "Generate 10 completely unique, fascinating, and realistic news articles related to global cooking trends, recipe discoveries, new restaurant trends, flavor science, or historical culinary facts. Return ONLY a pure JSON array containing 10 objects, each with 'title' (string), 'summary' (string, max 2 sentences), and 'date' (string like 'Today', '2 hours ago', or 'Yesterday'). No markdown formatting around the JSON, just the raw JSON array.";
+
+  const body = JSON.stringify({
+    model: "llama-3.1-8b-instant",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.7
+  });
+
+  const options = {
+    hostname: 'api.groq.com',
+    path: '/openai/v1/chat/completions',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + GROQ_API_KEY,
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body)
+    }
+  };
+
+  const req = https.request(options, (res) => {
+    let data = '';
+    res.on('data', chunk => data += chunk);
+    res.on('end', () => {
+      try {
+        const parsed = JSON.parse(data);
+        let content = parsed.choices[0].message.content.trim();
+        if (content.startsWith('```json')) content = content.substring(7);
+        if (content.startsWith('```')) content = content.substring(3);
+        if (content.endsWith('```')) content = content.substring(0, content.length - 3);
+        const articles = JSON.parse(content.trim());
+        callback(null, articles);
+      } catch (e) {
+        callback(e);
+      }
+    });
+  });
+
+  req.on('error', callback);
+  req.write(body);
+  req.end();
+}
+
 const server = http.createServer((req, res) => {
+  // 0. Secure Groq API proxy endpoint
+  if (req.url === '/api/culinary-news') {
+    fetchGroqNews((err, articles) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: err.message }));
+      } else {
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify(articles));
+      }
+    });
+    return;
+  }
+
   // 1. Check if it's an API request
   if (req.url.startsWith('/recipe2-api')) {
     const options = {

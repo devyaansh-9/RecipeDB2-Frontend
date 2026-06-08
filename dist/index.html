@@ -2137,62 +2137,114 @@
             </div>
           </div>
 
-          <!-- Column 2: Nutri-Planner Calculator (5 columns span) -->
-          <div class="glass-panel">
-            <h3 class="panel-title">Daily Nutri-Planner Calculator</h3>
-            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1.25rem;">
-              Set your target macro thresholds. The database solver will filter through the catalog and suggest matching recipes in real-time.
-            </p>
+          
+          <!-- Column 2: Global Culinary News Feed -->
+          <div class="glass-panel" style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 600px; padding-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
+              <div>
+                <h3 class="panel-title" style="margin-bottom: 4px;">Top 10 Global Recipe News</h3>
+              </div>
+              <button id="refresh-news-btn" style="background: rgba(20,184,166,0.1); color: var(--teal); border: 1px solid rgba(20,184,166,0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+                ↺ Refresh News
+              </button>
+            </div>
             
-            <div class="planner-sliders">
+            <div id="news-loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 400px;">
+              <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--teal); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;"></div>
+              <div style="color: var(--teal); font-weight: 600; letter-spacing: 1px; animation: pulse 1.5s infinite;">FETCHING LATEST CULINARY NEWS...</div>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Querying Groq Llama3...</p>
+            </div>
+
+            <div id="news-feed-container" style="display: none; flex-direction: column; gap: 16px; overflow-y: auto; padding-right: 8px; flex: 1; max-height: 700px;">
+              <!-- News cards rendered here -->
+            </div>
+
+            <style>
+              @keyframes spin { to { transform: rotate(360deg); } }
+              @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+              .news-card {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 10px;
+                padding: 16px;
+                transition: all 0.2s;
+              }
+              .news-card:hover {
+                background: rgba(255,255,255,0.06);
+                border-color: rgba(20,184,166,0.3);
+                transform: translateY(-2px);
+              }
+              .news-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.4; }
+              .news-summary { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+              .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+              .news-read-more { color: var(--teal); font-weight: 700; cursor: pointer; }
+              .news-read-more:hover { color: #fff; }
               
-              <div class="slider-group">
-                <label class="slider-label" for="slide-cal">Calories Max</label>
-                <input type="range" class="planner-range" id="slide-cal" min="100" max="1500" step="50" value="800">
-              </div>
+              /* Scrollbar for news container */
+              #news-feed-container::-webkit-scrollbar { width: 6px; }
+              #news-feed-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
+              #news-feed-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+              #news-feed-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+            </style>
 
-              <div class="slider-group">
-                <label class="slider-label" for="slide-carbs">Carbohydrates Max</label>
-                <input type="range" class="planner-range" id="slide-carbs" min="10" max="400" step="10" value="120">
-              </div>
+            <script>
+              (function() {
+                const container = document.getElementById('news-feed-container');
+                const loading = document.getElementById('news-loading-state');
+                const refreshBtn = document.getElementById('refresh-news-btn');
 
-              <div class="slider-group">
-                <label class="slider-label" for="slide-protein">Protein Min</label>
-                <input type="range" class="planner-range" id="slide-protein" min="5" max="120" step="5" value="30">
-              </div>
+                async function fetchCulinaryNews() {
+                  loading.style.display = 'flex';
+                  container.style.display = 'none';
+                  container.innerHTML = '';
+                  refreshBtn.style.opacity = '0.5';
+                  refreshBtn.style.pointerEvents = 'none';
 
-              <div class="slider-group">
-                <label class="slider-label" for="slide-fat">Total Fats Max</label>
-                <input type="range" class="planner-range" id="slide-fat" min="5" max="150" step="5" value="60">
-              </div>
+                  try {
+                    const response = await fetch('/api/culinary-news');
+                    if (!response.ok) throw new Error('Server error: ' + response.statusText);
+                    const articles = await response.json();
 
-            </div>
+                    articles.forEach(article => {
+                      const card = document.createElement('div');
+                      card.className = 'news-card';
+                      const searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(article.title);
+                      card.innerHTML = `
+                        <div class="news-title">${article.title}</div>
+                        <div class="news-summary">${article.summary}</div>
+                        <div class="news-meta">
+                          <span>${article.date}</span>
+                          <a href="${searchUrl}" target="_blank" class="news-read-more" style="text-decoration:none;">Read Article &#8594;</a>
+                        </div>
+                      `;
+                      container.appendChild(card);
+                    });
 
-            <!-- Compact macro summary card (updated dynamically by exact span IDs) -->
-            <div class="macro-summary-card">
-              <div class="macro-summary-item">
-                <span class="macro-summary-label">Calories Limit</span>
-                <span class="macro-summary-value" id="val-slide-cal">800 kcal</span>
-              </div>
-              <div class="macro-summary-item">
-                <span class="macro-summary-label">Carbs Limit</span>
-                <span class="macro-summary-value" id="val-slide-carbs">120g</span>
-              </div>
-              <div class="macro-summary-item">
-                <span class="macro-summary-label">Protein Target</span>
-                <span class="macro-summary-value" id="val-slide-protein">30g</span>
-              </div>
-              <div class="macro-summary-item">
-                <span class="macro-summary-label">Fat Limit</span>
-                <span class="macro-summary-value" id="val-slide-fat">60g</span>
-              </div>
-            </div>
+                    loading.style.display = 'none';
+                    container.style.display = 'flex';
+                  } catch (err) {
+                    console.error('Failed to fetch news:', err);
+                    loading.innerHTML = `
+                      <div style="color:#ef4444;font-size:24px;margin-bottom:12px;">⚠️</div>
+                      <div style="color:#ef4444;font-weight:700;margin-bottom:8px;">Failed to load news</div>
+                      <p style="font-size:12px;color:var(--text-secondary);text-align:center;">${err.message}</p>
+                      <button onclick="window.location.reload()" style="margin-top:16px; background:transparent; color:#fff; border:1px solid #fff; padding:6px 12px; border-radius:4px; cursor:pointer;">Retry</button>
+                    `;
+                  } finally {
+                    refreshBtn.style.opacity = '1';
+                    refreshBtn.style.pointerEvents = 'auto';
+                  }
+                }
 
-            <h4 class="exclusion-subtitle" style="margin-top: 1.25rem; margin-bottom: 0.75rem;">Recommended Plan Matching Recipes</h4>
-            <div class="planner-results" id="planner-results-container">
-              <!-- Cards Loaded dynamically -->
-            </div>
+                refreshBtn.addEventListener('click', fetchCulinaryNews);
+                
+                // Fetch on initial load
+                // Delay slightly to let the rest of the app load
+                setTimeout(fetchCulinaryNews, 1000);
+              })();
+            </script>
           </div>
+
 
         </div>
       </div>

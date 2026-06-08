@@ -768,22 +768,22 @@ function z() {
       const n = parseInt(a.target.value);
       n >= 1 && n <= i.totalPages && ((i.currentPage = n), v());
     }),
-    t.slideCal.addEventListener("input", (a) => {
+    t.slideCal?.addEventListener("input", (a) => {
       ((i.plannerTargets.calories = parseInt(a.target.value)),
         (t.valSlideCal.textContent = `${i.plannerTargets.calories} kcal`),
         E());
     }),
-    t.slideCarbs.addEventListener("input", (a) => {
+    t.slideCarbs?.addEventListener("input", (a) => {
       ((i.plannerTargets.carbs = parseInt(a.target.value)),
         (t.valSlideCarbs.textContent = `${i.plannerTargets.carbs}g`),
         E());
     }),
-    t.slideProtein.addEventListener("input", (a) => {
+    t.slideProtein?.addEventListener("input", (a) => {
       ((i.plannerTargets.protein = parseInt(a.target.value)),
         (t.valSlideProtein.textContent = `${i.plannerTargets.protein}g`),
         E());
     }),
-    t.slideFat.addEventListener("input", (a) => {
+    t.slideFat?.addEventListener("input", (a) => {
       ((i.plannerTargets.fat = parseInt(a.target.value)),
         (t.valSlideFat.textContent = `${i.plannerTargets.fat}g`),
         E());
