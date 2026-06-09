@@ -835,35 +835,163 @@ function I() {
     a.classList.toggle("hidden", !e);
   });
 }
+function openDB() {
+  return new Promise((resolve, reject) => {
+    try {
+      const request = indexedDB.open('RecipeImageCacheDB', 1);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('recipe_images')) {
+          db.createObjectStore('recipe_images');
+        }
+      };
+      request.onsuccess = (e) => resolve(e.target.result);
+      request.onerror = (e) => reject(e.target.error);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+async function getCachedImage(recipeName) {
+  try {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction('recipe_images', 'readonly');
+      const store = transaction.objectStore('recipe_images');
+      const request = store.get(recipeName);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (err) {
+    console.warn('[Cache] Failed to get cached image:', err);
+    return null;
+  }
+}
+async function cacheImage(recipeName, imageBlob) {
+  try {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction('recipe_images', 'readwrite');
+      const store = transaction.objectStore('recipe_images');
+      const request = store.put(imageBlob, recipeName);
+      request.onsuccess = () => resolve(true);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (err) {
+    console.warn('[Cache] Failed to cache image:', err);
+    return false;
+  }
+}
+async function generateRecipeImage(recipeName, region) {
+  const cachedBlob = await getCachedImage(recipeName);
+  if (cachedBlob) return cachedBlob;
+  const key = localStorage.getItem('recipedb_stabilityKey');
+  if (!key) return null;
+  const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
+  const formData = new FormData();
+  formData.append('prompt', prompt);
+  formData.append('output_format', 'webp');
+  try {
+    const res = await fetch('https://api.stability.ai/v2beta/stable-image/generate/core', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${key}`,
+        'Accept': 'image/*'
+      },
+      body: formData
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    await cacheImage(recipeName, blob);
+    return blob;
+  } catch (err) {
+    return null;
+  }
+}
+
 async function H() {
-  const e = await T({ path: "/recipe2-api/recipe/recipeofday" });
+  let e;
+  try {
+    const res = await fetch('/api/recipe-of-day');
+    if (!res.ok) throw new Error('Not OK');
+    const data = await res.json();
+    e = { data };
+  } catch (err) {
+    console.warn("Failed fetching from server-side cache, trying direct API route...", err);
+    e = await T({ path: "/recipe2-api/recipe/recipeofday" });
+  }
   if (e && e.data && e.data.payload) {
     const a = e.data.payload.data;
-    ((i.featuredRecipe = a),
+    const loaderEl = document.getElementById("featured-loading-state");
+    (i.featuredRecipe = a),
       (t.featuredTitle.textContent = a.Recipe_title),
-      (t.featuredTime.textContent = `${a.total_time || 45} mins`),
-      (t.featuredRegion.textContent = a.Region || "Global"),
-      (t.featuredImage.src =
-        a.img_url &&
-        !a.img_url.includes("geniuskitchen") &&
-        !a.img_url.includes("food.com") &&
-        !a.img_url.includes("logo") &&
-        !a.img_url.includes("placeholder")
-          ? a.img_url
-          : "assets/chef_cooking.png"),
-      (t.featuredBadges.innerHTML = ""));
+      (t.featuredTime.textContent = a.total_time ? `${a.total_time} mins` : "");
+    t.featuredRegion.textContent = a.Region || "Global";
+    // Separate the bullet from region/time to avoid showing " • " when empty
+    const metaEl = t.featuredRegion.parentElement;
+    if (metaEl) {
+      metaEl.innerHTML = `<span id="featured-region">${a.Region || "Global"}</span>${a.total_time ? ` &bull; <span id="featured-time">${a.total_time} mins</span>` : ''}`;
+    }
+    (t.featuredBadges.innerHTML = "");
     const n = (o, s) => {
       const r = document.createElement("span");
-      ((r.className = `badge ${s}`),
-        (r.textContent = o),
-        t.featuredBadges.appendChild(r));
+      (r.className = `badge ${s}`), (r.textContent = o), t.featuredBadges.appendChild(r);
     };
     (parseFloat(a.Calories) && n(`${a.Calories} Calories`, "calories"),
       parseFloat(a.vegan) === 1 && n("Vegan", "vegan"),
       parseFloat(a.lacto_vegetarian) === 1 && n("Lacto-Veg", "vegan"),
-      a.Source && n(`Source: ${a.Source}`, ""),
       (t.featuredRecipeContainer.onclick = () => _(a)),
       (t.featuredRecipeContainer.style.cursor = "pointer"));
+
+    // --- Git Cache Logic (same as landing page) ---
+    const rawImg = a.img_url || '';
+    const isPlaceholder = !rawImg ||
+      rawImg.toLowerCase().includes('geniuskitchen') ||
+      rawImg.toLowerCase().includes('food.com') ||
+      rawImg.toLowerCase().includes('logo') ||
+      rawImg.toLowerCase().includes('placeholder');
+
+    t.featuredImage.style.transition = 'opacity 0.6s ease';
+    t.featuredImage.style.opacity = '0';
+
+    let useGitCache = false;
+    try {
+      const cacheRes = await fetch('assets/recipe_title.txt');
+      if (cacheRes.ok) {
+        const cachedTitle = (await cacheRes.text()).trim();
+        if (cachedTitle === a.Recipe_title) useGitCache = true;
+      }
+    } catch (err) { /* no cache */ }
+
+    if (useGitCache) {
+      setTimeout(() => {
+        t.featuredImage.src = 'assets/recipe_of_the_day.webp';
+        t.featuredImage.onload = () => {
+          t.featuredImage.style.opacity = '1';
+          if (loaderEl) loaderEl.style.display = 'none';
+        };
+      }, 600);
+    } else {
+      const blob = await generateRecipeImage(a.Recipe_title, a.Region || 'Global');
+      if (blob) {
+        const dataUrl = URL.createObjectURL(blob);
+        setTimeout(() => {
+          t.featuredImage.src = dataUrl;
+          t.featuredImage.onload = () => {
+            t.featuredImage.style.opacity = '1';
+            if (loaderEl) loaderEl.style.display = 'none';
+          };
+        }, 600);
+      } else {
+        setTimeout(() => {
+          t.featuredImage.src = isPlaceholder ? 'assets/chef_cooking.png' : rawImg;
+          t.featuredImage.onload = () => {
+            t.featuredImage.style.opacity = '1';
+            if (loaderEl) loaderEl.style.display = 'none';
+          };
+        }, 600);
+      }
+    }
   }
 }
 async function O() {

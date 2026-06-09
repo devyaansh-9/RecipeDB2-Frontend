@@ -2145,9 +2145,21 @@
     // Pick deterministic recipe based on day of year for fallback image
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
 
+    let responseData;
     try {
-      const responseData = await apiFetch('/recipe2-api/recipe/recipeofday');
-      // The API returns { payload: { data: { ... } } }
+      const res = await fetch('/api/recipe-of-day');
+      if (!res.ok) throw new Error('Not OK');
+      responseData = await res.json();
+    } catch (err) {
+      console.warn('[Cache] Server cache fetch failed. Falling back to live API...', err);
+      try {
+        responseData = await apiFetch('/recipe2-api/recipe/recipeofday');
+      } catch (e) {
+        console.error('All fetch attempts failed:', e);
+      }
+    }
+
+    try {
       const recipe = responseData?.payload?.data || responseData?.data;
       if (!recipe) throw new Error('No data');
 

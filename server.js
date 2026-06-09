@@ -6,6 +6,55 @@ const PORT = 8080;
 const TARGET_HOST = '192.168.1.92';
 const TARGET_PORT = 3030;
 
+// ============================================================
+//  SERVER-SIDE RECIPE OF THE DAY CACHE
+//  Fetches once per day from the backend, serves the SAME
+//  recipe to BOTH landing page and portal — guaranteed sync.
+// ============================================================
+let rotdCache = { date: null, recipe: null };
+
+function getTodayStr() {
+  return new Date().toISOString().slice(0, 10); // "2026-06-09"
+}
+
+function fetchRotdFromBackend(callback) {
+  const options = {
+    hostname: TARGET_HOST,
+    port: TARGET_PORT,
+    path: '/recipe2-api/recipe/recipeofday',
+    method: 'GET'
+  };
+  const req = http.request(options, (res) => {
+    let data = '';
+    res.on('data', chunk => data += chunk);
+    res.on('end', () => {
+      try {
+        const parsed = JSON.parse(data);
+        const recipe = parsed?.payload?.data || parsed?.data || null;
+        if (recipe) {
+          rotdCache = { date: getTodayStr(), recipe };
+          console.log(`[ROTD Cache] Fetched & cached: "${recipe.Recipe_title}"`);
+        }
+        callback(null, recipe);
+      } catch (e) {
+        callback(e, null);
+      }
+    });
+  });
+  req.on('error', err => callback(err, null));
+  req.end();
+}
+
+function getRotdCached(callback) {
+  const today = getTodayStr();
+  if (rotdCache.date === today && rotdCache.recipe) {
+    console.log(`[ROTD Cache] Serving cached: "${rotdCache.recipe.Recipe_title}"`);
+    callback(null, rotdCache.recipe);
+  } else {
+    fetchRotdFromBackend(callback);
+  }
+}
+
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -83,6 +132,24 @@ const server = http.createServer((req, res) => {
       } else {
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end(JSON.stringify(articles));
+      }
+    });
+    return;
+  }
+
+  // ── RECIPE OF THE DAY — server-cached so both pages get same recipe ──
+  if (req.url === '/api/recipe-of-day') {
+    getRotdCached((err, recipe) => {
+      if (err || !recipe) {
+        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: 'Failed to fetch recipe of the day' }));
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control': 'no-store'
+        });
+        res.end(JSON.stringify({ payload: { data: recipe } }));
       }
     });
     return;
