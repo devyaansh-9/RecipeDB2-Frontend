@@ -230,7 +230,7 @@
       --border-glow:        transparent;
 
       --text-primary:       #111827; /* Soft warm vanilla white */
-      --text-secondary:     #4B5563; /* Muted oat gray */
+      --text-secondary:     #000000; /* Muted oat gray */
       --text-muted:         #9CA3AF; /* Earthy stone dust */
 
       --accent-cyan:        #E5A93B; /* Saffron Gold */
@@ -2213,8 +2213,8 @@
                 box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.08);
               }
               .news-title { font-size: 15px; font-weight: 700; color: #0f172a !important; margin-bottom: 8px; line-height: 1.4; font-family: 'Poppins', sans-serif !important; }
-              .news-summary { font-size: 13px; color: #475569 !important; line-height: 1.5; margin-bottom: 12px; }
-              .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b !important; text-transform: uppercase; letter-spacing: 0.5px; }
+              .news-summary { font-size: 13px; color: #000000 !important; line-height: 1.5; margin-bottom: 12px; }
+              .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #000000 !important; text-transform: uppercase; letter-spacing: 0.5px; }
               .news-read-more { color: #2563eb !important; font-weight: 700; cursor: pointer; text-decoration: none !important; }
               .news-read-more:hover { color: #1d4ed8 !important; text-decoration: underline !important; }
               
@@ -2285,10 +2285,10 @@
 
     /* ── Body / paragraph text — rich slate, not grey ── */
     body {
-      color: #334155 !important;
+      color: #000000 !important;
     }
     p, li, label, td, th {
-      color: #334155;
+      color: #000000;
     }
     select option {
       background-color: #ffffff !important;
@@ -2297,7 +2297,7 @@
 
     /* ── Primary paragraph blocks ── */
     .about-text, .section-description, .detail-text {
-      color: #475569 !important;
+      color: #000000 !important;
       font-size: 1rem !important;
       line-height: 1.75 !important;
       font-weight: 400 !important;
@@ -2314,7 +2314,7 @@
 
     /* ── Nav tabs — clear & active ── */
     .nav-tab, .nav-links button, .tab-btn {
-      color: #475569 !important;
+      color: #000000 !important;
       font-weight: 600 !important;
       font-size: 0.9rem !important;
     }
@@ -2346,7 +2346,7 @@
     .gastronomy-table td:first-child small,
     .gastronomy-table .diet-tag,
     .diet-type {
-      color: #64748b !important;
+      color: #000000 !important;
       font-size: 0.78rem !important;
     }
 
@@ -2416,11 +2416,77 @@
 
     /* ── Stat labels below numbers ── */
     .stat-label, .kpi-label, [class*="stat"] p {
-      color: #64748b !important;
+      color: #000000 !important;
       font-size: 0.72rem !important;
       font-weight: 600 !important;
       letter-spacing: 0.08em !important;
       text-transform: uppercase !important;
+    }
+
+    /* ===== REMOVE GLASSMORPHISM BLURS & SHADOWS ON IMAGES ===== */
+    
+    /* 1. Remove blur filter and dark shadow gradient overlay on the Recipe of the Day image */
+    .featured-card-blur {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    
+    /* Make the Recipe of the Day image 4k bright and vibrant */
+    .featured-box-bg-img {
+      filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
+    }
+    
+    /* 2. Remove dark shadow gradient overlay on the carousel cards */
+    .carousel-card::after {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    
+    /* Make the carousel images 4k bright and vibrant */
+    .carousel-card-img {
+      filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
+    }
+    
+    /* Ensure text inside carousel cards is extremely readable without image shadow overlays */
+    .carousel-card-info h4 {
+      color: #ffffff !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+      font-weight: 900 !important;
+    }
+    .carousel-card-info p {
+      color: #e2e8f0 !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+      font-weight: 700 !important;
+    }
+
+    /* Ensure text in featured Recipe of the Day card is readable without overlays */
+    .featured-box-title {
+      background: none !important;
+      -webkit-text-fill-color: #ffffff !important;
+      color: #ffffff !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.95) !important;
+      font-weight: 900 !important;
+    }
+    .featured-box-tag {
+      color: #f59e0b !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95) !important;
+      font-weight: 800 !important;
+    }
+    .featured-box-meta span {
+      color: #e2e8f0 !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+      font-weight: 700 !important;
+    }
+
+    /* 3. Remove glassmorphic blurs from navbar, header, and footer */
+    .navbar, nav, header, [class*="nav-"], #navbar, #header, #topbar {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    footer.app-footer, .app-footer, footer {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
 </style>
 
@@ -2912,7 +2978,7 @@
                 <!-- Map Info Detail Overlay (Floating inside map) -->
                 <div id="map-hub-details" style="position: absolute; bottom: 15px; left: 15px; right: 15px; padding: 1rem; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(30, 58, 138, 0.15); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10;">
                   <h4 id="map-hub-name" style="color: #1e3a8a; font-weight: 800; margin: 0 0 0.35rem 0; font-size: 0.85rem;">Cuisine Atlas Details</h4>
-                  <p id="map-hub-stats" style="font-size: 0.72rem; color: #334155; margin: 0; line-height: 1.4;"></p>
+                  <p id="map-hub-stats" style="font-size: 0.72rem; color: #000000; margin: 0; line-height: 1.4;"></p>
                 </div>
               </div>
             </div>
