@@ -1186,52 +1186,60 @@
     }
     
     /* Results pagination bar styling */
-    #explorer-pane .table-footer-controls {
+    .table-footer-controls {
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
-      padding: 1.5rem 0 0 0 !important;
-      border-top: 1px solid var(--border-color) !important;
-      background: transparent !important;
+      padding: 1rem 1.5rem !important;
+      border: 1px solid rgba(30, 58, 138, 0.15) !important;
+      background: rgba(255, 255, 255, 0.90) !important;
+      border-radius: 10px !important;
       margin-top: 3rem !important;
       flex-wrap: wrap !important;
       gap: 1.5rem !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
     }
     
-    #explorer-pane .rows-per-page {
+    .table-footer-controls .rows-per-page {
       display: flex !important;
       align-items: center !important;
       gap: 0.75rem !important;
     }
     
-    #explorer-pane .footer-select,
-    #explorer-pane .goto-input {
-      background: rgba(255, 255, 255, 0.02) !important;
-      border: 1px solid var(--border-color) !important;
+    .table-footer-controls .footer-label {
+      color: #000000 !important;
+      font-weight: 700 !important;
+      font-size: 0.85rem !important;
+    }
+
+    .table-footer-controls .footer-select,
+    .table-footer-controls .goto-input {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.20) !important;
       border-radius: 8px !important;
-      color: var(--text-primary) !important;
+      color: #000000 !important;
       padding: 0.5rem 0.75rem !important;
       outline: none !important;
       font-size: 0.85rem !important;
       font-weight: 600 !important;
     }
     
-    #explorer-pane .table-pagination-nav {
+    .table-footer-controls .table-pagination-nav {
       display: flex !important;
       align-items: center !important;
       gap: 1.5rem !important;
       flex-wrap: wrap !important;
     }
     
-    #explorer-pane .pagination-arrows {
+    .table-footer-controls .pagination-arrows {
       display: flex !important;
       gap: 0.35rem !important;
     }
     
-    #explorer-pane .btn-arrow-nav {
-      background: rgba(255,255,255,0.02) !important;
-      border: 1px solid var(--border-color) !important;
-      color: var(--text-primary) !important;
+    .table-footer-controls .btn-arrow-nav {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.20) !important;
+      color: #000000 !important;
       border-radius: 8px !important;
       width: 40px !important;
       height: 40px !important;
@@ -1243,23 +1251,26 @@
       transition: all 0.2s !important;
     }
     
-    #explorer-pane .btn-arrow-nav:hover:not(:disabled) {
-      background: var(--text-primary) !important;
+    .table-footer-controls .btn-arrow-nav:hover:not(:disabled) {
+      background: #000000 !important;
       color: #ffffff !important;
-      border-color: var(--text-primary) !important;
+      border-color: #000000 !important;
     }
     
-    #explorer-pane .btn-arrow-nav:disabled {
-      opacity: 0.25 !important;
+    .table-footer-controls .btn-arrow-nav:disabled {
+      background: rgba(0, 0, 0, 0.05) !important;
+      color: rgba(0, 0, 0, 0.3) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      opacity: 0.5 !important;
       cursor: not-allowed !important;
     }
     
-    #explorer-pane .goto-box {
+    .table-footer-controls .goto-box {
       display: flex !important;
       align-items: center !important;
       gap: 0.75rem !important;
     }
-
+    
     /* ─── Background Animated Orbit Rings ─── */
     .portal-orbit {
       position: fixed !important;
