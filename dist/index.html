@@ -62,8 +62,8 @@
       }
     })();
   </script>
-  <script type="module" crossorigin src="/assets/index-B6lYJ60e.js?v=3"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css?v=3">
+  <script type="module" crossorigin src="/assets/index-B6lYJ60e.js?v=4"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css?v=4">
   <style>
     /* ===== API CONSOLE SIDEBAR SCROLLBAR ===== */
     #endpoint-sidebar {
@@ -95,41 +95,41 @@
     
     /* SVG Map styling */
     .world-svg {
-      background: rgba(0, 0, 0, 0.4);
+      background: transparent !important;
       width: 100%;
       height: 100%;
       min-height: 320px;
     }
     .map-land {
-      fill: rgba(255, 255, 255, 0.03);
-      stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 1.2;
-      transition: fill 0.3s, stroke 0.3s;
+      fill: #ffffff !important;
+      stroke: #cbd5e1 !important;
+      stroke-width: 1.0 !important;
+      transition: fill 0.3s, stroke 0.3s !important;
     }
     .map-land:hover {
-      fill: rgba(34, 197, 94, 0.06);
-      stroke: rgba(34, 197, 94, 0.25);
+      fill: #bae6fd !important;
+      stroke: #3b82f6 !important;
     }
     
     /* Map Hub Markers styling */
     .map-hub {
-      cursor: pointer;
+      cursor: pointer !important;
     }
     .map-hub circle.pulse-circle {
-      fill: rgba(34, 197, 94, 0.25);
-      transform-origin: center;
-      transform-box: fill-box;
-      animation: pulse-ring 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+      fill: rgba(29, 78, 216, 0.35) !important;
+      transform-origin: center !important;
+      transform-box: fill-box !important;
+      animation: pulse-ring 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite !important;
     }
     .map-hub circle.core-circle {
-      fill: var(--accent-cyan);
-      stroke: #fff;
-      stroke-width: 1.5;
-      transition: fill 0.35s, r 0.35s;
+      fill: #1d4ed8 !important;
+      stroke: #fff !important;
+      stroke-width: 1.5 !important;
+      transition: fill 0.35s, r 0.35s !important;
     }
     .map-hub:hover circle.core-circle {
-      fill: var(--accent-emerald);
-      r: 8;
+      fill: #2563eb !important;
+      r: 8 !important;
     }
     
     /* Staggered pulse rings keyframes */
@@ -187,24 +187,51 @@
     .planner-range {
       accent-color: var(--accent-cyan);
     }
-  </style>
+  
+    /* ===== FORCE WHITE NAVBAR & PAGE BACKGROUND ===== */
+    html, body {
+      background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 30%, #93c5fd 60%, #ffffff 100%) !important;
+      background-attachment: fixed !important;
+    }
+    /* Force the top navbar bar white */
+    .navbar, nav, header, [class*="nav-"], #navbar, #header, #topbar {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+      border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    }
+    /* Navbar text should be dark */
+    .navbar *, nav *, header * {
+      color: #111827 !important;
+    }
+    /* Keep accent colors for brand name */
+    .brand-db2 {
+      color: var(--accent-cyan) !important;
+    }
+    /* Force all top-level page wrappers to be transparent */
+    #app, .app, main, .main, .page, .page-wrapper, .content-wrapper {
+      background: transparent !important;
+    }
+
+    </style>
 
   <!-- ===== LANDING PAGE THEME + CURSOR OVERRIDE ===== -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
   <style>
     /* ─── Gourmet Gastronomy Theme Tokens ─── */
     :root {
-      --bg-main:            #0C0A09; /* Deep warm cocoa black */
-      --bg-surface:         #181514; /* Warm charcoal clay */
-      --bg-panel:           #211D1C; /* Dark roasted coffee */
-      --bg-input:           #131110; /* Clean dark input background */
-      --border-color:       rgba(229, 218, 206, 0.08); /* Faint warm copper wire */
-      --border-hover:       rgba(229, 218, 206, 0.18); /* Brighter warm copper */
+      --bg-main:            transparent; /* Deep warm cocoa black */
+      --bg-surface:         rgba(255,255,255,0.75); /* Warm charcoal clay */
+      --bg-panel:           rgba(255,255,255,0.85); /* Dark roasted coffee */
+      --bg-input:           rgba(255,255,255,0.90); /* Clean dark input background */
+      --border-color:       rgba(30, 58, 138, 0.15); /* Faint warm copper wire */
+      --border-hover:       rgba(0, 0, 0, 0.20); /* Brighter warm copper */
       --border-glow:        transparent;
 
-      --text-primary:       #FAF9F6; /* Soft warm vanilla white */
-      --text-secondary:     #C5BDB5; /* Muted oat gray */
-      --text-muted:         #8E837A; /* Earthy stone dust */
+      --text-primary:       #111827; /* Soft warm vanilla white */
+      --text-secondary:     #4B5563; /* Muted oat gray */
+      --text-muted:         #9CA3AF; /* Earthy stone dust */
 
       --accent-cyan:        #E5A93B; /* Saffron Gold */
       --accent-cyan-rgb:    229, 169, 59;
@@ -226,7 +253,7 @@
 
     /* ─── Body Base ─── */
     html {
-      background-color: #0C0A09 !important;
+      background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 30%, #93c5fd 60%, #ffffff 100%) !important; min-height: 100vh;
     }
 
     body {
@@ -384,7 +411,7 @@
       background: rgba(255,255,255,0.04) !important;
     }
     .nav-tab.active {
-      background: #222226 !important;
+      background: #F8FAFC !important;
       border-color: var(--border-color) !important;
       color: var(--text-primary) !important;
       box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
@@ -486,7 +513,7 @@
 
     /* ─── Average Calories by Continent (Chart Box) ─── */
     .chart-box {
-      background: #18181B !important;
+      background: #F1F5F9 !important;
       border: 1px solid var(--border-color) !important;
       border-radius: 6px !important;
       padding: 1rem !important;
@@ -495,7 +522,7 @@
 
     /* ─── Global Macronutrient Target Weights re-style ─── */
     .macro-chart-container {
-      background: #222226 !important;
+      background: #F8FAFC !important;
       border: 1px solid var(--border-color) !important;
       border-radius: 6px !important;
       padding: 1rem !important;
@@ -518,7 +545,7 @@
       color: var(--text-primary) !important;
     }
     .macro-progress-bg {
-      background: #18181B !important;
+      background: #F1F5F9 !important;
       height: 6px !important;
       border-radius: 9999px !important;
     }
@@ -586,7 +613,7 @@
     .planner-range {
       width: 100% !important;
       accent-color: var(--accent-cyan) !important;
-      background: #27272A !important;
+      background: #E2E8F0 !important;
       height: 4px !important;
       border-radius: 9999px !important;
       outline: none !important;
@@ -594,7 +621,7 @@
 
     /* ─── Macro Summary Card ─── */
     .macro-summary-card {
-      background: #222226;
+      background: #F8FAFC;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       padding: 1rem;
@@ -641,7 +668,7 @@
       gap: 10px;
     }
     .suggestion-card {
-      background: #222226 !important;
+      background: #F8FAFC !important;
       border: 1px solid var(--border-color) !important;
       border-radius: 6px !important;
       padding: 0.75rem 1rem !important;
@@ -753,8 +780,17 @@
       height: 160px !important;
       border-radius: 20px !important;
       padding: 1.5rem !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
       border: 1px solid rgba(255,255,255,0.05) !important;
+    }
+    .carousel-card-img {
+      filter: brightness(1.1) saturate(1.2) contrast(1.05) !important;
+      background-size: cover !important;
+      background-position: center !important;
+      transition: filter 0.3s ease !important;
+    }
+    .carousel-card:hover .carousel-card-img {
+      filter: brightness(1.2) saturate(1.3) contrast(1.05) !important;
     }
     .carousel-card-info h4 {
       font-size: 1.4rem !important;
@@ -774,7 +810,7 @@
       border-color: rgba(255,255,255,0.3) !important;
     }
     .carousel-card::after {
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 5%, rgba(0,0,0,0.4) 50%, transparent 80%) !important;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 80%) !important;
     }
     
     /* Use white/light accent instead of green for active marquee card */
@@ -837,7 +873,7 @@
     
     #explorer-pane .search-tab-btn.active {
       background: var(--text-primary) !important;
-      color: var(--bg-main) !important;
+      color: #ffffff !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
     }
     
@@ -923,7 +959,7 @@
     #explorer-pane .planner-range {
       accent-color: var(--text-primary) !important;
       height: 4px !important;
-      background: #27272a !important;
+      background: #E2E8F0 !important;
     }
     
     /* Submit search button redesign */
@@ -935,7 +971,7 @@
       border-radius: 14px !important;
       font-weight: 800 !important;
       background: var(--text-primary) !important;
-      color: var(--bg-main) !important;
+      color: #ffffff !important;
       border: none !important;
       cursor: pointer !important;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -1083,7 +1119,7 @@
     
     #explorer-pane .gastronomy-table td:last-child button:hover {
       background: var(--text-primary) !important;
-      color: var(--bg-main) !important;
+      color: #ffffff !important;
       border-color: var(--text-primary) !important;
     }
     
@@ -1209,7 +1245,7 @@
     
     #explorer-pane .btn-arrow-nav:hover:not(:disabled) {
       background: var(--text-primary) !important;
-      color: var(--bg-main) !important;
+      color: #ffffff !important;
       border-color: var(--text-primary) !important;
     }
     
@@ -2163,29 +2199,230 @@
               @keyframes spin { to { transform: rotate(360deg); } }
               @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
               .news-card {
-                background: rgba(255,255,255,0.03);
-                border: 1px solid rgba(255,255,255,0.08);
+                background: rgba(255, 255, 255, 0.6) !important;
+                border: 1px solid rgba(30, 58, 138, 0.1) !important;
                 border-radius: 10px;
                 padding: 16px;
-                transition: all 0.2s;
+                transition: all 0.25s ease;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
               }
               .news-card:hover {
-                background: rgba(255,255,255,0.06);
-                border-color: rgba(20,184,166,0.3);
+                background: #ffffff !important;
+                border-color: #3b82f6 !important;
                 transform: translateY(-2px);
+                box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.08);
               }
-              .news-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.4; }
-              .news-summary { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
-              .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
-              .news-read-more { color: var(--teal); font-weight: 700; cursor: pointer; }
-              .news-read-more:hover { color: #fff; }
+              .news-title { font-size: 15px; font-weight: 700; color: #0f172a !important; margin-bottom: 8px; line-height: 1.4; font-family: 'Poppins', sans-serif !important; }
+              .news-summary { font-size: 13px; color: #475569 !important; line-height: 1.5; margin-bottom: 12px; }
+              .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b !important; text-transform: uppercase; letter-spacing: 0.5px; }
+              .news-read-more { color: #2563eb !important; font-weight: 700; cursor: pointer; text-decoration: none !important; }
+              .news-read-more:hover { color: #1d4ed8 !important; text-decoration: underline !important; }
               
               /* Scrollbar for news container */
               #news-feed-container::-webkit-scrollbar { width: 6px; }
-              #news-feed-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
-              #news-feed-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-              #news-feed-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
-            </style>
+              #news-feed-container::-webkit-scrollbar-track { background: rgba(30, 58, 138, 0.05); border-radius: 4px; }
+              #news-feed-container::-webkit-scrollbar-thumb { background: rgba(30, 58, 138, 0.15); border-radius: 4px; }
+              #news-feed-container::-webkit-scrollbar-thumb:hover { background: rgba(30, 58, 138, 0.3); }
+            
+    /* ===== WHITE FOOTER OVERRIDE ===== */
+    footer.app-footer,
+    .app-footer,
+    footer {
+      background: rgba(255, 255, 255, 0.90) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.06) !important;
+    }
+    .footer-copyright-banner,
+    .footer-copyright-banner * {
+      color: #374151 !important;
+    }
+    .footer-copyright-banner a {
+      color: #1d4ed8 !important;
+    }
+    .footer-copyright-banner a:hover {
+      color: #1e40af !important;
+    }
+
+    /* ============================================================
+       PROFESSIONAL TYPOGRAPHY SYSTEM — Blue & White Theme
+       ============================================================ */
+
+    /* Import premium Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
+
+    /* Base body text — deep navy, highly readable */
+    body, body * {
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+    }
+
+    body {
+      color: #1e293b !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    /* ── Headings — Deep navy blue, bold & premium ── */
+    h1, h2, h3, h4, h5, h6,
+    .panel-title,
+    .section-title,
+    .search-by-header {
+      font-family: 'Poppins', 'Inter', sans-serif !important;
+      color: #0f172a !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* ── Brand name stays vibrant ── */
+    .brand, .brand * {
+      color: #0f172a !important;
+    }
+    /* Keep "DB2" in brand accent color */
+    .brand-db2, [class*="brand"] span {
+      color: #2563eb !important;
+    }
+
+    /* ── Body / paragraph text — rich slate, not grey ── */
+    body {
+      color: #334155 !important;
+    }
+    p, li, label, td, th {
+      color: #334155;
+    }
+    select option {
+      background-color: #ffffff !important;
+      color: #1f2937 !important;
+    }
+
+    /* ── Primary paragraph blocks ── */
+    .about-text, .section-description, .detail-text {
+      color: #475569 !important;
+      font-size: 1rem !important;
+      line-height: 1.75 !important;
+      font-weight: 400 !important;
+    }
+
+    /* ── Stats numbers — vivid blue accent ── */
+    .stat-value, .stat-number, .kpi-value,
+    [class*="stat"] h2, [class*="stat"] h3,
+    .metric-value {
+      color: #1d4ed8 !important;
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 900 !important;
+    }
+
+    /* ── Nav tabs — clear & active ── */
+    .nav-tab, .nav-links button, .tab-btn {
+      color: #475569 !important;
+      font-weight: 600 !important;
+      font-size: 0.9rem !important;
+    }
+    .nav-tab.active, .nav-tab:hover, .nav-links button.active {
+      color: #1d4ed8 !important;
+      font-weight: 700 !important;
+    }
+
+    /* ── Table text ── */
+    .gastronomy-table td {
+      color: #1e293b !important;
+      font-weight: 500 !important;
+    }
+    .gastronomy-table th {
+      color: #0f172a !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      font-size: 0.75rem !important;
+    }
+    /* Recipe name in table — vivid dark blue, not black */
+    .gastronomy-table .recipe-name,
+    .gastronomy-table td:first-child strong,
+    .gastronomy-table td:first-child {
+      color: #1e3a8a !important;
+      font-weight: 700 !important;
+    }
+    /* Sub-label (diet type) */
+    .gastronomy-table td:first-child small,
+    .gastronomy-table .diet-tag,
+    .diet-type {
+      color: #64748b !important;
+      font-size: 0.78rem !important;
+    }
+
+    /* ── Calorie / number cells — golden accent ── */
+    .gastronomy-table td.calories,
+    .gastronomy-table .calorie-val,
+    .calorie-value {
+      color: #d97706 !important;
+      font-weight: 700 !important;
+    }
+
+    /* ── Panel titles ── */
+    .panel-title {
+      color: #0f172a !important;
+      font-size: 1.25rem !important;
+    }
+
+    /* ── Search labels & filter headings ── */
+    .search-by-header {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* ── Footer text ── */
+    footer, .app-footer, .footer-copyright-banner {
+      color: #374151 !important;
+    }
+    footer p, .footer-copyright-banner p,
+    .footer-copyright-banner span {
+      color: #6b7280 !important;
+      font-size: 0.82rem !important;
+    }
+    footer strong, .footer-copyright-banner strong {
+      color: #1e3a8a !important;
+      font-weight: 700 !important;
+    }
+    footer a, .footer-copyright-banner a {
+      color: #2563eb !important;
+      font-weight: 500 !important;
+      text-decoration: underline !important;
+    }
+
+    /* ── Cuisine section title ── */
+    .carousel-section .panel-title {
+      color: #0f172a !important;
+    }
+
+    /* ── "About RecipeDB2" accented text ── */
+    .accent-text, [style*="color: var(--accent"] {
+      color: #2563eb !important;
+    }
+
+    /* ── Buttons with text ── */
+    .btn-primary, button[class*="btn-"] {
+      font-weight: 600 !important;
+      letter-spacing: 0.01em !important;
+    }
+
+    /* ── Detail / modal text ── */
+    .detail-title {
+      color: #0f172a !important;
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 800 !important;
+    }
+
+    /* ── Stat labels below numbers ── */
+    .stat-label, .kpi-label, [class*="stat"] p {
+      color: #64748b !important;
+      font-size: 0.72rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+    }
+</style>
 
             <script>
               (function() {
@@ -2332,9 +2569,9 @@
               <!-- Split Grid for Canvas and Controls -->
               <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 1rem; flex: 1; min-height: 350px;">
                 <!-- Canvas Wrapper -->
-                <div id="canvas-container" style="position: relative; border-radius: 12px; background: rgba(0, 0, 0, 0.6); overflow: hidden; border: 1px solid var(--border-color);">
+                <div id="canvas-container" style="position: relative; border-radius: 12px; background: #0f172a; overflow: hidden; border: 1px solid rgba(30, 58, 138, 0.25);">
                   <canvas id="ingredient-canvas" style="display: block; width: 100%; height: 100%; min-height: 320px;"></canvas>
-                  <div id="canvas-tooltip" style="position: absolute; pointer-events: none; background: rgba(10,10,10,0.9); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 8px 12px; font-size: 0.75rem; color: #fff; opacity: 0; transition: opacity 0.2s; z-index: 10; box-shadow: var(--shadow-glow); width: 220px; line-height: 1.4;"></div>
+                  <div id="canvas-tooltip" style="position: absolute; pointer-events: none; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 8px 12px; font-size: 0.75rem; color: #fff; opacity: 0; transition: opacity 0.2s; z-index: 10; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); width: 220px; line-height: 1.4;"></div>
                 </div>
                 
                 <!-- Controls & Legend Panel -->
@@ -2394,7 +2631,7 @@
               </p>
               
               <!-- Vector World Map Container -->
-              <div style="flex: 1; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); overflow: hidden; position: relative;">
+              <div style="flex: 1; border-radius: 12px; background: #dbeafe; border: 1px solid rgba(30, 58, 138, 0.15); overflow: hidden; position: relative;">
                 <svg viewBox="0 0 710 380" class="world-svg">
   <path class="map-land" id="map-country-fo" d="M321.9,80 322.8,80.8 322.8,81.1 321.8,80.4 321.9,80Z" />
   <path class="map-land" id="map-country-um" d="M25.4,206.4 25.4,206.4 25.4,206.4 25.4,206.4 25.4,206.4Z" />
@@ -2673,9 +2910,9 @@
                 </svg>
 
                 <!-- Map Info Detail Overlay (Floating inside map) -->
-                <div id="map-hub-details" style="position: absolute; bottom: 15px; left: 15px; right: 15px; padding: 1rem; border-radius: 8px; background: rgba(10,12,25,0.9); border: 1px solid var(--border-color); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10;">
-                  <h4 id="map-hub-name" style="color: var(--accent-cyan); font-weight: 800; margin: 0 0 0.35rem 0; font-size: 0.85rem;">Cuisine Atlas Details</h4>
-                  <p id="map-hub-stats" style="font-size: 0.72rem; color: var(--text-secondary); margin: 0; line-height: 1.4;"></p>
+                <div id="map-hub-details" style="position: absolute; bottom: 15px; left: 15px; right: 15px; padding: 1rem; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(30, 58, 138, 0.15); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10;">
+                  <h4 id="map-hub-name" style="color: #1e3a8a; font-weight: 800; margin: 0 0 0.35rem 0; font-size: 0.85rem;">Cuisine Atlas Details</h4>
+                  <p id="map-hub-stats" style="font-size: 0.72rem; color: #334155; margin: 0; line-height: 1.4;"></p>
                 </div>
               </div>
             </div>
@@ -3440,12 +3677,11 @@
                 if (l.target === hoveredNode.id) hoveredNeighbors.add(l.source);
               });
               
-              // Set tooltip overlay
               tooltip.innerHTML = `
-                <div style="font-weight:800; color:var(--accent-cyan); font-size:0.85rem; margin-bottom: 0.2rem;">${hoveredNode.label}</div>
-                <div style="font-size:0.7rem; color:var(--text-secondary);"><span style="color:#aaa;">Category:</span> ${hoveredNode.category}</div>
-                <div style="font-size:0.7rem; color:var(--text-secondary); margin-top:0.1rem;"><span style="color:#aaa;">Staples:</span> ${hoveredNode.compounds}</div>
-                <div style="font-size:0.7rem; color:var(--text-secondary); margin-top:0.1rem;"><span style="color:#aaa;">Recipes:</span> ${hoveredNode.count}</div>
+                <div style="font-weight:800; color:#e5a93b; font-size:0.85rem; margin-bottom: 0.2rem;">${hoveredNode.label}</div>
+                <div style="font-size:0.7rem; color:#e2e8f0;"><span style="color:#94a3b8;">Category:</span> ${hoveredNode.category}</div>
+                <div style="font-size:0.7rem; color:#e2e8f0; margin-top:0.1rem;"><span style="color:#94a3b8;">Staples:</span> ${hoveredNode.compounds}</div>
+                <div style="font-size:0.7rem; color:#e2e8f0; margin-top:0.1rem;"><span style="color:#94a3b8;">Recipes:</span> ${hoveredNode.count}</div>
               `;
               
               // Tooltip positioning

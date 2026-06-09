@@ -1947,12 +1947,12 @@ function j() {
     p += `
       <defs>
         <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="${isMax ? "var(--accent-cyan)" : "#3F3F46"}" />
-          <stop offset="100%" stop-color="${isMax ? "rgba(34,197,94,0.15)" : "#27272A"}" />
+          <stop offset="0%" stop-color="${isMax ? "#f59e0b" : "#3b82f6"}" stop-opacity="1" />
+          <stop offset="100%" stop-color="${isMax ? "#fef3c7" : "#93c5fd"}" stop-opacity="1" />
         </linearGradient>
       </defs>
-      <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "var(--accent-cyan)" : "var(--border-color)"}" stroke-width="1" rx="4" ry="4" style="transition: all 0.3s;" />
-      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "var(--accent-cyan)" : "var(--text-primary)"}" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
+      <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "#d97706" : "#2563eb"}" stroke-width="1.2" rx="4" ry="4" style="transition: all 0.3s;" />
+      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#d97706" : "#1e3a8a"}" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
       <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="9.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
     `;
   }),
