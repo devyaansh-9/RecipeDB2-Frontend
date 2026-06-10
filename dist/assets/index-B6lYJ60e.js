@@ -885,21 +885,8 @@ async function cacheImage(recipeName, imageBlob) {
 async function generateRecipeImage(recipeName, region) {
   const cachedBlob = await getCachedImage(recipeName);
   if (cachedBlob) return cachedBlob;
-  const key = localStorage.getItem('recipedb_stabilityKey');
-  if (!key) return null;
-  const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
-  const formData = new FormData();
-  formData.append('prompt', prompt);
-  formData.append('output_format', 'webp');
   try {
-    const res = await fetch('https://api.stability.ai/v2beta/stable-image/generate/core', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${key}`,
-        'Accept': 'image/*'
-      },
-      body: formData
-    });
+    const res = await fetch(`/api/generate-image?recipeName=${encodeURIComponent(recipeName)}&region=${encodeURIComponent(region)}`);
     if (!res.ok) return null;
     const blob = await res.blob();
     await cacheImage(recipeName, blob);

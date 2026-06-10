@@ -122,6 +122,55 @@ function fetchGroqNews(callback) {
   req.end();
 }
 
+
+const STABILITY_KEY = 'sk-VnPSbBlyZ7MecnDuSOJGYsaRLfUbWYj128e5PLtu6WISePhX';
+
+function generateImage(prompt, callback) {
+  const boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW';
+  const bodyParts = [
+    `--${boundary}\r\n`,
+    `Content-Disposition: form-data; name="prompt"\r\n\r\n`,
+    `${prompt}\r\n`,
+    `--${boundary}\r\n`,
+    `Content-Disposition: form-data; name="output_format"\r\n\r\n`,
+    `webp\r\n`,
+    `--${boundary}--\r\n`
+  ];
+  const bodyBuffer = Buffer.concat(bodyParts.map(part => Buffer.from(part)));
+
+  const options = {
+    hostname: 'api.stability.ai',
+    path: '/v2beta/stable-image/generate/core',
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${STABILITY_KEY}`,
+      'Accept': 'image/*',
+      'Content-Type': `multipart/form-data; boundary=${boundary}`,
+      'Content-Length': bodyBuffer.length
+    }
+  };
+
+  const req = https.request(options, (res) => {
+    if (res.statusCode === 200) {
+      let chunks = [];
+      res.on('data', chunk => chunks.push(chunk));
+      res.on('end', () => {
+        callback(null, Buffer.concat(chunks));
+      });
+    } else {
+      let errBody = '';
+      res.on('data', chunk => errBody += chunk);
+      res.on('end', () => {
+        callback(new Error(`Stability AI returned ${res.statusCode}: ${errBody}`));
+      });
+    }
+  });
+
+  req.on('error', err => callback(err));
+  req.write(bodyBuffer);
+  req.end();
+}
+
 const server = http.createServer((req, res) => {
   // 0. Secure Groq API proxy endpoint
   if (req.url === '/api/culinary-news') {

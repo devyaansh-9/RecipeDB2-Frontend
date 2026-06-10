@@ -3897,28 +3897,12 @@
           return cachedBlob;
         }
 
-        // 2. Fetch from API if not cached
-        const key = localStorage.getItem('recipedb_stabilityKey');
-        if (!key) return null;
-
-        const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
-        
-        const formData = new FormData();
-        formData.append('prompt', prompt);
-        formData.append('output_format', 'webp');
-
+        // 2. Fetch from our secure proxy API if not cached
         try {
-          const res = await fetch('https://api.stability.ai/v2beta/stable-image/generate/core', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${key}`,
-              'Accept': 'image/*'
-            },
-            body: formData
-          });
+          const url = `/api/generate-image?recipeName=${encodeURIComponent(recipeName)}&region=${encodeURIComponent(region)}`;
+          const res = await fetch(url);
           if (!res.ok) {
-            const err = await res.text();
-            console.warn('[Stability] Error:', res.status, err);
+            console.warn('[Stability Proxy] Error:', res.status);
             return null;
           }
           const blob = await res.blob();
@@ -3926,7 +3910,7 @@
           await cacheImage(recipeName, blob);
           return blob;
         } catch (err) {
-          console.warn('[Stability] Image generation failed:', err);
+          console.warn('[Stability Proxy] Image generation failed:', err);
           return null;
         }
       }
