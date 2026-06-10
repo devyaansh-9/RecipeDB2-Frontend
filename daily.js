@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 
 const API_KEY = 'LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz';
 const BASE_URL = 'https://api.foodoscope.com';
-const STABILITY_KEY = 'sk-' + '4YXlW1YSz9iw2Dm4eW3uKWlkQtE9zL328Go7Chl6iGaMktoC';
+const STABILITY_KEY = 'sk-' + 'VnPSbBlyZ7MecnDuSOJGYsaRLfUbWYj128e5PLtu6WISePhX';
 
 async function run() {
   try {
