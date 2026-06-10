@@ -1425,114 +1425,116 @@
            ========================================== -->
       <div id="explorer-pane" class="tab-pane active">
         
-        <!-- Cuisine Infinite Marquee Slideshow -->
-        <div class="glass-panel carousel-section" style="overflow:hidden !important;">
-          <h3 class="panel-title" style="margin-bottom: 0.75rem;">Explore Cuisines</h3>
+        <!-- Cuisine Filter Tabs -->
+        <div class="glass-panel" style="padding: 1rem 1.5rem 0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+            <h3 class="panel-title" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">🌍 Explore Cuisines</h3>
+            <span id="cuisine-filter-label" style="font-size:0.75rem; color:var(--text-muted); font-weight:600; letter-spacing:0.03em;">All cuisines shown</span>
+          </div>
           <style>
-            .cuisine-marquee-wrap { overflow: hidden; padding: 0.5rem 0 0.75rem; }
-            .cuisine-marquee-track {
-              display: flex; gap: 1.25rem; width: max-content;
-              animation: cuisine-scroll 35s linear infinite;
+            /* ─── Override bundle's .carousel-card styles completely ─── */
+            #cuisine-carousel.cuisine-tabs-wrap { 
+              display:flex !important; 
+              flex-wrap:wrap !important; 
+              gap:8px !important; 
+              border:none !important; 
+              margin:0 !important; 
+              padding:0.5rem 0 !important; 
+              overflow-x:auto !important; 
+              scrollbar-width:none !important; 
             }
-            .cuisine-marquee-track:hover { animation-play-state: paused; }
-            @keyframes cuisine-scroll {
-              0%   { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
+            #cuisine-carousel.cuisine-tabs-wrap::-webkit-scrollbar { display:none !important; }
+            #cuisine-carousel .cuisine-tab {
+              /* Reset all carousel-card styles */
+              min-width: unset !important;
+              width: auto !important;
+              height: auto !important;
+              position: static !important;
+              overflow: visible !important;
+              flex-shrink: unset !important;
+              flex-direction: row !important;
+              justify-content: flex-start !important;
+              transform: none !important;
+              box-shadow: none !important;
+              
+              /* Match .nav-tab styles */
+              background: transparent !important;
+              border: 1px solid transparent !important;
+              color: var(--text-secondary) !important;
+              padding: 6px 14px !important;
+              border-radius: 6px !important;
+              font-weight: 600 !important;
+              font-size: 0.82rem !important;
+              transition: all 0.2s ease !important;
+              display: inline-flex !important;
+              align-items: center !important;
+              gap: 6px !important;
+              cursor: pointer !important;
+              user-select: none !important;
+              white-space: nowrap !important;
             }
+            /* Kill the bundle's ::after overlay and ::before top-bar on .carousel-card */
+            #cuisine-carousel .cuisine-tab::after { display:none !important; content:none !important; }
+            #cuisine-carousel .cuisine-tab::before { display:none !important; content:none !important; }
+            
+            #cuisine-carousel .cuisine-tab:hover {
+              color: var(--text-primary) !important;
+              background: rgba(255,255,255,0.04) !important;
+              transform: none !important;
+              border-color: transparent !important;
+              box-shadow: none !important;
+            }
+            #cuisine-carousel .cuisine-tab.active {
+              background: #F8FAFC !important;
+              border-color: var(--border-color) !important;
+              color: #2563EB !important; /* Match Recipe Portal blue */
+              box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+              transform: none !important;
+            }
+            #cuisine-carousel .tab-flag { font-size: 1rem !important; line-height:1 !important; filter: saturate(0.8); }
+            #cuisine-carousel .cuisine-tab.active .tab-flag { filter: saturate(1.2); }
           </style>
-          <div class="cuisine-marquee-wrap">
-            <div class="cuisine-marquee-track" id="cuisine-marquee-track">
-
-              <div class="carousel-card active" data-cuisine="">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>All Cuisines</h4><p>Browse entire catalog</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Italian">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Italian</h4><p>Herbs & cheese</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Mexican">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Mexican</h4><p>Fiery & vibrant</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="French">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1608855238293-a8853e7f7c98?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>French</h4><p>Classic & elegant</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Japanese">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Japanese</h4><p>Umami & delicate</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Chinese">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Chinese</h4><p>Wok & dim sum</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Indian Subcontinent">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Indian</h4><p>Spiced & rich</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Thai">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Thai</h4><p>Sweet, sour & spicy</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Middle Eastern">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1547058881-aa0edd92aab3?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Middle Eastern</h4><p>Aromatic & savory</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Greek">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Greek</h4><p>Fresh & Mediterranean</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Spanish and Portuguese">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1515443961218-a51367888e4b?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Spanish</h4><p>Tapas & paella</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Korean">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Korean</h4><p>Fermented & bold</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Rest Africa">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>African</h4><p>Hearty & earthy</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Caribbean">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Caribbean</h4><p>Tropical & spicy</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="South American">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1601314002592-b8734bca6604?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>South American</h4><p>Grilled meats & corn</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="UK">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>UK & Irish</h4><p>Pub classics & roasts</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Scandinavian">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Scandinavian</h4><p>Cured fish & dill</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="Eastern European">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1623341214825-9f4f963727da?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>Eastern European</h4><p>Dumplings & stews</p></div>
-              </div>
-              <div class="carousel-card" data-cuisine="US">
-                <div class="carousel-card-img" style="background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80')"></div>
-                <div class="carousel-card-info"><h4>American</h4><p>Burgers & BBQ</p></div>
-              </div>
-            </div>
+          <div class="cuisine-tabs-wrap" id="cuisine-carousel">
+            <span class="cuisine-tab carousel-card all-tab active" data-cuisine=""><span class="tab-flag">🍽️</span> All</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Italian"><span class="tab-flag">🇮🇹</span> Italian</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Mexican"><span class="tab-flag">🇲🇽</span> Mexican</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="French"><span class="tab-flag">🇫🇷</span> French</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Japanese"><span class="tab-flag">🇯🇵</span> Japanese</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Chinese"><span class="tab-flag">🇨🇳</span> Chinese</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Indian Subcontinent"><span class="tab-flag">🇮🇳</span> Indian</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Thai"><span class="tab-flag">🇹🇭</span> Thai</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Middle Eastern"><span class="tab-flag">🥙</span> Middle Eastern</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Greek"><span class="tab-flag">🇬🇷</span> Greek</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Spanish and Portuguese"><span class="tab-flag">🇪🇸</span> Spanish</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Korean"><span class="tab-flag">🇰🇷</span> Korean</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Rest Africa"><span class="tab-flag">🌍</span> African</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Caribbean"><span class="tab-flag">🏝️</span> Caribbean</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="South American"><span class="tab-flag">🇧🇷</span> S. American</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="UK"><span class="tab-flag">🇬🇧</span> UK &amp; Irish</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Scandinavian"><span class="tab-flag">🇸🇪</span> Scandinavian</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="Eastern European"><span class="tab-flag">🥟</span> E. European</span>
+            <span class="cuisine-tab carousel-card" data-cuisine="US"><span class="tab-flag">🇺🇸</span> American</span>
           </div>
           <script>
-            // Clone all cards once for seamless infinite loop
             (function() {
-              const track = document.getElementById('cuisine-marquee-track');
-              if (!track) return;
-              const cards = track.innerHTML;
-              track.innerHTML = cards + cards; // duplicate for seamless wrap
+              const wrap = document.getElementById('cuisine-carousel');
+              if (!wrap) return;
+              wrap.addEventListener('click', function(e) {
+                const tab = e.target.closest('.cuisine-tab');
+                if (!tab) return;
+                wrap.querySelectorAll('.cuisine-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const cuisine = tab.dataset.cuisine;
+                const label = document.getElementById('cuisine-filter-label');
+                if (label) label.textContent = cuisine ? 'Filtered: ' + tab.textContent.trim() : 'All cuisines shown';
+              });
             })();
           </script>
         </div>
 
         <!-- About & Featured Recipe Dual-Card Section -->
+
+
         <div class="about-featured-grid">
           
           <!-- Left Panel: About RecipeDB2 -->
