@@ -952,30 +952,30 @@ async function H() {
 
     if (useGitCache) {
       setTimeout(() => {
-        t.featuredImage.src = 'assets/recipe_of_the_day.webp';
         t.featuredImage.onload = () => {
           t.featuredImage.style.opacity = '1';
           if (loaderEl) loaderEl.style.display = 'none';
         };
+        t.featuredImage.src = 'assets/recipe_of_the_day.webp';
       }, 600);
     } else {
       const blob = await generateRecipeImage(a.Recipe_title, a.Region || 'Global');
       if (blob) {
         const dataUrl = URL.createObjectURL(blob);
         setTimeout(() => {
-          t.featuredImage.src = dataUrl;
           t.featuredImage.onload = () => {
             t.featuredImage.style.opacity = '1';
             if (loaderEl) loaderEl.style.display = 'none';
           };
+          t.featuredImage.src = dataUrl;
         }, 600);
       } else {
         setTimeout(() => {
-          t.featuredImage.src = isPlaceholder ? 'assets/chef_cooking.png' : rawImg;
           t.featuredImage.onload = () => {
             t.featuredImage.style.opacity = '1';
             if (loaderEl) loaderEl.style.display = 'none';
           };
+          t.featuredImage.src = isPlaceholder ? 'assets/chef_cooking.png' : rawImg;
         }, 600);
       }
     }
