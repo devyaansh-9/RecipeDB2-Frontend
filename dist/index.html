@@ -1224,8 +1224,8 @@
     }
     
     .table-footer-controls .footer-label {
-      color: #000000 !important;
-      font-weight: 700 !important;
+      color: #0f172a !important;
+      font-weight: 800 !important;
       font-size: 0.85rem !important;
     }
 
@@ -1234,11 +1234,11 @@
       background: #ffffff !important;
       border: 1px solid rgba(0, 0, 0, 0.20) !important;
       border-radius: 8px !important;
-      color: #000000 !important;
+      color: #0f172a !important;
       padding: 0.5rem 0.75rem !important;
       outline: none !important;
       font-size: 0.85rem !important;
-      font-weight: 600 !important;
+      font-weight: 800 !important;
     }
     
     .table-footer-controls .table-pagination-nav {
@@ -1286,6 +1286,14 @@
       display: flex !important;
       align-items: center !important;
       gap: 0.75rem !important;
+    }
+
+    /* Force all text inside pagination bar to be dark black */
+    .table-footer-controls span,
+    .table-footer-controls label,
+    .table-footer-controls input,
+    .table-footer-controls select {
+      color: #0f172a !important;
     }
     
     /* ─── Background Animated Orbit Rings ─── */
@@ -2092,8 +2100,8 @@
           <!-- Table Interactive Footer controls -->
           <div class="table-footer-controls">
             <div class="rows-per-page">
-              <span class="footer-label">Rows per page:</span>
-              <select class="footer-select" id="rows-selector">
+              <span class="footer-label" style="color:#0f172a!important;font-weight:800!important;">Rows per page:</span>
+              <select class="footer-select" id="rows-selector" style="color:#0f172a!important;font-weight:700!important;">
                 <option value="5">5</option>
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
@@ -2101,7 +2109,7 @@
             </div>
             
             <div class="table-pagination-nav">
-              <span class="footer-label" id="footer-item-counter">Loading...</span>
+              <span class="footer-label" id="footer-item-counter" style="color:#0f172a!important;font-weight:800!important;">Loading...</span>
               
               <div class="pagination-arrows">
                 <button class="btn-arrow-nav" id="btn-nav-first" title="First page">&laquo;</button>
@@ -2111,8 +2119,8 @@
               </div>
 
               <div class="goto-box">
-                <span class="footer-label">Go To</span>
-                <input type="number" class="goto-input" id="input-goto-page" value="1" min="1">
+                <span class="footer-label" style="color:#0f172a!important;font-weight:800!important;">Go To</span>
+                <input type="number" class="goto-input" id="input-goto-page" value="1" min="1" style="color:#0f172a!important;font-weight:700!important;">
               </div>
             </div>
           </div>
