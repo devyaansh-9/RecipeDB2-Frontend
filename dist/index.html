@@ -1208,13 +1208,15 @@
       justify-content: space-between !important;
       align-items: center !important;
       padding: 1rem 1.5rem !important;
-      border: 1px solid rgba(30, 58, 138, 0.15) !important;
-      background: rgba(255, 255, 255, 0.90) !important;
-      border-radius: 10px !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      background: rgba(15, 23, 42, 0.75) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-radius: 14px !important;
       margin-top: 3rem !important;
       flex-wrap: wrap !important;
       gap: 1.5rem !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.06) !important;
     }
     
     .table-footer-controls .rows-per-page {
@@ -1224,21 +1226,32 @@
     }
     
     .table-footer-controls .footer-label {
-      color: #000000 !important;
-      font-weight: 700 !important;
-      font-size: 0.85rem !important;
+      color: rgba(255, 255, 255, 0.6) !important;
+      font-weight: 600 !important;
+      font-size: 0.82rem !important;
+      letter-spacing: 0.02em !important;
     }
 
     .table-footer-controls .footer-select,
     .table-footer-controls .goto-input {
-      background: #ffffff !important;
-      border: 1px solid rgba(0, 0, 0, 0.20) !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 8px !important;
-      color: #000000 !important;
+      color: #ffffff !important;
       padding: 0.5rem 0.75rem !important;
       outline: none !important;
       font-size: 0.85rem !important;
       font-weight: 600 !important;
+      transition: border-color 0.2s !important;
+    }
+    .table-footer-controls .footer-select:focus,
+    .table-footer-controls .goto-input:focus {
+      border-color: rgba(249, 115, 22, 0.5) !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1) !important;
+    }
+    .table-footer-controls .footer-select option {
+      background: #0f172a !important;
+      color: #ffffff !important;
     }
     
     .table-footer-controls .table-pagination-nav {
@@ -1254,30 +1267,32 @@
     }
     
     .table-footer-controls .btn-arrow-nav {
-      background: #ffffff !important;
-      border: 1px solid rgba(0, 0, 0, 0.20) !important;
-      color: #000000 !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      color: rgba(255, 255, 255, 0.85) !important;
       border-radius: 8px !important;
-      width: 40px !important;
-      height: 40px !important;
+      width: 38px !important;
+      height: 38px !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      font-size: 1.1rem !important;
+      font-size: 1rem !important;
       cursor: pointer !important;
-      transition: all 0.2s !important;
+      transition: all 0.2s ease !important;
     }
     
     .table-footer-controls .btn-arrow-nav:hover:not(:disabled) {
-      background: #000000 !important;
+      background: linear-gradient(135deg, rgba(249,115,22,0.8), rgba(234,88,12,0.9)) !important;
       color: #ffffff !important;
-      border-color: #000000 !important;
+      border-color: rgba(249,115,22,0.5) !important;
+      box-shadow: 0 4px 12px rgba(249,115,22,0.35) !important;
+      transform: translateY(-1px) !important;
     }
     
     .table-footer-controls .btn-arrow-nav:disabled {
-      background: rgba(0, 0, 0, 0.05) !important;
-      color: rgba(0, 0, 0, 0.3) !important;
-      border-color: rgba(0, 0, 0, 0.1) !important;
+      background: rgba(255, 255, 255, 0.03) !important;
+      color: rgba(255, 255, 255, 0.2) !important;
+      border-color: rgba(255, 255, 255, 0.06) !important;
       opacity: 0.5 !important;
       cursor: not-allowed !important;
     }
@@ -2252,25 +2267,25 @@
               #news-feed-container::-webkit-scrollbar-thumb { background: rgba(30, 58, 138, 0.15); border-radius: 4px; }
               #news-feed-container::-webkit-scrollbar-thumb:hover { background: rgba(30, 58, 138, 0.3); }
             
-    /* ===== WHITE FOOTER OVERRIDE ===== */
+    /* ===== DARK FOOTER OVERRIDE ===== */
     footer.app-footer,
     .app-footer,
     footer {
-      background: rgba(255, 255, 255, 0.90) !important;
-      backdrop-filter: blur(12px) !important;
-      -webkit-backdrop-filter: blur(12px) !important;
-      border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-      box-shadow: 0 -2px 12px rgba(0,0,0,0.06) !important;
+      background: rgba(10, 15, 30, 0.85) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.3) !important;
     }
     .footer-copyright-banner,
     .footer-copyright-banner * {
-      color: #374151 !important;
+      color: rgba(255, 255, 255, 0.5) !important;
     }
     .footer-copyright-banner a {
-      color: #1d4ed8 !important;
+      color: rgba(249, 115, 22, 0.8) !important;
     }
     .footer-copyright-banner a:hover {
-      color: #1e40af !important;
+      color: rgba(249, 115, 22, 1) !important;
     }
 
     /* ============================================================
