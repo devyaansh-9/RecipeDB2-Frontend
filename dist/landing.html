@@ -2219,22 +2219,23 @@
           console.log('[Git Cache] Loading cached image from Git...');
           setTimeout(() => {
             imgEl.onload = () => { imgEl.style.opacity = '1'; };
-            imgEl.src = 'assets/recipe_of_the_day.webp';
-          }, 600);
+            imgEl.onerror = () => { imgEl.style.opacity = '1'; imgEl.src = 'assets/chef_cooking.png'; };
+            imgEl.src = 'assets/recipe_of_the_day.webp?v=' + Date.now();
+          }, 300);
         } else {
           const blob = await generateRecipeImage(title, region);
           if (blob) {
             const dataUrl = URL.createObjectURL(blob);
             setTimeout(() => {
               imgEl.onload = () => { imgEl.style.opacity = '1'; };
+              imgEl.onerror = () => { imgEl.style.opacity = '1'; imgEl.src = 'assets/chef_cooking.png'; };
               imgEl.src = dataUrl;
-            }, 600);
+            }, 300);
           } else {
-            console.warn('[Stability] Failed. Falling back directly to chef cooking placeholder...');
-            setTimeout(() => {
-              imgEl.onload = () => { imgEl.style.opacity = '1'; };
-              imgEl.src = 'assets/chef_cooking.png';
-            }, 600);
+            console.warn('[Stability] Failed. Falling back to chef cooking placeholder...');
+            imgEl.onload = () => { imgEl.style.opacity = '1'; };
+            imgEl.onerror = () => { imgEl.style.opacity = '1'; };
+            imgEl.src = 'assets/chef_cooking.png';
           }
         }
     }
