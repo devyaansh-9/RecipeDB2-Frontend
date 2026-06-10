@@ -6,7 +6,7 @@
   <title>RecipeDB2 Gastronomy Portal & API Playground</title>
   <meta name="description" content="A comprehensive interactive client and developer console for accessing over 128,942 recipes, nutritional metrics, and meal planning features of RecipeDB2.">
   <script>
-    // Early diagnostics setup
+    // Early diagnostics setup with backend error logger
     (function() {
       window.consoleErrors = [];
       const originalError = console.error;
@@ -15,10 +15,22 @@
         window.consoleErrors.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' '));
       };
       window.addEventListener('error', function(e) {
-        window.consoleErrors.push('Error: ' + e.message + ' at ' + e.filename + ':' + e.lineno);
+        const errInfo = 'Error: ' + e.message + ' at ' + e.filename + ':' + e.lineno;
+        window.consoleErrors.push(errInfo);
+        fetch('/api/log-error', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: errInfo, stack: e.error ? e.error.stack : null })
+        }).catch(() => {});
       });
       window.addEventListener('unhandledrejection', function(e) {
-        window.consoleErrors.push('Unhandled Rejection: ' + (e.reason ? e.reason.message || e.reason.stack || e.reason : e));
+        const errInfo = 'Unhandled Rejection: ' + (e.reason ? e.reason.message || e.reason.stack || e.reason : e);
+        window.consoleErrors.push(errInfo);
+        fetch('/api/log-error', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: errInfo, stack: e.reason && e.reason.stack ? e.reason.stack : null })
+        }).catch(() => {});
       });
     })();
   </script>

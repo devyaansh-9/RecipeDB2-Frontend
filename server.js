@@ -173,7 +173,31 @@ function generateImage(prompt, callback) {
 
 const server = http.createServer((req, res) => {
   // 0. Secure Groq API proxy endpoint
-  if (req.url === '/api/culinary-news') {
+  
+  // ─── BROWSER ERROR LOGGER ENDPOINT ───
+  if (req.url === '/api/log-error' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      console.log('\n================== BROWSER ERROR LOGGED ==================');
+      try {
+        const parsed = JSON.parse(body);
+        console.log(parsed.error || parsed.message || body);
+        if (parsed.stack) {
+          console.log('Stack Trace:');
+          console.log(parsed.stack);
+        }
+      } catch (e) {
+        console.log(body);
+      }
+      console.log('==========================================================\n');
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: true }));
+    });
+    return;
+  }
+
+if (req.url === '/api/culinary-news') {
     fetchGroqNews((err, articles) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
