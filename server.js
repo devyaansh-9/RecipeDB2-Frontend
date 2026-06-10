@@ -197,7 +197,34 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-if (req.url === '/api/culinary-news') {
+  // ─── STABILITY AI IMAGE GENERATION PROXY ENDPOINT ───
+  const [pathname, queryString] = req.url.split('?');
+  if (pathname === '/api/generate-image') {
+    const queryParams = new URLSearchParams(queryString || '');
+    const recipeName = queryParams.get('recipeName') || '';
+    const region = queryParams.get('region') || '';
+    const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
+    
+    console.log(`[Stability Proxy] Generating image for: "${recipeName}" (${region} cuisine)...`);
+    generateImage(prompt, (err, imageBuffer) => {
+      if (err) {
+        console.error('[Stability Proxy Error]:', err.message);
+        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: err.message }));
+      } else {
+        console.log(`[Stability Proxy] Success generating image for: "${recipeName}"`);
+        res.writeHead(200, {
+          'Content-Type': 'image/webp',
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control': 'public, max-age=86400'
+        });
+        res.end(imageBuffer);
+      }
+    });
+    return;
+  }
+
+  if (req.url === '/api/culinary-news') {
     fetchGroqNews((err, articles) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
