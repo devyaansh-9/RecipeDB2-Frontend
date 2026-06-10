@@ -4247,79 +4247,95 @@
   
 
   <script>
-    const canvas = document.getElementById('particle-bg');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      let width, height, particles;
+    (function() {
+      const canvas = document.getElementById('particle-bg');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
 
-      const shapes = ['🥦', '🌽', '🥬', '🍄', '🥑', '🍆', '🍋', '🍇', '🥕', '🍏', '🌶️', '🧀'];
-      const colors = ['#A78BFA', '#F472B6', '#34D399', '#FBBF24', '#60A5FA', '#F87171'];
+        const shapes = ['🥦', '🌽', '🥬', '🍄', '🥑', '🍆', '🍋', '🍇', '🥕', '🍏', '🌶️', '🧀'];
+        const colors = ['#A78BFA', '#F472B6', '#34D399', '#FBBF24', '#60A5FA', '#F87171'];
 
-      function initParticles() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        
-        particles = [];
-        const numParticles = Math.floor(width * height / 15000); // Dense field like confetti
-        
-        for (let i = 0; i < numParticles; i++) {
-          const isEmoji = Math.random() > 0.4;
-          particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: Math.random() * 0.4 + 0.2, // Drift right
-            vy: Math.random() * 0.4 + 0.2, // Drift down
-            rotation: Math.random() * Math.PI * 2,
-            rotSpeed: (Math.random() - 0.5) * 0.02,
-            size: Math.random() * 12 + 10, // Small veggies (10px to 22px)
-            isEmoji: isEmoji,
-            emoji: isEmoji ? shapes[Math.floor(Math.random() * shapes.length)] : null,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.5 + 0.3
-          });
-        }
-      }
-
-      function animateParticles() {
-        ctx.clearRect(0, 0, width, height);
-        
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.rotation += p.rotSpeed;
+        function initParticles() {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
           
-          if (p.x > width + 20) { p.x = -20; p.y = Math.random() * height; }
-          if (p.y > height + 20) { p.y = -20; p.x = Math.random() * width; }
-
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rotation);
-          ctx.globalAlpha = p.alpha;
+          particles = [];
+          const numParticles = Math.floor(width * height / 15000); // Dense field like confetti
           
-          if (p.isEmoji) {
-            ctx.font = `${p.size}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(p.emoji, 0, 0);
-          } else {
-            ctx.beginPath();
-            ctx.arc(0, 0, p.size / 3, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
+          for (let i = 0; i < numParticles; i++) {
+            const isEmoji = Math.random() > 0.4;
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: Math.random() * 0.4 + 0.2, // Drift right
+              vy: Math.random() * 0.4 + 0.2, // Drift down
+              rotation: Math.random() * Math.PI * 2,
+              rotSpeed: (Math.random() - 0.5) * 0.02,
+              size: Math.random() * 12 + 10, // Small veggies (10px to 22px)
+              isEmoji: isEmoji,
+              emoji: isEmoji ? shapes[Math.floor(Math.random() * shapes.length)] : null,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              alpha: Math.random() * 0.5 + 0.3
+            });
           }
-          
-          ctx.restore();
         }
 
-        requestAnimationFrame(animateParticles);
-      }
+        function animateParticles() {
+          ctx.clearRect(0, 0, width, height);
+          
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rotation += p.rotSpeed;
+            
+            if (p.x > width + 20) { p.x = -20; p.y = Math.random() * height; }
+            if (p.y > height + 20) { p.y = -20; p.x = Math.random() * width; }
 
-      window.addEventListener('resize', initParticles);
-      initParticles();
-      animateParticles();
-    }
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.globalAlpha = p.alpha;
+            
+            if (p.isEmoji) {
+              ctx.font = `${p.size}px Arial`;
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(p.emoji, 0, 0);
+            } else {
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size / 3, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+            }
+            
+            ctx.restore();
+          }
+
+          requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', initParticles);
+        initParticles();
+        animateParticles();
+      }
+    })();
   </script>
+
+  <!-- Hidden helper elements to prevent legacy JS bundle null pointer exceptions -->
+  <div style="display: none !important;">
+    <div id="cuisine-carousel"></div>
+    <input type="range" id="slide-cal" min="100" max="1500" value="800">
+    <input type="range" id="slide-carbs" min="10" max="400" value="120">
+    <input type="range" id="slide-protein" min="5" max="120" value="30">
+    <input type="range" id="slide-fat" min="5" max="150" value="60">
+    <span id="val-slide-cal"></span>
+    <span id="val-slide-carbs"></span>
+    <span id="val-slide-protein"></span>
+    <span id="val-slide-fat"></span>
+    <div id="planner-results-container"></div>
+  </div>
 </body>
 
 </html>
