@@ -57,8 +57,8 @@
         localStorage.setItem('recipedb_engine', 'live');
       }
       const stabilityKey = localStorage.getItem('recipedb_stabilityKey');
-      if (!stabilityKey || stabilityKey === 'undefined' || stabilityKey === 'null') {
-        localStorage.setItem('recipedb_stabilityKey', 'sk-' + '04PvwE0b55M5fxM3zHSMtID8dwXPmXr5JJaimYfMSta58wMv');
+      if (!stabilityKey || stabilityKey === 'undefined' || stabilityKey === 'null' || stabilityKey.includes('04PvwE0b55')) {
+        localStorage.setItem('recipedb_stabilityKey', 'sk-' + '4YXlW1YSz9iw2Dm4eW3uKWlkQtE9zL328Go7Chl6iGaMktoC');
       }
     })();
   </script>
