@@ -200,40 +200,28 @@ const server = http.createServer((req, res) => {
   // ─── STABILITY AI IMAGE GENERATION PROXY ENDPOINT ───
   const [pathname, queryString] = req.url.split('?');
   if (pathname === '/api/generate-image') {
-    const queryParams = new URLSearchParams(queryString || '');
-    const recipeName = queryParams.get('recipeName') || '';
-    const region = queryParams.get('region') || '';
-    const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
-    
-    console.log(`[Stability Proxy] Generating image for: "${recipeName}" (${region} cuisine)...`);
-    generateImage(prompt, (err, imageBuffer) => {
-      if (err) {
-        console.error('[Stability Proxy Error]:', err.message);
-        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        res.end(JSON.stringify({ error: err.message }));
-      } else {
-        console.log(`[Stability Proxy] Success generating image for: "${recipeName}"`);
-        res.writeHead(200, {
-          'Content-Type': 'image/webp',
-          'Access-Control-Allow-Origin': '*',
-          'Cache-Control': 'public, max-age=86400'
-        });
-        res.end(imageBuffer);
-      }
-    });
+    console.log('[Stability Proxy] Image generation disabled by user to save tokens.');
+    res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify({ error: 'Image generation disabled' }));
     return;
   }
 
   if (req.url === '/api/culinary-news') {
-    fetchGroqNews((err, articles) => {
-      if (err) {
-        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        res.end(JSON.stringify({ error: err.message }));
-      } else {
-        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        res.end(JSON.stringify(articles));
-      }
-    });
+    console.log('[Groq Proxy] News generation disabled by user. Returning mock news data.');
+    const mockNews = [
+      { "title": "Culinary AI Revolution", "summary": "Chefs across the globe are embracing AI tools to invent unexpected flavor pairings.", "date": "Today" },
+      { "title": "Sweet & Salty Sweeps the Nation", "summary": "A new wave of desserts combining intense sea salt and dark caramel is trending.", "date": "2 hours ago" },
+      { "title": "Historical Roman Recipe Reconstructed", "summary": "Archaeologists and chefs team up to recreate an authentic 2,000-year-old feast.", "date": "Yesterday" },
+      { "title": "Vegan Cheese Breakthrough", "summary": "A new fermentation process is producing dairy-free cheese that melts and stretches.", "date": "Today" },
+      { "title": "The Ghost Pepper Comeback", "summary": "Ultra-spicy ingredients are finding their way into mainstream fast food menus.", "date": "5 hours ago" },
+      { "title": "Lab-Grown Seafood Hits Menus", "summary": "Sustainable cell-cultured salmon is now being served in select upscale restaurants.", "date": "Yesterday" },
+      { "title": "Mushroom Coffee Boom", "summary": "The morning brew is getting a fungal upgrade as health-conscious consumers seek alternatives.", "date": "Today" },
+      { "title": "Robots in the Kitchen", "summary": "Automated sous-chefs are taking over repetitive chopping tasks in commercial kitchens.", "date": "3 hours ago" },
+      { "title": "Zero-Waste Cooking Trend", "summary": "Top restaurants are pledging to completely eliminate food waste by repurposing scraps.", "date": "Yesterday" },
+      { "title": "Global Vanilla Shortage", "summary": "Bakers brace for impact as the price of authentic Madagascar vanilla soars.", "date": "Today" }
+    ];
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify(mockNews));
     return;
   }
 
