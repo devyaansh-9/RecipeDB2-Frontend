@@ -245,7 +245,19 @@ async function T({
   }
 }
 function F(e, a) {
-  return { success: !1, message: "Mock sandbox disabled", payload: null };
+  return {
+    success: !0,
+    message: "Mock sandbox enabled",
+    payload: {
+      data: [
+        { Recipe_id: "m1", Recipe_title: "Mediterranean Hummus Bowl", Region: "Middle East", Sub_region: "Lebanon", servings: 2, Calories: 350 },
+        { Recipe_id: "m2", Recipe_title: "Spicy Thai Basil Chicken", Region: "Asia", Sub_region: "Thailand", servings: 4, Calories: 450 },
+        { Recipe_id: "m3", Recipe_title: "Classic Margherita Pizza", Region: "Europe", Sub_region: "Italy", servings: 3, Calories: 600 },
+        { Recipe_id: "m4", Recipe_title: "Mexican Street Corn Tacos", Region: "North America", Sub_region: "Mexico", servings: 4, Calories: 380 },
+        { Recipe_id: "m5", Recipe_title: "South Indian Masala Dosa", Region: "Asia", Sub_region: "India", servings: 2, Calories: 420 }
+      ]
+    }
+  };
 }
 const i = {
     currentTab: "explorer-pane",
