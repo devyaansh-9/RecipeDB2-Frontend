@@ -107,8 +107,8 @@ const $ = {
     get engine() {
       let e = localStorage.getItem("recipedb_engine");
       return (
-        (!e || e === "live") &&
-          ((e = "mock"), localStorage.setItem("recipedb_engine", "mock")),
+        (!e || e === "mock") &&
+          ((e = "live"), localStorage.setItem("recipedb_engine", "live")),
         e
       );
     },
