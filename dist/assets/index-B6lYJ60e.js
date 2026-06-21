@@ -54,8 +54,8 @@ const $ = {
   y = {
     get baseUrl() {
       let e = localStorage.getItem("recipedb_baseUrl");
-      if (!e || e.includes("cosylab.iiitd.edu.in")) {
-        e = "https://api.foodoscope.com";
+      if (!e || e.includes("cosylab.iiitd.edu.in") || e.includes("api.foodoscope.com")) {
+        e = window.location.origin;
         localStorage.setItem("recipedb_baseUrl", e);
       } else {
         try {

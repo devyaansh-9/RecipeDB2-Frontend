@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 8080;
-const TARGET_HOST = '192.168.1.92';
-const TARGET_PORT = 3030;
+const TARGET_HOST = 'recipedb2-api.foodoscope.com';
+const TARGET_PORT = 443;
+const TARGET_PROTOCOL = 'https';
 
 // ============================================================
 //  SERVER-SIDE RECIPE OF THE DAY CACHE
@@ -252,11 +253,12 @@ const server = http.createServer((req, res) => {
       method: req.method,
       headers: {
         ...req.headers,
-        host: `${TARGET_HOST}:${TARGET_PORT}`
+        host: TARGET_HOST
       }
     };
 
-    const proxyReq = http.request(options, (proxyRes) => {
+    const client = TARGET_PROTOCOL === 'https' ? https : http;
+    const proxyReq = client.request(options, (proxyRes) => {
       res.writeHead(proxyRes.statusCode, proxyRes.headers);
       proxyRes.pipe(res);
     });

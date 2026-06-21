@@ -6,7 +6,7 @@
   <title>RecipeDB2 Gastronomy Portal & API Playground</title>
   <meta name="description" content="A comprehensive interactive client and developer console for accessing over 128,942 recipes, nutritional metrics, and meal planning features of RecipeDB2.">
   <script>
-    // Early diagnostics setup with backend error logger
+    // Set up our early diagnostics tracker and send any runtime exceptions to our backend logger
     (function() {
       window.consoleErrors = [];
       const originalError = console.error;
@@ -37,8 +37,8 @@
   <script>
     (function() {
       let baseUrl = localStorage.getItem('recipedb_baseUrl');
-      if (!baseUrl || baseUrl.includes('cosylab.iiitd.edu.in')) {
-        baseUrl = 'https://api.foodoscope.com';
+      if (!baseUrl || baseUrl.includes('cosylab.iiitd.edu.in') || baseUrl.includes('api.foodoscope.com')) {
+        baseUrl = window.location.origin;
         localStorage.setItem('recipedb_baseUrl', baseUrl);
       } else {
         try {
@@ -82,7 +82,7 @@
   <script type="module" crossorigin src="/assets/index-B6lYJ60e.js?v=4"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-UhpNvyYz.css?v=4">
   <style>
-    /* ===== API CONSOLE SIDEBAR SCROLLBAR ===== */
+    /* Clean up the scrollbar design for the API console sidebar */
     #endpoint-sidebar {
       scrollbar-width: thin;
       scrollbar-color: rgba(6, 182, 212, 0.3) rgba(255, 255, 255, 0.02);
@@ -102,7 +102,7 @@
       background: var(--accent-cyan);
     }
 
-    /* ===== LAB GRID & VIZ STYLING ===== */
+    /* Layout and visualization styles for our experimental science lab */
     #lab-pane {
       display: none;
     }
@@ -110,7 +110,7 @@
       display: block;
     }
     
-    /* SVG Map styling */
+    /* Give the world map SVG land and hover states some nice visual feedback */
     .world-svg {
       background: transparent !important;
       width: 100%;
@@ -128,7 +128,7 @@
       stroke: #3b82f6 !important;
     }
     
-    /* Map Hub Markers styling */
+    /* Pulsing markers to highlight active culinary regions on the map */
     .map-hub {
       cursor: pointer !important;
     }
@@ -149,13 +149,13 @@
       r: 8 !important;
     }
     
-    /* Staggered pulse rings keyframes */
+    /* Define the animation to make the region markers pulse gently */
     @keyframes pulse-ring {
       0% { transform: scale(0.6); opacity: 0.8; }
       80%, 100% { transform: scale(2.8); opacity: 0; }
     }
     
-    /* Heatmap similarity matrix styles */
+    /* Interactive grid styling to compare how similar different cuisines are */
     .heatmap-container {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -200,17 +200,17 @@
       box-shadow: var(--shadow-glow);
     }
     
-    /* Custom Styling Overrides for Inputs & Sliders */
+    /* Custom slider styles to match our warm theme */
     .planner-range {
       accent-color: var(--accent-cyan);
     }
   
-    /* ===== FORCE WHITE NAVBAR & PAGE BACKGROUND ===== */
+    /* Clean layout overrides to keep page sections white and legible */
     html, body {
       background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 30%, #93c5fd 60%, #ffffff 100%) !important;
       background-attachment: fixed !important;
     }
-    /* Force the top navbar bar white */
+    /* Ensure the main navigation header displays on a white background */
     .navbar, nav, header, [class*="nav-"], #navbar, #header, #topbar {
       background: rgba(255, 255, 255, 0.92) !important;
       backdrop-filter: blur(12px) !important;
@@ -218,20 +218,20 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
       border-bottom: 1px solid rgba(0,0,0,0.08) !important;
     }
-    /* Navbar text should be dark */
+    /* Give the navigation links a dark color to stand out clearly on the white header */
     .navbar *, nav *, header * {
       color: #111827 !important;
     }
-    /* Keep accent colors for brand name */
+    /* Keep the highlight colors for the brand name */
     .brand-db2 {
       color: var(--accent-cyan) !important;
     }
-    /* Force all top-level page wrappers to be transparent */
+    /* Allow the page body background to show through wrapper sections by making them transparent */
     #app, .app, main, .main, .page, .page-wrapper, .content-wrapper {
       background: transparent !important;
     }
 
-    /* Remove ugly underline from social icons */
+    /* Clean up social links by removing standard hover underlines */
     a.social-circle, .social-circle-row a {
       text-decoration: none !important;
       border-bottom: none !important;
@@ -244,11 +244,11 @@
 
     </style>
 
-  <!-- ===== LANDING PAGE THEME + CURSOR OVERRIDE ===== -->
+  <!-- Warm Saffron and Chili styling themes along with cursor settings -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ─── Gourmet Gastronomy Theme Tokens ─── */
+    /* Saffron golds, warm clay tones, and soft vanillas to make the UI look delicious */
     :root {
       --bg-main:            transparent; /* Deep warm cocoa black */
       --bg-surface:         rgba(255,255,255,0.75); /* Warm charcoal clay */
@@ -280,7 +280,7 @@
       100% { background-position: -2000px -2000px; }
     }
 
-    /* ─── Body Base ─── */
+    /* Reset the body styles and set up a warm, subtle background image */
     html {
       background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 30%, #93c5fd 60%, #ffffff 100%) !important; min-height: 100vh;
     }
@@ -322,13 +322,13 @@
       pointer-events: none !important;
     }
 
-    /* Disable Custom Cursor */
+    /* Turn off custom cursors on mobile screens to keep things clean */
     #cursor, #cursor-ring, .cursor-trail {
       display: none !important;
       pointer-events: none !important;
     }
 
-    /* ─── Ambient Glow Blobs Redesign (Subtle, Elegant & Animating) ─── */
+    /* Warm, blurry accent glows that float gently in the background */
     .aurora, .bg-grid {
       display: none !important;
     }
@@ -337,10 +337,10 @@
       position: fixed !important;
       border-radius: 50% !important;
       filter: blur(140px) !important;
-      opacity: 0.04 !important; /* Slightly elevated visibility for moving effect */
+      opacity: 0.04 !important; /* Keep the glow subtle so it doesn't distract from the content */
       z-index: -1 !important;
       pointer-events: none !important;
-      will-change: transform; /* Hint to browser to enable hardware acceleration */
+      will-change: transform; /* Help the browser render these movements smoothly by prompting hardware acceleration */
     }
     .blob-1 {
       top: -10% !important;
@@ -367,7 +367,7 @@
       animation: float-blob-3 20s ease-in-out infinite !important;
     }
 
-    /* Slow, natural floating and scaling keyframes */
+    /* Floating animations to make the background blobs feel alive */
     @keyframes float-blob-1 {
       0% { transform: translate(0, 0) scale(1); }
       33% { transform: translate(40px, -60px) scale(1.15); }
@@ -386,7 +386,7 @@
       100% { transform: translate(0, 0) scale(1); }
     }
 
-    /* ─── Navbar Redesign ─── */
+    /* Clean header style with a scaling logo and navigation tabs */
     .navbar {
       background: transparent !important;
       border-bottom: 1px solid var(--border-color) !important;
@@ -464,7 +464,7 @@
       border-color: var(--border-hover) !important;
     }
 
-    /* ─── Glass Panels -> High-End Card Surfaces ─── */
+    /* Design for our premium card surfaces with warm borders */
     .glass-panel {
       background: var(--bg-surface) !important;
       backdrop-filter: none !important;
@@ -478,7 +478,7 @@
       border-color: var(--border-color) !important;
     }
 
-    /* ─── Section Header ─── */
+    /* Styled section titles for forms and parameters */
     .panel-title {
       font-size: 1rem !important;
       font-weight: 600 !important;
@@ -497,7 +497,7 @@
       padding-bottom: 0 !important;
     }
 
-    /* ─── KPI row ─── */
+    /* High-level key metrics dashboard cards grid */
     .kpi-row {
       grid-column: span 12;
       display: grid;
@@ -528,7 +528,7 @@
       letter-spacing: -0.03em;
     }
 
-    /* ─── 12-Column Grid Layout ─── */
+    /* A standard 12-column layout to organize cards on larger viewports */
     #analytics-pane .analytics-grid {
       display: grid !important;
       grid-template-columns: repeat(12, 1fr) !important;
@@ -541,7 +541,7 @@
       grid-column: span 5 !important;
     }
 
-    /* ─── Average Calories by Continent (Chart Box) ─── */
+    /* Wrapper to style the continent calorie charts */
     .chart-box {
       background: #F1F5F9 !important;
       border: 1px solid var(--border-color) !important;
@@ -550,7 +550,7 @@
       box-shadow: none !important;
     }
 
-    /* ─── Global Macronutrient Target Weights re-style ─── */
+    /* Sleek styling for the target macronutrient bars */
     .macro-chart-container {
       background: #F8FAFC !important;
       border: 1px solid var(--border-color) !important;
@@ -586,7 +586,7 @@
     .macro-progress-fill.protein { background: var(--accent-cyan) !important; }
     .macro-progress-fill.fat { background: #52525B !important; }
 
-    /* ─── Dietary Profile Distributions ─── */
+    /* Stylized list items for our dietary distributions overview */
     .stats-pills-container {
       display: flex;
       flex-direction: column;
@@ -620,7 +620,7 @@
       font-weight: 600 !important;
     }
 
-    /* ─── Sliders ─── */
+    /* Custom ranges and labels layout for calorie inputs */
     .planner-sliders {
       display: flex;
       flex-direction: column;
@@ -649,7 +649,7 @@
       outline: none !important;
     }
 
-    /* ─── Macro Summary Card ─── */
+    /* Small summary card to display calculated target values */
     .macro-summary-card {
       background: #F8FAFC;
       border: 1px solid var(--border-color);
@@ -678,7 +678,7 @@
       color: var(--text-primary);
     }
 
-    /* ─── Action button panels ─── */
+    /* Styling for primary actions buttons to make them pop */
     .btn-action-panel, .btn-send {
       background: #FAFAFA !important;
       color: #09090B !important;
@@ -691,7 +691,7 @@
       background: #E4E4E7 !important;
     }
 
-    /* ─── Recommended Plan Cards ─── */
+    /* Styling for food plan suggestions card layout */
     .planner-results {
       display: flex;
       flex-direction: column;
@@ -721,16 +721,16 @@
       font-size: 0.75rem !important;
       color: var(--text-muted) !important;
 
-    /* ─── Portal UI Redesign: Recipe Discovery Platform ─── */
+    /* Design overrides for the clean recipe discovery hub layout */
     
-    /* Global modifications for Explorer Pane */
+    /* Restyle the main explorer view to focus on readability */
     #explorer-pane {
       max-width: 1200px !important;
       margin: 0 auto !important;
       padding: 1.5rem !important;
     }
     
-    /* Less dark-card-on-dark-card layering & cleaner hierarchy */
+    /* Avoid nested card borders to make the layout feel less cluttered */
     #explorer-pane .about-panel {
       background: transparent !important;
       border: none !important;
@@ -757,7 +757,7 @@
       margin-bottom: 1.25rem !important;
     }
     
-    /* Stats banner customization */
+    /* Align database counters into a nice clean card layout */
     #explorer-pane .stats-banner {
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
@@ -795,7 +795,7 @@
       letter-spacing: 0.05em !important;
     }
     
-    /* Cuisine marquee slider visual alignment */
+    /* Style for horizontal scrolling marquee items */
     #explorer-pane .carousel-section {
       background: transparent !important;
       border: none !important;
@@ -803,7 +803,7 @@
       padding: 0 0 3rem 0 !important;
     }
 
-    /* Dramatic sizing and styling for the carousel cards */
+    /* Make the cuisine cards look bold with big fonts and subtle shadows */
     .carousel-card {
       min-width: 240px !important;
       width: 240px !important;
@@ -843,7 +843,7 @@
       background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 80%) !important;
     }
     
-    /* Use white/light accent instead of green for active marquee card */
+    /* Highlight the selected cuisine card with a clean white border */
     .carousel-card.active {
       border-color: var(--text-primary) !important;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.15) !important;
@@ -853,7 +853,7 @@
       background: var(--text-primary) !important;
     }
     
-    /* Larger, prominent Search Experience */
+    /* Adjust title spacing for the search query panel */
     #explorer-pane .search-by-container {
       background: transparent !important;
       border: none !important;
@@ -907,7 +907,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
     }
     
-    /* Search Form Inputs & Dropdowns styling */
+    /* Styling text inputs and custom selects for a uniform look */
     #explorer-pane .param-input-group {
       margin-bottom: 0 !important;
     }
@@ -951,7 +951,7 @@
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
     }
     
-    /* Nutrition Sliders Row styling */
+    /* Arrange multiple nutritional sliders side by side */
     #explorer-pane .nutrition-sliders-row {
       display: grid !important;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
@@ -992,7 +992,7 @@
       background: #E2E8F0 !important;
     }
     
-    /* Submit search button redesign */
+    /* Design a prominent search dispatch button with rounded corners */
     #explorer-pane .btn-action-panel#btn-submit-search {
       max-width: 280px !important;
       width: 100% !important;
@@ -1020,7 +1020,7 @@
       background: #f4f4f5 !important;
     }
     
-    /* Table to Recipe Card Grid conversion */
+    /* Convert the traditional table layout into responsive cards on mobile */
     #explorer-pane .recipe-results-panel {
       background: transparent !important;
       border: none !important;
@@ -1122,12 +1122,12 @@
     #explorer-pane .gastronomy-table td:nth-child(6)::before { content: "Protein"; font-weight: 500; color: var(--text-muted); }
     #explorer-pane .gastronomy-table td:nth-child(7)::before { content: "Fat"; font-weight: 500; color: var(--text-muted); }
     
-    /* Hide nutritional elements properly when toggled off */
+    /* Hide target nutrition cells when filters are deactivated */
     #explorer-pane .gastronomy-table td.hidden {
       display: none !important;
     }
     
-    /* Detail CTA button styling */
+    /* Styling the direct details button on recipe cards */
     #explorer-pane .gastronomy-table td:last-child {
       margin-top: 1.25rem !important;
       align-self: stretch !important;
@@ -1153,7 +1153,7 @@
       border-color: var(--text-primary) !important;
     }
     
-    /* Results control bar styling */
+    /* Clean spacing for the results table search bar */
     #explorer-pane .table-header-row {
       display: flex !important;
       justify-content: space-between !important;
@@ -1215,7 +1215,7 @@
       pointer-events: none !important;
     }
     
-    /* Results pagination bar styling */
+    /* Layout rules for page navigation and row count selectors */
     .table-footer-controls {
       display: flex !important;
       justify-content: space-between !important;
@@ -1301,7 +1301,7 @@
       gap: 0.75rem !important;
     }
 
-    /* Force all text inside pagination bar to be dark black */
+    /* Keep all text inside the results pagination bar dark black and high-contrast */
     .table-footer-controls span,
     .table-footer-controls label,
     .table-footer-controls input,
@@ -1309,7 +1309,7 @@
       color: #0f172a !important;
     }
     
-    /* ─── Background Animated Orbit Rings ─── */
+    /* Slow-spinning background orbital rings for depth and motion */
     .portal-orbit {
       position: fixed !important;
       top: 50% !important;
@@ -1318,7 +1318,7 @@
       width: clamp(600px, 75vw, 1000px) !important;
       height: clamp(600px, 75vw, 1000px) !important;
       border-radius: 50% !important;
-      border: 1px solid rgba(234, 88, 12, 0.04) !important; /* Gold ring */
+      border: 1px solid rgba(234, 88, 12, 0.04) !important; /* Gold color ring accent */
       z-index: -2 !important;
       pointer-events: none !important;
       animation: portal-orbit-spin 60s linear infinite !important;
@@ -1327,7 +1327,7 @@
     .portal-orbit-2 {
       width: clamp(400px, 50vw, 700px) !important;
       height: clamp(400px, 50vw, 700px) !important;
-      border-color: rgba(249, 115, 22, 0.03) !important; /* Spicy orange ring */
+      border-color: rgba(249, 115, 22, 0.03) !important; /* Spicy orange color ring accent */
       animation-duration: 80s !important;
       animation-direction: reverse !important;
     }
@@ -1339,7 +1339,7 @@
       position: absolute !important;
       width: 8px !important;
       height: 8px !important;
-      background: var(--accent-cyan) !important; /* Saffron gold */
+      background: var(--accent-cyan) !important; /* Saffron gold accent color */
       border-radius: 50% !important;
       box-shadow: 0 0 12px var(--accent-cyan), 0 0 24px rgba(234, 88, 12, 0.4) !important;
     }
@@ -1347,7 +1347,7 @@
       position: absolute !important;
       width: 6px !important;
       height: 6px !important;
-      background: var(--accent-emerald) !important; /* Spicy orange */
+      background: var(--accent-emerald) !important; /* Spicy orange accent color */
       border-radius: 50% !important;
       box-shadow: 0 0 12px var(--accent-emerald), 0 0 24px rgba(249, 115, 22, 0.4) !important;
     }
@@ -1363,16 +1363,16 @@
 <body>
   <canvas id="particle-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.85;"></canvas>
 
-  <!-- Custom Cursor -->
+  <!-- Decorative custom cursor overlay for premium interactive feedback -->
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
 
-  <!-- Background Decorative Glowing Blobs -->
+  <!-- Soft glowing blurred blobs that float in the background for a modern ambient look -->
   <div class="glow-blob blob-1"></div>
   <div class="glow-blob blob-2"></div>
   <div class="glow-blob blob-3"></div>
 
-  <!-- Background Animated Orbit Rings -->
+  <!-- Slow-spinning orbital gold and orange rings in the background -->
   <div class="portal-orbit">
     <div class="orbit-dot"></div>
     <div class="orbit-dot"></div>
@@ -1386,7 +1386,7 @@
 
   <div class="app-container">
     
-    <!-- Top Navigation Bar -->
+    <!-- Modern warm header containing brand logo, tab triggers and engine status -->
     <nav class="navbar">
       <div class="brand" id="brand-home" style="cursor: pointer;">
         <img src="assets/r2-logo.png?v=3" alt="RecipeDB2 Logo" class="brand-logo-img">
@@ -1397,7 +1397,7 @@
         </div>
       </div>
       
-      <!-- Primary Tab Toggles -->
+      <!-- Switches between main views: Explorer, Analytics, API Console, and Food Science Lab -->
       <div class="nav-links">
         <button class="nav-tab active" id="tab-btn-explorer" data-tab="explorer-pane">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -1417,7 +1417,7 @@
         </button>
       </div>
 
-      <!-- Engine Status & Configuration Button -->
+      <!-- Connection status badge and credential settings drawer toggle -->
       <div class="nav-settings">
         <a href="landing.html" style="text-decoration: none; background: rgba(255,255,255,0.1); color: var(--text-1); padding: 6px 14px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; margin-right: 12px; border: 1px solid rgba(255,255,255,0.1); display: inline-flex; align-items: center; gap: 6px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
@@ -1430,7 +1430,7 @@
       </div>
     </nav>
 
-    <!-- Main Workspace Section -->
+    <!-- Container holding all interactive views and tabs -->
     <main class="main-content">
       
       <!-- ==========================================
@@ -1438,14 +1438,14 @@
            ========================================== -->
       <div id="explorer-pane" class="tab-pane active">
         
-        <!-- Cuisine Filter Tabs -->
+        <!-- Tabs to browse search parameters by continent, country, or title keywords -->
         <div class="glass-panel" style="padding: 1rem 1.5rem 0;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
             <h3 class="panel-title" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">🌍 Explore Cuisines</h3>
             <span id="cuisine-filter-label" style="font-size:0.75rem; color:var(--text-muted); font-weight:600; letter-spacing:0.03em;">All cuisines shown</span>
           </div>
           <style>
-            /* ─── Override bundle's .carousel-card styles completely ─── */
+            /* Overrides for standard carousel card layouts to match custom dashboard themes */
             #cuisine-carousel.cuisine-tabs-wrap { 
               display:flex !important; 
               flex-wrap:wrap !important; 
@@ -1458,7 +1458,7 @@
             }
             #cuisine-carousel.cuisine-tabs-wrap::-webkit-scrollbar { display:none !important; }
             #cuisine-carousel .cuisine-tab {
-              /* Reset all carousel-card styles */
+              /* Wipe default CSS styles on sliding cards to apply custom paddings */
               min-width: unset !important;
               width: auto !important;
               height: auto !important;
@@ -1470,7 +1470,7 @@
               transform: none !important;
               box-shadow: none !important;
               
-              /* Match .nav-tab styles */
+              /* Match tab item layouts to navigation links styling */
               background: transparent !important;
               border: 1px solid transparent !important;
               color: var(--text-secondary) !important;
@@ -1486,7 +1486,7 @@
               user-select: none !important;
               white-space: nowrap !important;
             }
-            /* Kill the bundle's ::after overlay and ::before top-bar on .carousel-card */
+            /* Hide default top-border bars and shadow overlays from carousel cards */
             #cuisine-carousel .cuisine-tab::after { display:none !important; content:none !important; }
             #cuisine-carousel .cuisine-tab::before { display:none !important; content:none !important; }
             
@@ -1500,7 +1500,7 @@
             #cuisine-carousel .cuisine-tab.active {
               background: #F8FAFC !important;
               border-color: var(--border-color) !important;
-              color: #2563EB !important; /* Match Recipe Portal blue */
+              color: #2563EB !important; /* Highlight brand colors using Recipe Portal corporate blue */
               box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
               transform: none !important;
             }
@@ -1545,12 +1545,12 @@
           </script>
         </div>
 
-        <!-- About & Featured Recipe Dual-Card Section -->
+        <!-- Introduces RecipeDB2 and displays the daily featured recipe -->
 
 
         <div class="about-featured-grid">
           
-          <!-- Left Panel: About RecipeDB2 -->
+          <!-- Detailed introduction text explaining the project's background and dataset statistics -->
           <div class="glass-panel about-panel">
             <h2 class="about-title">About Recipe<span style="color: #8FBC8F;">DB2</span></h2>
             <div class="about-divider"></div>
@@ -1561,7 +1561,7 @@
               <strong>Recipe<span style="color: #8FBC8F;">DB2</span></strong> is an extensive, structured compilation of recipes and their nutritional profiles. This repertoire comprises <strong>128,942 recipes</strong> with <strong>35,474 ingredients</strong> from <strong>7 continents, 32 regions, 99 countries, and 34 states</strong>, further linked to nutritional profiles (USDA). This resource aims to facilitate scientific explorations of the culinary space (recipe, ingredients, cooking processes, dietary styles, etc.), seeking divergent applications.
             </p>
 
-            <!-- Database Stats Banner -->
+            <!-- Quick stats banner showing counts for recipes, ingredients, countries, and continents -->
             <div class="stats-banner">
               <div class="stat-card">
                 <div class="stat-number">128K+</div>
@@ -1582,9 +1582,9 @@
             </div>
           </div>
 
-          <!-- Right Panel: Recipe of the Day Featured Card -->
+          <!-- Featured daily recipe card with 3D hover tilt and dynamic AI image generation -->
           <div class="glass-panel featured-box-card" id="featured-recipe-container">
-            <!-- Loading Spinner (shown while fetching) -->
+            <!-- Smooth pulse spinner shown while pulling the daily recommendation -->
             <div class="featured-loading" id="featured-loading-state">
               <div class="loading-spinner"></div>
               <span>Loading Recipe of the Day...</span>
@@ -1603,18 +1603,18 @@
                 <span id="featured-time"></span>
               </div>
               <div class="diet-badges" id="featured-badges" style="margin-top: 1rem;">
-                <!-- Badges loaded dynamically -->
+                <!-- Space to show dietary suitability tags (e.g. Vegetarian, Gluten-Free) -->
               </div>
             </div>
           </div>
 
         </div>
 
-        <!-- "Search By" Multi-Tab Deck Card -->
+        <!-- Multi-mode query builder for narrowing down the recipe catalog -->
         <div class="glass-panel search-by-container">
           <h3 class="search-by-header">Search By</h3>
           
-          <!-- Inner Search Tab Toggles -->
+          <!-- Switch query criteria: Cuisine, Ingredients, Category, Nutrition, or Advanced -->
           <div class="search-tab-bar">
             <button class="search-tab-btn active" data-search-tab="tab-cuisine">Cuisine</button>
             <button class="search-tab-btn" data-search-tab="tab-ingredient">Ingredient</button>
@@ -1623,10 +1623,10 @@
             <button class="search-tab-btn" data-search-tab="tab-advanced">Advanced</button>
           </div>
 
-          <!-- Search Tabs Contents Panes -->
+          <!-- Individual parameter form panels matching the search tabs -->
           <div class="search-tab-content">
             
-            <!-- Pane 1: Cuisine Filters -->
+            <!-- Filters by Broad Continent, Country, and Title keywords -->
             <div class="search-tab-pane active" id="tab-cuisine">
               <div class="search-form-row">
                 <div class="param-input-group">
@@ -1657,7 +1657,7 @@
               </p>
             </div>
 
-            <!-- Pane 2: Ingredient Filters -->
+            <!-- Filters by including or excluding specific ingredients -->
             <div class="search-tab-pane" id="tab-ingredient">
               <div class="search-form-row col-2">
                 <div class="param-input-group">
@@ -1775,7 +1775,7 @@
               </div>
             </div>
 
-            <!-- Pane 3: Category Filters -->
+            <!-- Filters by dietary categories like Vegan, Vegetarian, Dairy, or Gluten -->
             <div class="search-tab-pane" id="tab-category">
               <div class="search-form-row col-2">
                 <div class="param-input-group">
@@ -1810,7 +1810,7 @@
               </div>
             </div>
 
-            <!-- Pane 4: Nutrition Filters -->
+            <!-- Slide controls to specify target calories and macronutrients -->
             <div class="search-tab-pane" id="tab-nutrition">
               <div class="nutrition-sliders-row">
                 
@@ -1849,7 +1849,7 @@
               </div>
             </div>
 
-            <!-- Pane 5: Advanced Filters -->
+            <!-- Full combination search form including cooking process and utensil options -->
             <div class="search-tab-pane" id="tab-advanced">
               
               <div class="search-form-row">
@@ -2069,13 +2069,13 @@
 
           </div>
 
-          <!-- Master Submit Button -->
+          <!-- Search dispatch trigger that executes the structured query -->
           <button class="btn-action-panel" id="btn-submit-search" style="max-width: 200px; margin: 1.5rem auto 0 auto;">
             Submit Search
           </button>
         </div>
 
-        <!-- "Showing All Recipes" Table Container -->
+        <!-- Grid list of results returned from the current query -->
         <div class="glass-panel recipe-results-panel" style="margin-top: 2rem; padding: 1.5rem 0 0 0;">
           <div class="table-header-row" style="padding: 0 1.5rem 1rem 1.5rem;">
             <h3 class="section-title" id="results-table-title">Showing All Recipes</h3>
@@ -2088,7 +2088,7 @@
             </div>
           </div>
 
-          <!-- Dynamic Data Table Wrapper -->
+          <!-- Interactive data grid displaying recipe summaries and nutrition toggles -->
           <div class="table-responsive">
             <table class="gastronomy-table" id="recipes-data-table">
               <thead>
@@ -2099,7 +2099,7 @@
                   <th class="sortable" data-sort="servings">Servings <span class="sort-icon">&Dagger;</span></th>
                   <th class="sortable" data-sort="Calories">Calories (KCal) <span class="sort-icon">&Dagger;</span></th>
                   
-                  <!-- Nutritional profiles fields (dynamic toggling based on checkbox) -->
+                  <!-- Columns visible only when nutritional details checkbox is active -->
                   <th class="nutri-col hidable-col" data-sort="Protein (g)">Protein (g) <span class="sort-icon">&Dagger;</span></th>
                   <th class="nutri-col hidable-col" data-sort="Total lipid (fat) (g)">Fat (g) <span class="sort-icon">&Dagger;</span></th>
                   
@@ -2107,12 +2107,12 @@
                 </tr>
               </thead>
               <tbody id="table-body-container">
-                <!-- Loaded dynamically -->
+                <!-- Element content populated dynamically by active renderer -->
               </tbody>
             </table>
           </div>
 
-          <!-- Table Interactive Footer controls -->
+          <!-- Pagination, rows-per-page, and jump-to-page settings -->
           <div class="table-footer-controls">
             <div class="rows-per-page">
               <span class="footer-label" style="color:#0f172a!important;font-weight:800!important;">Rows per page:</span>
@@ -2148,7 +2148,7 @@
            ========================================== -->
       <div id="analytics-pane" class="tab-pane">
         
-        <!-- KPI Dashboard Section -->
+        <!-- Fast-loading high-level database metrics -->
         <div class="kpi-row">
           <div class="kpi-card">
             <span class="kpi-label">Total Recipes</span>
@@ -2170,14 +2170,14 @@
 
         <div class="analytics-grid">
           
-          <!-- Column 1: Analytics Center (7 columns span) -->
+          <!-- Main graphs showing calories and dietary profile distributions -->
           <div class="glass-panel">
             <h3 class="panel-title"><span>Recipe<span style="color: #8FBC8F;">DB2</span>&nbsp; Statistics</span></h3>
             
             <div class="exclusion-section">
               <h4 class="exclusion-subtitle">Average Calories by Continent</h4>
               <div class="chart-box" id="calories-bar-chart">
-                <!-- Custom SVG Bar Chart Rendered Dynamically -->
+                <!-- Dynamically drawn SVG charts showing regional calorie patterns -->
               </div>
             </div>
 
@@ -2218,14 +2218,14 @@
               <div class="exclusion-section">
                 <h4 class="exclusion-subtitle">Dietary Profile Distributions</h4>
                 <div class="stats-pills-container" id="dietary-profile-stats">
-                  <!-- Loaded Dynamically -->
+                  <!-- Endpoint items inserted at boot time -->
                 </div>
               </div>
             </div>
           </div>
 
           
-          <!-- Column 2: Global Culinary News Feed -->
+          <!-- Latest culinary and food science headlines powered by AI query -->
           <div class="glass-panel" style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 600px; padding-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
               <div>
@@ -2243,7 +2243,7 @@
             </div>
 
             <div id="news-feed-container" style="display: none; flex-direction: column; gap: 16px; overflow-y: auto; padding-right: 8px; flex: 1; max-height: 700px;">
-              <!-- News cards rendered here -->
+              <!-- Individual articles populated dynamically -->
             </div>
 
             <style>
@@ -2269,13 +2269,13 @@
               .news-read-more { color: #2563eb !important; font-weight: 700; cursor: pointer; text-decoration: none !important; }
               .news-read-more:hover { color: #1d4ed8 !important; text-decoration: underline !important; }
               
-              /* Scrollbar for news container */
+              /* Custom thin scrollbar layout for the culinary news list */
               #news-feed-container::-webkit-scrollbar { width: 6px; }
               #news-feed-container::-webkit-scrollbar-track { background: rgba(30, 58, 138, 0.05); border-radius: 4px; }
               #news-feed-container::-webkit-scrollbar-thumb { background: rgba(30, 58, 138, 0.15); border-radius: 4px; }
               #news-feed-container::-webkit-scrollbar-thumb:hover { background: rgba(30, 58, 138, 0.3); }
             
-    /* ===== WHITE FOOTER OVERRIDE ===== */
+    /* Ensure the footer area matches the white theme background and remains readable */
     footer.app-footer,
     .app-footer,
     footer {
@@ -2300,10 +2300,10 @@
        PROFESSIONAL TYPOGRAPHY SYSTEM — Blue & White Theme
        ============================================================ */
 
-    /* Import premium Google Font */
+    /* Fetch readable modern typography from Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
 
-    /* Base body text — deep navy, highly readable */
+    /* Base body text uses deep navy for premium readability */
     body, body * {
       -webkit-font-smoothing: antialiased !important;
       -moz-osx-font-smoothing: grayscale !important;
@@ -2314,7 +2314,7 @@
       font-family: 'Inter', sans-serif !important;
     }
 
-    /* ── Headings — Deep navy blue, bold & premium ── */
+    /* Headings style: deep navy, extra bold, with clean letter-spacing */
     h1, h2, h3, h4, h5, h6,
     .panel-title,
     .section-title,
@@ -2325,16 +2325,16 @@
       letter-spacing: -0.02em !important;
     }
 
-    /* ── Brand name stays vibrant ── */
+    /* Keep brand labels styling colorful */
     .brand, .brand * {
       color: #0f172a !important;
     }
-    /* Keep "DB2" in brand accent color */
+    /* Style the "DB2" substring with the brand accent color */
     .brand-db2, [class*="brand"] span {
       color: #2563eb !important;
     }
 
-    /* ── Body / paragraph text — rich slate, not grey ── */
+    /* Paragraph text style: rich slate to improve contrast over plain grey */
     body {
       color: #000000 !important;
     }
@@ -2346,7 +2346,7 @@
       color: #1f2937 !important;
     }
 
-    /* ── Primary paragraph blocks ── */
+    /* Style rules for core paragraph content blocks */
     .about-text, .section-description, .detail-text {
       color: #000000 !important;
       font-size: 1rem !important;
@@ -2354,7 +2354,7 @@
       font-weight: 400 !important;
     }
 
-    /* ── Stats numbers — vivid blue accent ── */
+    /* Metrics counters style: vivid blue accent color */
     .stat-value, .stat-number, .kpi-value,
     [class*="stat"] h2, [class*="stat"] h3,
     .metric-value {
@@ -2363,7 +2363,7 @@
       font-weight: 900 !important;
     }
 
-    /* ── Nav tabs — clear & active ── */
+    /* Tab indicators: clear status indicator colors */
     .nav-tab, .nav-links button, .tab-btn {
       color: #000000 !important;
       font-weight: 600 !important;
@@ -2374,7 +2374,7 @@
       font-weight: 700 !important;
     }
 
-    /* ── Table text ── */
+    /* Grid columns typography styling */
     .gastronomy-table td {
       color: #1e293b !important;
       font-weight: 500 !important;
@@ -2386,14 +2386,14 @@
       letter-spacing: 0.06em !important;
       font-size: 0.75rem !important;
     }
-    /* Recipe name in table — vivid dark blue, not black */
+    /* Recipe title style: vivid dark blue for click-through call to action */
     .gastronomy-table .recipe-name,
     .gastronomy-table td:first-child strong,
     .gastronomy-table td:first-child {
       color: #1e3a8a !important;
       font-weight: 700 !important;
     }
-    /* Sub-label (diet type) */
+    /* Dietary tag label style */
     .gastronomy-table td:first-child small,
     .gastronomy-table .diet-tag,
     .diet-type {
@@ -2401,7 +2401,7 @@
       font-size: 0.78rem !important;
     }
 
-    /* ── Calorie / number cells — golden accent ── */
+    /* Energy cells style: golden accent color token */
     .gastronomy-table td.calories,
     .gastronomy-table .calorie-val,
     .calorie-value {
@@ -2409,13 +2409,13 @@
       font-weight: 700 !important;
     }
 
-    /* ── Panel titles ── */
+    /* Section titles style rules */
     .panel-title {
       color: #0f172a !important;
       font-size: 1.25rem !important;
     }
 
-    /* ── Search labels & filter headings ── */
+    /* Form field indicators and search filter headings style rules */
     .search-by-header {
       background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
       -webkit-background-clip: text !important;
@@ -2423,7 +2423,7 @@
       background-clip: text !important;
     }
 
-    /* ── Footer text ── */
+    /* Bottom navigation links typography styles */
     footer, .app-footer, .footer-copyright-banner {
       color: #374151 !important;
     }
@@ -2442,30 +2442,30 @@
       text-decoration: underline !important;
     }
 
-    /* ── Cuisine section title ── */
+    /* Cuisine section header styling */
     .carousel-section .panel-title {
       color: #0f172a !important;
     }
 
-    /* ── "About RecipeDB2" accented text ── */
+    /* Accent rules for the about section title */
     .accent-text, [style*="color: var(--accent"] {
       color: #2563eb !important;
     }
 
-    /* ── Buttons with text ── */
+    /* Action buttons content alignment and padding rules */
     .btn-primary, button[class*="btn-"] {
       font-weight: 600 !important;
       letter-spacing: 0.01em !important;
     }
 
-    /* ── Detail / modal text ── */
+    /* Text styles for sliding drawer lists and steps */
     .detail-title {
       color: #0f172a !important;
       font-family: 'Poppins', sans-serif !important;
       font-weight: 800 !important;
     }
 
-    /* ── Stat labels below numbers ── */
+    /* Metric descriptors text styling below counter numbers */
     .stat-label, .kpi-label, [class*="stat"] p {
       color: #000000 !important;
       font-size: 0.72rem !important;
@@ -2474,32 +2474,32 @@
       text-transform: uppercase !important;
     }
 
-    /* ===== REMOVE GLASSMORPHISM BLURS & SHADOWS ON IMAGES ===== */
+    /* Image overlays cleanup to keep pictures sharp and bright */
     
-    /* 1. Remove blur filter and dark shadow gradient overlay on the Recipe of the Day image */
+    /* Disable background blur and shadow gradients on the main daily recipe photo */
     .featured-card-blur {
       background: transparent !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
     }
     
-    /* Make the Recipe of the Day image 4k bright and vibrant */
+    /* Keep the main daily recipe photo clear and vibrant */
     .featured-box-bg-img {
       filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
     }
     
-    /* 2. Remove dark shadow gradient overlay on the carousel cards */
+    /* Remove background dark gradient covers from card images */
     .carousel-card::after {
       background: transparent !important;
       box-shadow: none !important;
     }
     
-    /* Make the carousel images 4k bright and vibrant */
+    /* Keep the cuisine carousel cards crisp and high-contrast */
     .carousel-card-img {
       filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
     }
     
-    /* Ensure text inside carousel cards is extremely readable without image shadow overlays */
+    /* Ensure text inside carousel items stays visible by applying readable contrast outlines */
     .carousel-card-info h4 {
       color: #ffffff !important;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 1px 2px rgba(0, 0, 0, 0.95) !important;
@@ -2511,7 +2511,7 @@
       font-weight: 700 !important;
     }
 
-    /* Ensure text in featured Recipe of the Day card is readable without overlays */
+    /* Keep all text tags on the daily recipe card highly legible */
     .featured-box-title {
       background: none !important;
       -webkit-text-fill-color: #ffffff !important;
@@ -2532,14 +2532,14 @@
       font-weight: 700 !important;
     }
     
-    /* Make the badges (like calories) purely white */
+    /* Style metric tags with pure white background cards */
     #featured-badges .badge {
       color: #ffffff !important;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
       font-weight: 700 !important;
     }
 
-    /* 3. Remove glassmorphic blurs from navbar, header, and footer */
+    /* Turn off glass filters on header and footer to speed up rendering */
     .navbar, nav, header, [class*="nav-"], #navbar, #header, #topbar {
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
@@ -2601,8 +2601,8 @@
 
                 refreshBtn.addEventListener('click', fetchCulinaryNews);
                 
-                // Fetch on initial load
-                // Delay slightly to let the rest of the app load
+                // Kick off the initial load when the page is ready
+                // Wait just a brief moment so the main app elements have time to settle first
                 setTimeout(fetchCulinaryNews, 1000);
               })();
             </script>
@@ -2618,18 +2618,18 @@
       <div id="playground-pane" class="tab-pane">
         <div class="playground-grid">
           
-          <!-- Left Column: Endpoint Directory -->
+          <!-- Sidebar listing all available RecipeDB2 API endpoints -->
           <div class="glass-panel" style="height: calc(100vh - 220px); min-height: 600px; max-height: 850px; display: flex; flex-direction: column;">
             <h3 class="panel-title" style="flex-shrink: 0;">API Endpoints</h3>
             <div class="endpoint-list" id="endpoint-sidebar" style="flex: 1; overflow-y: auto; padding-right: 0.25rem;">
-              <!-- Loaded Dynamically -->
+              <!-- Endpoint items inserted at boot time -->
             </div>
           </div>
 
-          <!-- Right Column: Interactive Workstation -->
+          <!-- Workspace for constructing API requests and viewing JSON responses -->
           <div class="play-workspace">
             
-            <!-- Address Bar Box -->
+            <!-- URL bar with request method tag and send button -->
             <div class="glass-panel">
               <div class="url-bar-container">
                 <div class="method-tag" id="pg-method-tag">GET</div>
@@ -2641,15 +2641,15 @@
               </div>
             </div>
 
-            <!-- Parameters Panels -->
+            <!-- Form inputs matching the selected endpoint parameters -->
             <div class="glass-panel" id="pg-params-panel">
               <h4 class="pg-sec-title">Query Parameters</h4>
               <div class="params-grid" id="pg-params-container">
-                <!-- Parameters form fields loaded dynamically based on active endpoint -->
+                <!-- Parameter fields custom-rendered depending on the selected endpoint -->
               </div>
             </div>
 
-            <!-- Developer Output Console Log -->
+            <!-- Interactive output window displaying response code, latency, and formatted JSON -->
             <div class="console-panel">
               <div class="console-header">
                 <div class="console-tab-container">
@@ -2668,7 +2668,7 @@
                 </div>
               </div>
               <div class="console-body">
-                <pre class="code-block" id="pg-console-output">// Click "Send" above to dispatch request and inspect responses.</pre>
+                <pre class="code-block" id="pg-console-output">// Dispatches request and handles server responses</pre>
               </div>
             </div>
 
@@ -2683,7 +2683,7 @@
         <div class="analytics-grid" style="grid-template-columns: 1fr; gap: 2rem;">
           
           <div class="about-featured-grid" style="grid-template-columns: 1fr; gap: 2rem; margin-bottom: 0;">
-            <!-- Component 1: Canvas Force Directed Graph -->
+            <!-- Interactive force-directed canvas displaying ingredient compound pairings -->
             <div class="glass-panel" style="display: flex; flex-direction: column; min-height: 520px;">
               <h3 class="panel-title" style="margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
                 Ingredient Flavor Galaxy
@@ -2692,19 +2692,19 @@
                 This physics-based node network represents shared flavor chemical compounds between staple ingredients. Hover over nodes to see their category, staple compounds, and neighbor connections. Click nodes to filter Explorer recipes, or drag to deform the network.
               </p>
               
-              <!-- Split Grid for Canvas and Controls -->
+              <!-- Layout dividing the visualization canvas from its physics adjustments -->
               <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 1rem; flex: 1; min-height: 350px;">
-                <!-- Canvas Wrapper -->
+                <!-- Drawing board for the ingredient node network graph -->
                 <div id="canvas-container" style="position: relative; border-radius: 12px; background: #0f172a; overflow: hidden; border: 1px solid rgba(30, 58, 138, 0.25);">
                   <canvas id="ingredient-canvas" style="display: block; width: 100%; height: 100%; min-height: 320px;"></canvas>
                   <div id="canvas-tooltip" style="position: absolute; pointer-events: none; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 8px 12px; font-size: 0.75rem; color: #fff; opacity: 0; transition: opacity 0.2s; z-index: 10; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); width: 220px; line-height: 1.4;"></div>
                 </div>
                 
-                <!-- Controls & Legend Panel -->
+                <!-- Legend indicators and slider controls for the force simulation physics -->
                 <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 1.25rem;">
                   <h4 style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; margin: 0;">Simulation Physics</h4>
                   
-                  <!-- Sliders -->
+                  <!-- Interactive physics control sliders -->
                   <div class="planner-sliders" style="display: flex; flex-direction: column; gap: 0.75rem; border: none; padding: 0;">
                     <div class="slider-group">
                       <div class="slider-header">
@@ -2747,7 +2747,7 @@
               </div>
             </div>
 
-            <!-- Component 2: Interactive World Cuisine Map -->
+            <!-- SVG Map showing gastronomy hubs across the globe -->
             <div class="glass-panel" style="display: flex; flex-direction: column; min-height: 520px; position: relative;">
               <h3 class="panel-title" style="margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
                 Global Cuisine Atlas
@@ -2756,7 +2756,7 @@
                 Click any highlighted geocultural hub on the interactive SVG world map to filter recipe datasets. Hover over hubs to view average caloric metrics and staple ingredients of that cultural cuisine.
               </p>
               
-              <!-- Vector World Map Container -->
+              <!-- Custom SVG outline projection of the continents -->
               <div style="flex: 1; border-radius: 12px; background: #dbeafe; border: 1px solid rgba(30, 58, 138, 0.15); overflow: hidden; position: relative;">
                 <svg viewBox="0 0 710 380" class="world-svg">
   <path class="map-land" id="map-country-fo" d="M321.9,80 322.8,80.8 322.8,81.1 321.8,80.4 321.9,80Z" />
@@ -2972,7 +2972,7 @@
   <path class="map-land" id="map-country-kg" d="M476.6,138.3 474,138.9 472.5,137.9 468.4,138.2 469.6,136.6 471.5,136.6 472.9,136.8 475.7,135.3 473,133.8 472.4,134.5 470,133.5 471.5,132 473.2,130.6 476.4,131.5 477.7,129.6 479.6,130.6 485.8,130.5 489.2,132.1 485.7,134 485.2,134.7 482.6,135 480.6,136.5 480.3,135.7 477.3,137 476.6,138.3 M470.9,137.4 470.6,137.4 470.8,137.6 471,137.5 470.9,137.4 M473,137.3 473.1,137.1 472.9,137.2 473,137.3 473,137.3 M471.9,137 471.5,136.9 471.7,137.4 472,137.4 471.9,137Z" />
   <path class="map-land" id="map-country-np" d="M504.4,163.2 504.5,165.5 502.8,166.3 500,165.8 497.6,164.3 494.1,163.9 488.9,161.2 489.5,159.2 490.8,158.3 492.8,158.1 495.6,160.5 496.6,160.3 498.6,162.3 500.3,163.1 501.4,162.6 504.4,163.2Z" />
 
-                  <!-- Map Hubs (pulsing markers representing the 15 countries) -->
+                  <!-- Dynamic pulse indicators marking active culinary research regions -->
                   <g class="map-hub" data-name="US" data-type="country">
                     <circle class="pulse-circle" cx="140" cy="125" r="8" />
                     <circle class="core-circle" cx="140" cy="125" r="5" />
@@ -3035,7 +3035,7 @@
                   </g>
                 </svg>
 
-                <!-- Map Info Detail Overlay (Floating inside map) -->
+                <!-- Floating panel showing cuisine metrics when hover is triggered on a hub -->
                 <div id="map-hub-details" style="position: absolute; bottom: 15px; left: 15px; right: 15px; padding: 1rem; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(30, 58, 138, 0.15); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 10;">
                   <h4 id="map-hub-name" style="color: #1e3a8a; font-weight: 800; margin: 0 0 0.35rem 0; font-size: 0.85rem;">Cuisine Atlas Details</h4>
                   <p id="map-hub-stats" style="font-size: 0.72rem; color: #000000; margin: 0; line-height: 1.4;"></p>
@@ -3045,7 +3045,7 @@
 
           </div>
 
-          <!-- Component 3: Similarity Matrix Heatmap -->
+          <!-- Comparative grid showing how cuisines share ingredients and techniques -->
           <div class="glass-panel" style="display: flex; flex-direction: column; align-items: center;">
             <h3 class="panel-title" style="margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; width: 100%;">
               Shared Flavor Similarity Heatmap
@@ -3055,7 +3055,7 @@
             </p>
             
             <div class="heatmap-container">
-              <!-- Row 0: Headers -->
+              <!-- Header cells labeling columns with target cuisines -->
               <div class="heatmap-header"></div>
               <div class="heatmap-header">IND</div>
               <div class="heatmap-header">MDE</div>
@@ -3064,7 +3064,7 @@
               <div class="heatmap-header">ITA</div>
               <div class="heatmap-header">EAS</div>
               
-              <!-- Row 1: Indian -->
+              <!-- Similarity indices for the Indian Subcontinent cuisine -->
               <div class="heatmap-header">Indian</div>
               <div class="heatmap-cell" data-val="100" style="background: rgba(16, 185, 129, 0.9); color: #000;">100%</div>
               <div class="heatmap-cell" data-val="68" style="background: rgba(16, 185, 129, 0.68); color: #fff;">68%</div>
@@ -3073,7 +3073,7 @@
               <div class="heatmap-cell" data-val="32" style="background: rgba(16, 185, 129, 0.32); color: var(--text-secondary);">32%</div>
               <div class="heatmap-cell" data-val="48" style="background: rgba(16, 185, 129, 0.48); color: #fff;">48%</div>
 
-              <!-- Row 2: Mid East -->
+              <!-- Similarity indices for the Middle Eastern cuisine -->
               <div class="heatmap-header">Mid East</div>
               <div class="heatmap-cell" data-val="68" style="background: rgba(16, 185, 129, 0.68); color: #fff;">68%</div>
               <div class="heatmap-cell" data-val="100" style="background: rgba(16, 185, 129, 0.9); color: #000;">100%</div>
@@ -3082,7 +3082,7 @@
               <div class="heatmap-cell" data-val="56" style="background: rgba(16, 185, 129, 0.56); color: #fff;">56%</div>
               <div class="heatmap-cell" data-val="25" style="background: rgba(16, 185, 129, 0.25); color: var(--text-secondary);">25%</div>
 
-              <!-- Row 3: French -->
+              <!-- Similarity indices for the French cuisine -->
               <div class="heatmap-header">French</div>
               <div class="heatmap-cell" data-val="28" style="background: rgba(16, 185, 129, 0.28); color: var(--text-secondary);">28%</div>
               <div class="heatmap-cell" data-val="45" style="background: rgba(16, 185, 129, 0.45); color: #fff;">45%</div>
@@ -3091,7 +3091,7 @@
               <div class="heatmap-cell" data-val="62" style="background: rgba(16, 185, 129, 0.62); color: #fff;">62%</div>
               <div class="heatmap-cell" data-val="20" style="background: rgba(16, 185, 129, 0.20); color: var(--text-secondary);">20%</div>
 
-              <!-- Row 4: Mexican -->
+              <!-- Similarity indices for the Mexican cuisine -->
               <div class="heatmap-header">Mexican</div>
               <div class="heatmap-cell" data-val="52" style="background: rgba(16, 185, 129, 0.52); color: #fff;">52%</div>
               <div class="heatmap-cell" data-val="38" style="background: rgba(16, 185, 129, 0.38); color: var(--text-secondary);">38%</div>
@@ -3100,7 +3100,7 @@
               <div class="heatmap-cell" data-val="42" style="background: rgba(16, 185, 129, 0.42); color: var(--text-secondary);">42%</div>
               <div class="heatmap-cell" data-val="35" style="background: rgba(16, 185, 129, 0.35); color: var(--text-secondary);">35%</div>
 
-              <!-- Row 5: Italian -->
+              <!-- Similarity indices for the Italian cuisine -->
               <div class="heatmap-header">Italian</div>
               <div class="heatmap-cell" data-val="32" style="background: rgba(16, 185, 129, 0.32); color: var(--text-secondary);">32%</div>
               <div class="heatmap-cell" data-val="56" style="background: rgba(16, 185, 129, 0.56); color: #fff;">56%</div>
@@ -3109,7 +3109,7 @@
               <div class="heatmap-cell" data-val="100" style="background: rgba(16, 185, 129, 0.9); color: #000;">100%</div>
               <div class="heatmap-cell" data-val="26" style="background: rgba(16, 185, 129, 0.26); color: var(--text-secondary);">26%</div>
 
-              <!-- Row 6: East Asian -->
+              <!-- Similarity indices for the East Asian cuisine -->
               <div class="heatmap-header">East Asian</div>
               <div class="heatmap-cell" data-val="48" style="background: rgba(16, 185, 129, 0.48); color: #fff;">48%</div>
               <div class="heatmap-cell" data-val="25" style="background: rgba(16, 185, 129, 0.25); color: var(--text-secondary);">25%</div>
@@ -3125,7 +3125,7 @@
 
     </main>
 
-    <!-- Footer Area -->
+    <!-- Footer with copyright and quick info links -->
     <footer class="app-footer">
       <div class="footer-copyright-banner">
         <div class="footer-logo-iiitd" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
@@ -3142,7 +3142,7 @@
           Indraprastha Institute of Information Technology Delhi (IIIT-Delhi) &bull; Prof. Ganesh Bagler
         </p>
         
-        <!-- Glowing Circular Social Links -->
+        <!-- Circular icons displaying glowing hover outlines -->
         <div class="social-circle-row">
           <a href="https://cosylab.iiitd.edu.in/" target="_blank" class="social-circle" title="CoSyLab Website"><i class="fa-solid fa-globe"></i></a>
           <a href="https://in.linkedin.com/company/cosylab-iiitd" target="_blank" class="social-circle" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
@@ -3158,7 +3158,7 @@
        MODALS OVERLAYS
        ========================================== -->
 
-  <!-- Drawer Modal 1: Settings Panel -->
+  <!-- Sliding drawer containing API base URL settings and security keys -->
   <div class="modal-backdrop" id="modal-settings">
     <div class="modal-container">
       <div class="modal-header">
@@ -3204,7 +3204,7 @@
     </div>
   </div>
 
-  <!-- Drawer Modal 2: Recipe Detail & Nutritional Breakdown -->
+  <!-- Sliding drawer with detailed ingredients list, steps, and nutrition breakdown -->
   <div class="modal-backdrop" id="modal-recipe-detail">
     <div class="modal-container" style="max-width: 800px; width: 95%;">
       <div class="modal-header">
@@ -3214,7 +3214,7 @@
       <div class="modal-body">
         <div class="recipe-detail-grid">
           
-          <!-- Left Panel: General Info, Ingredients & Utensils -->
+          <!-- Left side displaying name, region, ingredients list, and utensils needed -->
           <div>
             <div class="detail-meta-grid">
               <div class="detail-meta-box">
@@ -3234,31 +3234,31 @@
             <div class="exclusion-section">
               <h4 class="detail-section-title">Cooking Tools</h4>
               <div class="diet-badges" id="det-utensils">
-                <!-- Loaded dynamically -->
+                <!-- Element content populated dynamically by active renderer -->
               </div>
             </div>
 
             <div class="exclusion-section">
               <h4 class="detail-section-title">Techniques</h4>
               <div class="diet-badges" id="det-processes">
-                <!-- Loaded dynamically -->
+                <!-- Element content populated dynamically by active renderer -->
               </div>
             </div>
 
             <div class="exclusion-section">
               <h4 class="detail-section-title">Dietary Classification</h4>
               <div class="diet-badges" id="det-diet-tags">
-                <!-- Loaded dynamically -->
+                <!-- Element content populated dynamically by active renderer -->
               </div>
             </div>
           </div>
 
-          <!-- Right Panel: Instructions & Nutritional Breakdown -->
+          <!-- Right side displaying cooking steps and circular nutrition charts -->
           <div>
             <div class="exclusion-section">
               <h4 class="detail-section-title">Nutritional Distribution</h4>
               
-              <!-- Nutrient breakdown micro progress rings -->
+              <!-- Visual circular metrics for calorie and macronutrient proportions -->
               <div class="macro-chart-container">
                 <div class="macro-row">
                   <div class="macro-header">
@@ -3305,7 +3305,7 @@
             <div class="exclusion-section">
               <h4 class="detail-section-title">Preparation Instructions</h4>
               <div class="instruction-list" id="det-instructions">
-                <!-- Steps loaded dynamically -->
+                <!-- Recipe instruction steps populated sequentially -->
               </div>
             </div>
           </div>
@@ -3315,13 +3315,14 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
+  <!-- Floating feedback alerts showing success/error messages -->
   <div id="toast-container"></div>
 
-  <!-- Bootstrapping App Module -->
+  <!-- Application bootstrap script for tabs, search, maps, and particle effects -->
   <script>
     /* ========================================================
-       TOAST NOTIFICATIONS UTILITY
+       Toast Notification Helper
+       Creates and displays clean floating alert notifications
        ======================================================== */
     function showToast(message, type = 'info') {
       const container = document.getElementById('toast-container');
@@ -3334,7 +3335,7 @@
       `;
       container.appendChild(toast);
       
-      // Animation trigger
+      // Add a brief fade-in-up class when tab changes
       setTimeout(() => {
         toast.style.opacity = '1';
       }, 10);
@@ -3346,9 +3347,10 @@
     }
 
     /* ========================================================
-       TAB TOGGLE INTERCEPTOR FOR FOOD SCIENCE LAB
+       Tab Change Interceptor
+       Custom listener to manage and swap layout elements when loading the Food Science Lab
        ======================================================== */
-    // Global tab switch scrolling interceptor (scroll back to top of viewport)
+    // Reset scroll position to top when page changes so the user doesn't start halfway down
     document.querySelectorAll('.nav-tab, #brand-home').forEach(btn => {
       btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'instant' });
@@ -3360,28 +3362,28 @@
 
     if (labTabBtn && labPane) {
       labTabBtn.addEventListener('click', () => {
-        // Trigger click on explorer tab to reset Vite's internal active state toggles
+        // Click the explorer tab programmatically to make sure everything resets properly
         const explorerTabBtn = document.getElementById('tab-btn-explorer');
         if (explorerTabBtn) explorerTabBtn.click();
         
-        // Remove active class from explorer
+        // Wipe clean the active class states on explorer components
         document.getElementById('tab-btn-explorer').classList.remove('active');
         document.getElementById('explorer-pane').classList.remove('active');
         
-        // Explicitly activate Lab Tab
+        // Explicitly set status to active for the lab panel
         labTabBtn.classList.add('active');
         labPane.classList.add('active');
         
-        // Resize canvas elements once visible
+        // Ensure the interactive canvas sizes match their container when the tab opens
         if (typeof resizeCanvasGlobal === 'function') {
           setTimeout(resizeCanvasGlobal, 50);
         }
 
-        // Scroll to top
+        // Scroll to the top of viewport when navigation occurs
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
 
-      // Ensure that other navigation buttons remove the Lab Tab active status
+      // Deactivate the lab tab status whenever we head elsewhere
       document.querySelectorAll('#tab-btn-explorer, #tab-btn-analytics, #tab-btn-playground, #brand-home').forEach(btn => {
         btn.addEventListener('click', () => {
           labTabBtn.classList.remove('active');
@@ -3391,7 +3393,8 @@
     }
 
     /* ========================================================
-       VECTOR WORLD CUISINE MAP & DETAILS OVERLAY
+       World Cuisine Map and Hub Overlay
+       Manages hub mouse hover stats card and custom click routing
        ======================================================== */
     const mapStats = {
       'US': { count: 5025, mainIng: 'Beef, Potatoes, Cheese, Wheat, Mustard', avgCal: '920 KCal' },
@@ -3440,17 +3443,17 @@
         const cuisineTabBtn = document.querySelector('[data-search-tab="tab-cuisine"]');
         
         if (explorerTabBtn && cuisineTabBtn) {
-          // 1. Click explorer pane button
+          // Programmatically click explorer button to change current view
           explorerTabBtn.click();
-          // 2. Click Cuisine search sub-tab
+          // Navigate to cuisine search filters panel
           cuisineTabBtn.click();
           
-          // 3. Clear all other search parameters to prevent clash
+          // Wipe clean any other search fields so they don't block the cuisine query
           document.querySelectorAll('.param-field').forEach(input => {
             input.value = '';
           });
           
-          // 4. Set search value and trigger search submit
+          // Automatically insert targeted ingredient values and fire search submit event
           if (type === 'country' && countryInput) {
             const countryToContinentMap = {
               "Moroccan": "African", "Egyptian": "African", "Nigerian": "African", "Somalian": "African", "Namibian": "African", "Angolan": "African", "Libyan": "African", "Sudanese": "African", "Ethiopian": "African",
@@ -3483,7 +3486,8 @@
     });
 
     /* ========================================================
-       SHARED FLAVOR SIMILARITY HEATMAP MATRIX HOVER
+       Flavor Similarity Heatmap Interactivity
+       Hover event bindings to show flavor overlap index in the stats box
        ======================================================= */
     const cells = document.querySelectorAll('.heatmap-cell');
     cells.forEach(cell => {
@@ -3513,7 +3517,8 @@
     });
 
     /* ========================================================
-       ENHANCED FORCE-DIRECTED INGREDIENT CANVAS NETWORK GRAPH
+       Interactive ingredient network visualization block
+       Uses simple spring physics to float related items together
        ======================================================== */
     let resizeCanvasGlobal = null;
     const canvas = document.getElementById('ingredient-canvas');
@@ -3574,7 +3579,7 @@
         { source: 'Butter', target: 'Garlic' }
       ];
 
-      // Physics configuration sliders elements
+      // Grab the sliders for adjusting our graph's physics forces
       const springSlider = document.getElementById('graph-spring');
       const repulsionSlider = document.getElementById('graph-repulsion');
       const gravitySlider = document.getElementById('graph-gravity');
@@ -3589,7 +3594,7 @@
       let repulsionStrength = parseFloat(repulsionSlider.value);
       let gravityStrength = parseFloat(gravitySlider.value);
 
-      // Event binds for parameter change
+      // Listen for slider inputs and update the live graph values immediately
       springSlider.addEventListener('input', e => {
         springStrength = parseFloat(e.target.value);
         valSpring.textContent = springStrength.toFixed(3);
@@ -3618,7 +3623,7 @@
       resizeCanvas();
 
       const drawFrame = () => {
-        // Link Spring Attraction Forces
+        // Pull connected ingredients closer together using spring forces
         links.forEach(link => {
           const s = nodes.find(n => n.id === link.source);
           const t = nodes.find(n => n.id === link.target);
@@ -3637,7 +3642,7 @@
           }
         });
 
-        // Node Mutual Repulsion Forces
+        // Push ingredients apart from each other so they don't overlap
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const s = nodes[i];
@@ -3657,10 +3662,10 @@
           }
         }
 
-        // Apply friction, gravity and update positions
+        // Calculate the new positions by combining momentum, friction, and central gravity
         nodes.forEach(node => {
           if (node !== draggedNode) {
-            // Center Gravity pull
+            // Gently pull all nodes toward the center so they don't drift away
             node.vx += (canvas.width / 2 - node.x) * gravityStrength;
             node.vy += (canvas.height / 2 - node.y) * gravityStrength;
             
@@ -3669,7 +3674,7 @@
             node.x += node.vx;
             node.y += node.vy;
 
-            // Bounce boundary collisions
+            // Keep the nodes inside the canvas by bouncing them off the borders
             if (node.x < node.radius) { node.x = node.radius; node.vx *= -0.5; }
             if (node.x > canvas.width - node.radius) { node.x = canvas.width - node.radius; node.vx *= -0.5; }
             if (node.y < node.radius) { node.y = node.radius; node.vy *= -0.5; }
@@ -3677,10 +3682,10 @@
           }
         });
 
-        // Render loop clear
+        // Wipe the canvas clean for the next animation frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 1. Draw Links
+        // First, draw the lines connecting the related ingredients
         links.forEach(link => {
           const s = nodes.find(n => n.id === link.source);
           const t = nodes.find(n => n.id === link.target);
@@ -3701,7 +3706,7 @@
           }
         });
 
-        // 2. Draw Nodes
+        // Next, draw each ingredient as an interactive colored node
         nodes.forEach(node => {
           ctx.beginPath();
           ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
@@ -3720,7 +3725,7 @@
             }
           }
 
-          // Create node background color with opacity
+          // Paint the node circles with their corresponding category color and alpha
           ctx.fillStyle = node.color;
           ctx.globalAlpha = opacity;
           
@@ -3728,25 +3733,25 @@
           ctx.shadowBlur = node === hoveredNode ? 20 : 8;
           ctx.fill();
           ctx.shadowBlur = 0;
-          ctx.globalAlpha = 1.0; // reset
+          ctx.globalAlpha = 1.0; // Reset overall transparency back to normal
 
-          // Dash or Solid outer ring border
+          // Highlight the node by drawing a border ring around it
           if (showBorder) {
             ctx.beginPath();
             ctx.arc(node.x, node.y, node.radius + 3, 0, Math.PI * 2);
             ctx.lineWidth = 1.5;
             if (node === hoveredNode) {
               ctx.strokeStyle = '#fff';
-              ctx.setLineDash([4, 4]); // dashed ring
+              ctx.setLineDash([4, 4]); // Use dashed stroke style for hovered node outline
             } else {
               ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-              ctx.setLineDash([]); // solid ring
+              ctx.setLineDash([]); // Draw solid border stroke for normal nodes
             }
             ctx.stroke();
-            ctx.setLineDash([]); // reset
+            ctx.setLineDash([]); // Reset line dash pattern back to normal solid line
           }
 
-          // Label
+          // Draw the ingredient name text inside or near the node
           ctx.fillStyle = node === hoveredNode ? '#ffffff' : 'rgba(255,255,255,0.85)';
           ctx.font = node === hoveredNode ? 'bold 11px Inter, sans-serif' : '500 10.5px Inter, sans-serif';
           ctx.textAlign = 'center';
@@ -3757,7 +3762,7 @@
         requestAnimationFrame(drawFrame);
       };
 
-      // Mouse position utilities
+      // Helpers to find which node the user is hovering over
       const getMouseNode = (mx, my) => {
         return nodes.find(n => Math.hypot(n.x - mx, n.y - my) < n.radius + 5);
       };
@@ -3789,7 +3794,7 @@
             hoveredNeighbors.clear();
             
             if (hoveredNode) {
-              // Find all nodes connected to this node
+              // Find all neighboring ingredients that link directly to the hovered one
               links.forEach(l => {
                 if (l.source === hoveredNode.id) hoveredNeighbors.add(l.target);
                 if (l.target === hoveredNode.id) hoveredNeighbors.add(l.source);
@@ -3802,7 +3807,7 @@
                 <div style="font-size:0.7rem; color:#e2e8f0; margin-top:0.1rem;"><span style="color:#94a3b8;">Recipes:</span> ${hoveredNode.count}</div>
               `;
               
-              // Tooltip positioning
+              // Position the tooltip popover next to the mouse cursor
               tooltip.style.left = `${mx + 15}px`;
               tooltip.style.top = `${my + 15}px`;
               tooltip.style.opacity = '1';
@@ -3810,7 +3815,7 @@
               tooltip.style.opacity = '0';
             }
           } else if (hoveredNode) {
-            // Keep tooltip moving with mouse
+            // Update the tooltip coordinates as the mouse slides around
             tooltip.style.left = `${mx + 15}px`;
             tooltip.style.top = `${my + 15}px`;
           }
@@ -3821,7 +3826,7 @@
         draggedNode = null;
       });
 
-      // Canvas click listener to search for ingredient
+      // Search for recipes containing this ingredient when its node is clicked
       canvas.addEventListener('click', e => {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
@@ -3833,17 +3838,17 @@
           const ingredientTabBtn = document.querySelector('[data-search-tab="tab-ingredient"]');
           
           if (ingInput && explorerTabBtn && ingredientTabBtn) {
-            // 1. Switch pane to Explorer
+            // Navigate to the primary Recipe Explorer tab
             explorerTabBtn.click();
-            // 2. Switch sub-tab to Ingredient
+            // Select the Ingredient-based search sub-tab
             ingredientTabBtn.click();
             
-            // 3. Clear other inputs
+            // Reset other filter fields to avoid query conflicts
             document.querySelectorAll('.param-field').forEach(input => {
               input.value = '';
             });
             
-             // 4. Fill values and click search
+             // Put the clicked ingredient name into the input and trigger the search automatically
              let optionExists = Array.from(ingInput.options).some(opt => opt.value === clicked.label);
              if (!optionExists) {
                const opt = document.createElement('option');
@@ -3864,7 +3869,7 @@
         }
       });
 
-      // Start physics tick loop
+      // Spin up the animation tick loop for the physics simulation
       drawFrame();
     }
   </script>
@@ -3926,14 +3931,14 @@
       }
 
       async function generateRecipeImage(recipeName, region) {
-        // 1. Check IndexedDB cache first
+        // Check if we've already generated and cached this recipe image locally in IndexedDB
         const cachedBlob = await getCachedImage(recipeName);
         if (cachedBlob) {
           console.log(`[Cache] Loaded cached image for: "${recipeName}"`);
           return cachedBlob;
         }
 
-        // 2. Fetch from our secure proxy API if not cached
+        // If it's a new recipe, request a generated image from our secure proxy API endpoint
         try {
           const url = `/api/generate-image?recipeName=${encodeURIComponent(recipeName)}&region=${encodeURIComponent(region)}`;
           const res = await fetch(url);
@@ -3942,7 +3947,7 @@
             return null;
           }
           const blob = await res.blob();
-          // 3. Cache the new blob
+          // Save the newly generated image to IndexedDB for quick loading next time
           await cacheImage(recipeName, blob);
           return blob;
         } catch (err) {
@@ -3961,7 +3966,7 @@
         const title  = titleEl.textContent.trim();
         const region = regionEl?.textContent.trim() || 'International';
 
-        // Skip placeholder / loading states
+        // Don't generate anything for the default placeholders or loading labels
         if (!title || title === 'Persian Shish Kabob' || title.toLowerCase().includes('loading')) {
           if (loaderEl) loaderEl.style.display = 'none';
           return;
@@ -3970,7 +3975,7 @@
         imgEl.style.transition = 'opacity 0.6s ease';
         imgEl.style.opacity = '0';
 
-        // 1. Check Git Cache first
+        // Check if the daily highlighted recipe has a pre-saved local asset copy
         let useGitCache = false;
         try {
           const cacheRes = await fetch('assets/recipe_title.txt');
@@ -4018,7 +4023,7 @@
         }
       }
 
-      // Hook up UI listeners to save/load Stability key from the settings drawer
+      // Save and retrieve the user's Stability API key in the settings drawer
       document.addEventListener('DOMContentLoaded', () => {
         const openBtn = document.getElementById('btn-open-settings');
         const saveBtn = document.getElementById('btn-save-settings');
@@ -4039,7 +4044,7 @@
         }
       });
 
-      // Watch for title to be populated by the API response
+      // Listen for when the recipe of the day title is loaded to trigger image generation
       const titleEl = document.getElementById('featured-title');
       if (titleEl) {
         let triggered = false;
@@ -4054,7 +4059,7 @@
         });
         observer.observe(titleEl, { childList: true, subtree: true, characterData: true });
 
-        // Fallback: try after 4 seconds if observer missed it
+        // Fallback trigger in case the title observer missed the initial load event
         setTimeout(() => {
           if (!triggered) {
             triggered = true;
@@ -4064,7 +4069,7 @@
         }, 4000);
       }
 
-      // ===== 3D TILT HOVER EFFECT =====
+      /* Beautiful 3D tilting effect when hovering over the featured recipe card */
       (function() {
         const card = document.getElementById('featured-recipe-container');
         if (!card) return;
@@ -4082,7 +4087,7 @@
 
           const maxRotate = 10;
 
-          // Tilting angles mapping:
+          // Calculate the tilt angles based on where the cursor is relative to the card's center
           // rotateX is positive when mouse is at top (y < centerY), bringing top closer
           // rotateY is negative when mouse is at right (x > centerX), bringing right closer
           const rotateX = ((centerY - y) / centerY) * maxRotate;
@@ -4114,7 +4119,7 @@
       let mouseX = -100, mouseY = -100;
       let ringX  = -100, ringY  = -100;
 
-      // Trail pool
+      // Create a pool of trail elements for the cursor follow effect
       const TRAIL_COUNT = 10;
       const trails = [];
       for (let i = 0; i < TRAIL_COUNT; i++) {
@@ -4131,7 +4136,7 @@
         cursor.style.left = mouseX + 'px';
         cursor.style.top  = mouseY + 'px';
 
-        // Spawn trail particle
+        // Position and activate a cursor trail dot at the mouse position
         const t = trails[trailIdx % TRAIL_COUNT];
         t.x = mouseX; t.y = mouseY; t.life = 1;
         t.el.style.left    = mouseX + 'px';
@@ -4140,7 +4145,7 @@
         t.el.style.transform = 'translate(-50%,-50%) scale(1)';
         trailIdx++;
 
-        // Fade trail
+        // Fade out and shrink the trail dot after a tiny delay
         setTimeout(() => {
           t.el.style.transition = 'opacity 0.5s, transform 0.5s';
           t.el.style.opacity  = '0';
@@ -4149,7 +4154,7 @@
         setTimeout(() => { t.el.style.transition = 'none'; }, 560);
       });
 
-      // Lag ring behind cursor
+      // Smoothly interpolate the cursor ring position to create a lag effect
       function animateRing() {
         ringX += (mouseX - ringX) * 0.12;
         ringY += (mouseY - ringY) * 0.12;
@@ -4159,7 +4164,7 @@
       }
       animateRing();
 
-      // Expand on hover
+      // Grow the cursor pointer when hovering over interactive elements
       document.querySelectorAll('a, button, input, select, [role="button"], .carousel-card, .nav-tab, .recipe-row').forEach(el => {
         el.addEventListener('mouseenter', () => {
           cursor.classList.add('cursor-hover');
@@ -4171,7 +4176,7 @@
         });
       });
 
-      // Also handle dynamically added elements
+      // Ensure dynamic cards and list items also trigger the hover scale effect
       document.addEventListener('mouseover', (e) => {
         const el = e.target.closest('a, button, input, select, [role="button"], tr, .carousel-card');
         if (el) {
@@ -4228,20 +4233,20 @@
         const selectedCont = regionSelect.value;
         const currentVal = countrySelect.value;
         
-        // Clear all except first option
+        // Reset the country dropdown with a default helper option
         countrySelect.innerHTML = '<option value="">-- Any Country --</option>';
         
         let countries = [];
         if (selectedCont) {
           countries = continentCountryMap[selectedCont] || [];
         } else {
-          // If no continent is selected, show all countries
+          // If the continent filter is empty, show all available countries
           Object.values(continentCountryMap).forEach(list => {
             countries = countries.concat(list);
           });
         }
         
-        // Sort alphabetically
+        // Arrange the country list alphabetically for easier scanning
         countries.sort();
         
         countries.forEach(c => {
@@ -4251,7 +4256,7 @@
           countrySelect.appendChild(opt);
         });
         
-        // Restore previous value if it is still valid
+        // Keep the previously selected country if it's still in the updated list
         if (countries.includes(currentVal)) {
           countrySelect.value = currentVal;
         }
@@ -4259,7 +4264,7 @@
 
       if (regionSelect && countrySelect) {
         regionSelect.addEventListener('change', updateCountries);
-        // Initial population
+        // Populate the countries dropdown on page load
         updateCountries();
       }
     })();
@@ -4285,18 +4290,18 @@
           height = canvas.height = window.innerHeight;
           
           particles = [];
-          const numParticles = Math.floor(width * height / 15000); // Dense field like confetti
+          const numParticles = Math.floor(width * height / 15000); // Calculate how many particles to create based on screen real estate
           
           for (let i = 0; i < numParticles; i++) {
             const isEmoji = Math.random() > 0.4;
             particles.push({
               x: Math.random() * width,
               y: Math.random() * height,
-              vx: Math.random() * 0.4 + 0.2, // Drift right
-              vy: Math.random() * 0.4 + 0.2, // Drift down
+              vx: Math.random() * 0.4 + 0.2, // Give the particle a slow drift velocity to the right
+              vy: Math.random() * 0.4 + 0.2, // Give the particle a slow drift velocity downwards
               rotation: Math.random() * Math.PI * 2,
               rotSpeed: (Math.random() - 0.5) * 0.02,
-              size: Math.random() * 12 + 10, // Small veggies (10px to 22px)
+              size: Math.random() * 12 + 10, // Assign a random size to keep the floating background diverse
               isEmoji: isEmoji,
               emoji: isEmoji ? shapes[Math.floor(Math.random() * shapes.length)] : null,
               color: colors[Math.floor(Math.random() * colors.length)],
@@ -4347,7 +4352,7 @@
     })();
   </script>
 
-  <!-- Hidden helper elements to prevent legacy JS bundle null pointer exceptions -->
+  <!-- Hidden elements to handle legacy bundle references without throwing exceptions -->
   <div style="display: none !important;">
     <div id="cuisine-carousel"></div>
     <input type="range" id="slide-cal" min="100" max="1500" value="800">

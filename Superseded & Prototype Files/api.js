@@ -10,8 +10,8 @@ import {
 export const configStore = {
   get baseUrl() {
     let url = localStorage.getItem('recipedb_baseUrl');
-    if (!url || url.includes('cosylab.iiitd.edu.in') || url.includes('api.foodoscope.com')) {
-      url = window.location.origin;
+    if (!url || url.includes('cosylab.iiitd.edu.in')) {
+      url = 'https://api.foodoscope.com';
       localStorage.setItem('recipedb_baseUrl', url);
     } else {
       try {
