@@ -1409,6 +1409,14 @@
     .orbit-dot-2:nth-child(2) { bottom: 10%; right: 8%; }
     .orbit-dot-2:nth-child(3) { top: 50%; left: 0; transform: translate(-50%, -50%); }
   </style>
+<style>
+  /* Force number input arrows to be always visible */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+    display: block;
+  }
+</style>
 </head>
 <body>
   <canvas id="particle-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.85;"></canvas>
@@ -4418,6 +4426,7 @@
 </body>
 
 </html>
+
 
 
 
