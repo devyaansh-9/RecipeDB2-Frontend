@@ -864,6 +864,27 @@
       margin-top: 1.5rem !important;
     }
     
+    /* Match API console perfectly to the Query Parameters glass-panel style */
+    .console-panel {
+      background: var(--bg-surface) !important;
+      border: 1px solid var(--border-color) !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+      border-radius: 8px !important;
+    }
+    .console-header {
+      background: transparent !important;
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+    .console-body {
+      background: transparent !important; 
+    }
+    
+    /* Make text inside the console readable on the glass surface */
+    #pg-console-output {
+      color: var(--text-primary) !important;
+      background: transparent !important;
+    }
+    
     /* Set all API console tabs to orange as requested */
     .console-tab {
       color: #ea580c !important; /* Orange accent */
@@ -872,14 +893,16 @@
       opacity: 0.7 !important; /* Slightly dimmer so active tab still stands out */
     }
     
-    /* Lighten the dark background of the code output section */
-    .console-body {
-      background: #1e293b !important; /* Slate 800 - much easier to read than pitch black */
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+    /* Fix the API console metrics and copy button visibility for light theme */
+    .console-metrics .metric-pill, 
+    .console-metrics .btn-copy-curl {
+      color: var(--text-secondary) !important; 
+      background: rgba(0, 0, 0, 0.05) !important;
+      border: 1px solid rgba(0, 0, 0, 0.1) !important;
     }
-    #pg-console-output {
-      background: transparent !important;
+    .console-metrics .btn-copy-curl:hover {
+      color: var(--text-primary) !important;
+      background: rgba(0, 0, 0, 0.1) !important;
     }
 
     
