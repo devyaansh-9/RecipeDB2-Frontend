@@ -864,40 +864,12 @@
       margin-top: 1.5rem !important;
     }
     
-    /* Completely invert API console to light theme so text is easily readable */
-    .console-panel {
-      background: #ffffff !important; /* Pure white background */
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
+    /* Set all API console tabs to orange as requested */
+    .console-tab {
+      color: #ea580c !important; /* Orange accent */
     }
-    .console-header {
-      background: #e0f2fe !important; /* Sky 100 - Light blue strip */
-      border-bottom: 1px solid #bae6fd !important;
-    }
-    
-    /* Fix API console tab visibility for light theme */
     .console-tab:not(.active) {
-      color: #64748b !important; /* Slate 500 (Medium Gray) */
-    }
-    .console-tab.active {
-      color: #ea580c !important; /* Keep the orange accent */
-    }
-    
-    /* Fix API console metrics and copy button visibility for light theme */
-    .console-metrics .metric-pill, 
-    .console-metrics .btn-copy-curl {
-      color: #334155 !important; /* Slate 700 (Dark Gray) */
-      background: rgba(0, 0, 0, 0.05) !important;
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    }
-    .console-metrics .btn-copy-curl:hover {
-      color: #0f172a !important; /* Slate 900 (Almost Black) */
-      background: rgba(0, 0, 0, 0.1) !important;
-    }
-
-    /* Make the code output text dark so it's readable on light background */
-    #pg-console-output {
-      color: #0f172a !important; /* Slate 900 (Almost Black) */
+      opacity: 0.7 !important; /* Slightly dimmer so active tab still stands out */
     }
 
     
