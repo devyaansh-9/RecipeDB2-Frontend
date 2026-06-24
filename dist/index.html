@@ -871,6 +871,16 @@
     .console-tab:not(.active) {
       opacity: 0.7 !important; /* Slightly dimmer so active tab still stands out */
     }
+    
+    /* Lighten the dark background of the code output section */
+    .console-body {
+      background: #1e293b !important; /* Slate 800 - much easier to read than pitch black */
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    #pg-console-output {
+      background: transparent !important;
+    }
 
     
     #explorer-pane .search-by-header {
