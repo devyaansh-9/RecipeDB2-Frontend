@@ -864,16 +864,18 @@
       margin-top: 1.5rem !important;
     }
     
-    /* Match API console perfectly to the Query Parameters glass-panel style */
+    /* Match API console perfectly to the Query Parameters glass-panel style using forced light colors */
     .console-panel {
-      background: var(--bg-surface) !important;
-      border: 1px solid var(--border-color) !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+      background: rgba(255, 255, 255, 0.85) !important; /* Forced bright frosted glass */
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
       border-radius: 8px !important;
     }
     .console-header {
       background: transparent !important;
-      border-bottom: 1px solid var(--border-color) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
     }
     .console-body {
       background: transparent !important; 
@@ -881,7 +883,7 @@
     
     /* Make text inside the console readable on the glass surface */
     #pg-console-output {
-      color: var(--text-primary) !important;
+      color: #0f172a !important; /* Forced dark text */
       background: transparent !important;
     }
     
