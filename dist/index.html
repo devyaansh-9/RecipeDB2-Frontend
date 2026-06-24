@@ -877,15 +877,18 @@
       background: transparent !important;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
     }
-    .console-body {
-      background: transparent !important; 
-    }
-    
     /* Make text inside the console readable on the glass surface */
     #pg-console-output {
       color: #0f172a !important; /* Forced dark text */
       background: transparent !important;
     }
+
+    /* Override JSON syntax highlighting tokens for light theme */
+    #pg-console-output .token-key { color: #b91c1c !important; } /* Dark Red */
+    #pg-console-output .token-string { color: #059669 !important; } /* Dark Emerald */
+    #pg-console-output .token-number { color: #ea580c !important; } /* Dark Orange */
+    #pg-console-output .token-boolean { color: #7c3aed !important; } /* Dark Purple */
+    #pg-console-output .token-null { color: #475569 !important; } /* Dark Slate */
     
     /* Set all API console tabs to orange as requested */
     .console-tab {
