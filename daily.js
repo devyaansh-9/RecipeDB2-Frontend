@@ -2,9 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const API_KEY = 'LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz';
+let API_KEY = '';
+let STABILITY_KEY = '';
 const BASE_URL = 'https://api.foodoscope.com';
-const STABILITY_KEY = 'sk-' + 'VnPSbBlyZ7MecnDuSOJGYsaRLfUbWYj128e5PLtu6WISePhX';
+
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const apiMatch = envContent.match(/API_KEY=(.+)/);
+  if (apiMatch) API_KEY = apiMatch[1].trim();
+  const stabilityMatch = envContent.match(/STABILITY_KEY=(.+)/);
+  if (stabilityMatch) STABILITY_KEY = stabilityMatch[1].trim();
+}
 
 async function run() {
   try {

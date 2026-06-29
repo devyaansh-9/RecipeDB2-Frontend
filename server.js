@@ -71,13 +71,16 @@ const MIME_TYPES = {
 
 const https = require('https');
 
-// Load GROQ_API_KEY from .env file (never committed to GitHub)
-const envPath = path.join(__dirname, '.env');
+// Load API keys from local .env file (never committed to GitHub)
 let GROQ_API_KEY = '';
+let STABILITY_KEY = '';
+const envPath = path.join(__dirname, '.env');
 if (fs.existsSync(envPath)) {
   const envContent = fs.readFileSync(envPath, 'utf8');
-  const match = envContent.match(/GROQ_API_KEY=(.+)/);
-  if (match) GROQ_API_KEY = match[1].trim();
+  const groqMatch = envContent.match(/GROQ_API_KEY=(.+)/);
+  if (groqMatch) GROQ_API_KEY = groqMatch[1].trim();
+  const stabilityMatch = envContent.match(/STABILITY_KEY=(.+)/);
+  if (stabilityMatch) STABILITY_KEY = stabilityMatch[1].trim();
 }
 
 function fetchGroqNews(callback) {
@@ -106,6 +109,9 @@ function fetchGroqNews(callback) {
     res.on('end', () => {
       try {
         const parsed = JSON.parse(data);
+        if (res.statusCode !== 200) {
+          throw new Error(`Groq API returned status ${res.statusCode}: ${data}`);
+        }
         let content = parsed.choices[0].message.content.trim();
         if (content.startsWith('```json')) content = content.substring(7);
         if (content.startsWith('```')) content = content.substring(3);
@@ -123,8 +129,6 @@ function fetchGroqNews(callback) {
   req.end();
 }
 
-
-const STABILITY_KEY = 'sk-VnPSbBlyZ7MecnDuSOJGYsaRLfUbWYj128e5PLtu6WISePhX';
 
 function generateImage(prompt, callback) {
   const boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW';
@@ -201,28 +205,54 @@ const server = http.createServer((req, res) => {
   // ─── STABILITY AI IMAGE GENERATION PROXY ENDPOINT ───
   const [pathname, queryString] = req.url.split('?');
   if (pathname === '/api/generate-image') {
-    console.log('[Stability Proxy] Image generation disabled by user to save tokens.');
-    res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    res.end(JSON.stringify({ error: 'Image generation disabled' }));
+    const params = new URLSearchParams(queryString || '');
+    const recipeName = params.get('recipeName') || 'Delicious Dish';
+    const region = params.get('region') || 'International';
+    const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
+
+    console.log(`[Stability Proxy] Generating image for: "${recipeName}" (${region})...`);
+    generateImage(prompt, (err, imageBuffer) => {
+      if (err) {
+        console.error('[Stability Proxy] Image generation failed:', err.message);
+        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: err.message }));
+      } else {
+        console.log('[Stability Proxy] Image generated successfully.');
+        res.writeHead(200, { 
+          'Content-Type': 'image/webp',
+          'Access-Control-Allow-Origin': '*'
+        });
+        res.end(imageBuffer);
+      }
+    });
     return;
   }
 
   if (req.url === '/api/culinary-news') {
-    console.log('[Groq Proxy] News generation disabled by user. Returning mock news data.');
-    const mockNews = [
-      { "title": "Culinary AI Revolution", "summary": "Chefs across the globe are embracing AI tools to invent unexpected flavor pairings.", "date": "Today" },
-      { "title": "Sweet & Salty Sweeps the Nation", "summary": "A new wave of desserts combining intense sea salt and dark caramel is trending.", "date": "2 hours ago" },
-      { "title": "Historical Roman Recipe Reconstructed", "summary": "Archaeologists and chefs team up to recreate an authentic 2,000-year-old feast.", "date": "Yesterday" },
-      { "title": "Vegan Cheese Breakthrough", "summary": "A new fermentation process is producing dairy-free cheese that melts and stretches.", "date": "Today" },
-      { "title": "The Ghost Pepper Comeback", "summary": "Ultra-spicy ingredients are finding their way into mainstream fast food menus.", "date": "5 hours ago" },
-      { "title": "Lab-Grown Seafood Hits Menus", "summary": "Sustainable cell-cultured salmon is now being served in select upscale restaurants.", "date": "Yesterday" },
-      { "title": "Mushroom Coffee Boom", "summary": "The morning brew is getting a fungal upgrade as health-conscious consumers seek alternatives.", "date": "Today" },
-      { "title": "Robots in the Kitchen", "summary": "Automated sous-chefs are taking over repetitive chopping tasks in commercial kitchens.", "date": "3 hours ago" },
-      { "title": "Zero-Waste Cooking Trend", "summary": "Top restaurants are pledging to completely eliminate food waste by repurposing scraps.", "date": "Yesterday" },
-      { "title": "Global Vanilla Shortage", "summary": "Bakers brace for impact as the price of authentic Madagascar vanilla soars.", "date": "Today" }
-    ];
-    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    res.end(JSON.stringify(mockNews));
+    console.log('[Groq Proxy] Fetching news from Groq...');
+    fetchGroqNews((err, articles) => {
+      if (err) {
+        console.error('[Groq Proxy] Error fetching news, falling back to mock news:', err.message);
+        const mockNews = [
+          { "title": "Culinary AI Revolution", "summary": "Chefs across the globe are embracing AI tools to invent unexpected flavor pairings.", "date": "Today" },
+          { "title": "Sweet & Salty Sweeps the Nation", "summary": "A new wave of desserts combining intense sea salt and dark caramel is trending.", "date": "2 hours ago" },
+          { "title": "Historical Roman Recipe Reconstructed", "summary": "Archaeologists and chefs team up to recreate an authentic 2,000-year-old feast.", "date": "Yesterday" },
+          { "title": "Vegan Cheese Breakthrough", "summary": "A new fermentation process is producing dairy-free cheese that melts and stretches.", "date": "Today" },
+          { "title": "The Ghost Pepper Comeback", "summary": "Ultra-spicy ingredients are finding their way into mainstream fast food menus.", "date": "5 hours ago" },
+          { "title": "Lab-Grown Seafood Hits Menus", "summary": "Sustainable cell-cultured salmon is now being served in select upscale restaurants.", "date": "Yesterday" },
+          { "title": "Mushroom Coffee Boom", "summary": "The morning brew is getting a fungal upgrade as health-conscious consumers seek alternatives.", "date": "Today" },
+          { "title": "Robots in the Kitchen", "summary": "Automated sous-chefs are taking over repetitive chopping tasks in commercial kitchens.", "date": "3 hours ago" },
+          { "title": "Zero-Waste Cooking Trend", "summary": "Top restaurants are pledging to completely eliminate food waste by repurposing scraps.", "date": "Yesterday" },
+          { "title": "Global Vanilla Shortage", "summary": "Bakers brace for impact as the price of authentic Madagascar vanilla soars.", "date": "Today" }
+        ];
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify(mockNews));
+      } else {
+        console.log('[Groq Proxy] Successfully fetched and returned Groq news.');
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify(articles));
+      }
+    });
     return;
   }
 
