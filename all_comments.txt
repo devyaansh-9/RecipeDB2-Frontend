@@ -1,0 +1,90 @@
+1: Warm Saffron and Chili styling themes along with cursor settings
+2: Decorative custom cursor overlay for premium interactive feedback
+3: Soft glowing blurred blobs that float in the background for a modern ambient look
+4: Slow-spinning orbital gold and orange rings in the background
+5: Modern warm header containing brand logo, tab triggers and engine status
+6: Switches between main views: Explorer, Analytics, API Console, and Food Science Lab
+7: Connection status badge and credential settings drawer toggle
+8: Container holding all interactive views and tabs
+9: ==========================================
+           RECIPE EXPLORER VIEW (TAB 1)
+           ==========================================
+10: Tabs to browse search parameters by continent, country, or title keywords
+11: Introduces RecipeDB2 and displays the daily featured recipe
+12: Detailed introduction text explaining the project's background and dataset statistics
+13: Quick stats banner showing counts for recipes, ingredients, countries, and continents
+14: Featured daily recipe card with 3D hover tilt and dynamic AI image generation
+15: Smooth pulse spinner shown while pulling the daily recommendation
+16: Space to show dietary suitability tags (e.g. Vegetarian, Gluten-Free)
+17: Multi-mode query builder for narrowing down the recipe catalog
+18: Switch query criteria: Cuisine, Ingredients, Category, Nutrition, or Advanced
+19: Individual parameter form panels matching the search tabs
+20: Filters by Broad Continent, Country, and Title keywords
+21: Filters by including or excluding specific ingredients
+22: Filters by dietary categories like Vegan, Vegetarian, Dairy, or Gluten
+23: Slide controls to specify target calories and macronutrients
+24: Full combination search form including cooking process and utensil options
+25: Search dispatch trigger that executes the structured query
+26: Grid list of results returned from the current query
+27: Interactive data grid displaying recipe summaries and nutrition toggles
+28: Columns visible only when nutritional details checkbox is active
+29: Element content populated dynamically by active renderer
+30: Pagination, rows-per-page, and jump-to-page settings
+31: ==========================================
+           COMPUTATIONAL ANALYTICS & PLANNING VIEW (TAB 2)
+           ==========================================
+32: Fast-loading high-level database metrics
+33: Main graphs showing calories and dietary profile distributions
+34: Dynamically drawn SVG charts showing regional calorie patterns
+35: Endpoint items inserted at boot time
+36: Latest culinary and food science headlines powered by AI query
+37: Individual articles populated dynamically
+38: ==========================================
+           DEVELOPER PLAYGROUND VIEW (TAB 3)
+           ==========================================
+39: Sidebar listing all available RecipeDB2 API endpoints
+40: Endpoint items inserted at boot time
+41: Workspace for constructing API requests and viewing JSON responses
+42: URL bar with request method tag and send button
+43: Form inputs matching the selected endpoint parameters
+44: Parameter fields custom-rendered depending on the selected endpoint
+45: Interactive output window displaying response code, latency, and formatted JSON
+46: ==========================================
+           FOOD SCIENCE LAB VIEW (TAB 4)
+           ==========================================
+47: Interactive force-directed canvas displaying ingredient compound pairings
+48: Layout dividing the visualization canvas from its physics adjustments
+49: Drawing board for the ingredient node network graph
+50: Legend indicators and slider controls for the force simulation physics
+51: Interactive physics control sliders
+52: SVG Map showing gastronomy hubs across the globe
+53: Custom SVG outline projection of the continents
+54: Dynamic pulse indicators marking active culinary research regions
+55: Floating panel showing cuisine metrics when hover is triggered on a hub
+56: Comparative grid showing how cuisines share ingredients and techniques
+57: Header cells labeling columns with target cuisines
+58: Similarity indices for the Indian Subcontinent cuisine
+59: Similarity indices for the Middle Eastern cuisine
+60: Similarity indices for the French cuisine
+61: Similarity indices for the Mexican cuisine
+62: Similarity indices for the Italian cuisine
+63: Similarity indices for the East Asian cuisine
+64: Footer with copyright and quick info links
+65: Circular icons displaying glowing hover outlines
+66: ==========================================
+       MODALS OVERLAYS
+       ==========================================
+67: Sliding drawer containing API base URL settings and security keys
+68: Sliding drawer with detailed ingredients list, steps, and nutrition breakdown
+69: Left side displaying name, region, ingredients list, and utensils needed
+70: Element content populated dynamically by active renderer
+71: Element content populated dynamically by active renderer
+72: Element content populated dynamically by active renderer
+73: Right side displaying cooking steps and circular nutrition charts
+74: Visual circular metrics for calorie and macronutrient proportions
+75: Recipe instruction steps populated sequentially
+76: Floating feedback alerts showing success/error messages
+77: Application bootstrap script for tabs, search, maps, and particle effects
+78: ===== STABILITY RECIPE IMAGE GENERATION =====
+79: ===== CURSOR SCRIPT =====
+80: Hidden elements to handle legacy bundle references without throwing exceptions
