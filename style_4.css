@@ -1,0 +1,423 @@
+<style>
+              @keyframes spin {
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+
+              @keyframes pulse {
+                0% {
+                  opacity: 0.6;
+                }
+
+                50% {
+                  opacity: 1;
+                }
+
+                100% {
+                  opacity: 0.6;
+                }
+              }
+
+              .news-card {
+                background: rgba(255, 255, 255, 0.6) !important;
+                border: 1px solid rgba(30, 58, 138, 0.1) !important;
+                border-radius: 10px;
+                padding: 16px;
+                transition: all 0.25s ease;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+              }
+
+              .news-card:hover {
+                background: #ffffff !important;
+                border-color: #3b82f6 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.08);
+              }
+
+              .news-title {
+                font-size: 15px;
+                font-weight: 700;
+                color: #0f172a !important;
+                margin-bottom: 8px;
+                line-height: 1.4;
+                font-family: 'Poppins', sans-serif !important;
+              }
+
+              .news-summary {
+                font-size: 13px;
+                color: #000000 !important;
+                line-height: 1.5;
+                margin-bottom: 12px;
+              }
+
+              .news-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 11px;
+                color: #000000 !important;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+              }
+
+              .news-read-more {
+                color: #2563eb !important;
+                font-weight: 700;
+                cursor: pointer;
+                text-decoration: none !important;
+              }
+
+              .news-read-more:hover {
+                color: #1d4ed8 !important;
+                text-decoration: underline !important;
+              }
+
+              /* Custom thin scrollbar layout for the culinary news list */
+              #news-feed-container::-webkit-scrollbar {
+                width: 6px;
+              }
+
+              #news-feed-container::-webkit-scrollbar-track {
+                background: rgba(30, 58, 138, 0.05);
+                border-radius: 4px;
+              }
+
+              #news-feed-container::-webkit-scrollbar-thumb {
+                background: rgba(30, 58, 138, 0.15);
+                border-radius: 4px;
+              }
+
+              #news-feed-container::-webkit-scrollbar-thumb:hover {
+                background: rgba(30, 58, 138, 0.3);
+              }
+
+              /* Ensure the footer area matches the white theme background and remains readable */
+              footer.app-footer,
+              .app-footer,
+              footer {
+                background: rgba(255, 255, 255, 0.90) !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+                border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06) !important;
+              }
+
+              .footer-copyright-banner,
+              .footer-copyright-banner * {
+                color: #374151 !important;
+              }
+
+              .footer-copyright-banner a {
+                color: #1d4ed8 !important;
+              }
+
+              .footer-copyright-banner a:hover {
+                color: #1e40af !important;
+              }
+
+              /* ============================================================
+       PROFESSIONAL TYPOGRAPHY SYSTEM — Blue & White Theme
+       ============================================================ */
+
+              /* Fetch readable modern typography from Google Fonts */
+              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
+
+              /* Base body text uses deep navy for premium readability */
+              body,
+              body * {
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
+              }
+
+              body {
+                color: #1e293b !important;
+                font-family: 'Inter', sans-serif !important;
+              }
+
+              /* Headings style: deep navy, extra bold, with clean letter-spacing */
+              h1,
+              h2,
+              h3,
+              h4,
+              h5,
+              h6,
+              .panel-title,
+              .section-title,
+              .search-by-header {
+                font-family: 'Poppins', 'Inter', sans-serif !important;
+                color: #0f172a !important;
+                font-weight: 800 !important;
+                letter-spacing: -0.02em !important;
+              }
+
+              /* Keep brand labels styling colorful */
+              .brand,
+              .brand * {
+                color: #0f172a !important;
+              }
+
+              /* Style the "DB2" substring with the brand accent color */
+              .brand-db2,
+              [class*="brand"] span {
+                color: #2563eb !important;
+              }
+
+              /* Paragraph text style: rich slate to improve contrast over plain grey */
+              body {
+                color: #000000 !important;
+              }
+
+              p,
+              li,
+              label,
+              td,
+              th {
+                color: #000000;
+              }
+
+              select option {
+                background-color: #ffffff !important;
+                color: #1f2937 !important;
+              }
+
+              /* Style rules for core paragraph content blocks */
+              .about-text,
+              .section-description,
+              .detail-text {
+                color: #000000 !important;
+                font-size: 1rem !important;
+                line-height: 1.75 !important;
+                font-weight: 400 !important;
+              }
+
+              /* Metrics counters style: vivid blue accent color */
+              .stat-value,
+              .stat-number,
+              .kpi-value,
+              [class*="stat"] h2,
+              [class*="stat"] h3,
+              .metric-value {
+                color: #1d4ed8 !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 900 !important;
+              }
+
+              /* Tab indicators: clear status indicator colors */
+              .nav-tab,
+              .nav-links button,
+              .tab-btn {
+                color: #000000 !important;
+                font-weight: 600 !important;
+                font-size: 0.9rem !important;
+              }
+
+              .nav-tab.active,
+              .nav-tab:hover,
+              .nav-links button.active {
+                color: #1d4ed8 !important;
+                font-weight: 700 !important;
+              }
+
+              /* Grid columns typography styling */
+              .gastronomy-table td {
+                color: #1e293b !important;
+                font-weight: 500 !important;
+              }
+
+              .gastronomy-table th {
+                color: #0f172a !important;
+                font-weight: 700 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.06em !important;
+                font-size: 0.75rem !important;
+              }
+
+              /* Recipe title style: vivid dark blue for click-through call to action */
+              .gastronomy-table .recipe-name,
+              .gastronomy-table td:first-child strong,
+              .gastronomy-table td:first-child {
+                color: #1e3a8a !important;
+                font-weight: 700 !important;
+              }
+
+              /* Dietary tag label style */
+              .gastronomy-table td:first-child small,
+              .gastronomy-table .diet-tag,
+              .diet-type {
+                color: #000000 !important;
+                font-size: 0.78rem !important;
+              }
+
+              /* Energy cells style: golden accent color token */
+              .gastronomy-table td.calories,
+              .gastronomy-table .calorie-val,
+              .calorie-value {
+                color: #d97706 !important;
+                font-weight: 700 !important;
+              }
+
+              /* Section titles style rules */
+              .panel-title {
+                color: #0f172a !important;
+                font-size: 1.25rem !important;
+              }
+
+              /* Form field indicators and search filter headings style rules */
+              .search-by-header {
+                background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+              }
+
+              /* Bottom navigation links typography styles */
+              footer,
+              .app-footer,
+              .footer-copyright-banner {
+                color: #374151 !important;
+              }
+
+              footer p,
+              .footer-copyright-banner p,
+              .footer-copyright-banner span {
+                color: #6b7280 !important;
+                font-size: 0.82rem !important;
+              }
+
+              footer strong,
+              .footer-copyright-banner strong {
+                color: #1e3a8a !important;
+                font-weight: 700 !important;
+              }
+
+              footer a,
+              .footer-copyright-banner a {
+                color: #2563eb !important;
+                font-weight: 500 !important;
+                text-decoration: underline !important;
+              }
+
+              /* Cuisine section header styling */
+              .carousel-section .panel-title {
+                color: #0f172a !important;
+              }
+
+              /* Accent rules for the about section title */
+              .accent-text,
+              [style*="color: var(--accent"] {
+                color: #2563eb !important;
+              }
+
+              /* Action buttons content alignment and padding rules */
+              .btn-primary,
+              button[class*="btn-"] {
+                font-weight: 600 !important;
+                letter-spacing: 0.01em !important;
+              }
+
+              /* Text styles for sliding drawer lists and steps */
+              .detail-title {
+                color: #0f172a !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 800 !important;
+              }
+
+              /* Metric descriptors text styling below counter numbers */
+              .stat-label,
+              .kpi-label,
+              [class*="stat"] p {
+                color: #000000 !important;
+                font-size: 0.72rem !important;
+                font-weight: 600 !important;
+                letter-spacing: 0.08em !important;
+                text-transform: uppercase !important;
+              }
+
+              /* Image overlays cleanup to keep pictures sharp and bright */
+
+              /* Disable background blur and shadow gradients on the main daily recipe photo */
+              .featured-card-blur {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+              }
+
+              /* Keep the main daily recipe photo clear and vibrant */
+              .featured-box-bg-img {
+                filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
+              }
+
+              /* Remove background dark gradient covers from card images */
+              .carousel-card::after {
+                background: transparent !important;
+                box-shadow: none !important;
+              }
+
+              /* Keep the cuisine carousel cards crisp and high-contrast */
+              .carousel-card-img {
+                filter: brightness(1.25) saturate(1.2) contrast(1.05) !important;
+              }
+
+              /* Ensure text inside carousel items stays visible by applying readable contrast outlines */
+              .carousel-card-info h4 {
+                color: #ffffff !important;
+                text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+                font-weight: 900 !important;
+              }
+
+              .carousel-card-info p {
+                color: #e2e8f0 !important;
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+                font-weight: 700 !important;
+              }
+
+              /* Keep all text tags on the daily recipe card highly legible */
+              .featured-box-title {
+                background: none !important;
+                -webkit-text-fill-color: #ffffff !important;
+                color: #ffffff !important;
+                text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8) !important;
+                font-weight: 900 !important;
+              }
+
+              .featured-box-tag {
+                color: #ffffff !important;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85) !important;
+                font-weight: 800 !important;
+                letter-spacing: 2px !important;
+                text-transform: uppercase !important;
+              }
+
+              .featured-box-meta span {
+                color: #ffffff !important;
+                text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85) !important;
+                font-weight: 700 !important;
+              }
+
+              /* Style metric tags with pure white background cards */
+              #featured-badges .badge {
+                color: #ffffff !important;
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+                font-weight: 700 !important;
+              }
+
+              /* Turn off glass filters on header and footer to speed up rendering */
+              .navbar,
+              nav,
+              header,
+              [class*="nav-"],
+              #navbar,
+              #header,
+              #topbar {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+              }
+
+              footer.app-footer,
+              .app-footer,
+              footer {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+              }
+            </style>

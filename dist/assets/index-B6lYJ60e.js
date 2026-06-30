@@ -54,7 +54,7 @@ const $ = {
   y = {
     get baseUrl() {
       let e = localStorage.getItem("recipedb_baseUrl");
-      if (!e || e.includes("cosylab.iiitd.edu.in") || e.includes("api.foodoscope.com")) {
+      if (!e || e.includes("cosylab.iiitd.edu.in") || e.includes("api.foodoscope.com") || e.includes("localhost:3000") || e.includes("localhost:6969")) {
         e = window.location.origin;
         localStorage.setItem("recipedb_baseUrl", e);
       } else {
@@ -720,6 +720,46 @@ function z() {
           }));
       });
     }),
+    t.searchRegion.addEventListener("change", (e) => {
+      const cont = e.target.value.trim();
+      const cmap = {
+        "African": ["Angolan", "Egyptian", "Ethiopian", "Libyan", "Moroccan", "Namibian", "Nigerian", "Somalian", "Sudanese"],
+        "Asian": ["Bangladeshi", "Chinese", "Filipino", "Indian", "Indonesian", "Iraqi", "Israeli", "Japanese", "Korean", "Laotian", "Lebanese", "Malaysian", "Mongolian", "Nepalese", "Pakistani", "Palestinian", "Saudi Arabian", "Thai", "Turkish", "Vietnamese"],
+        "Australasian": ["Australian", "New Zealander"],
+        "Latin American": ["Argentine", "Brazilian", "Chilean", "Colombian", "Costa Rican", "Cuban", "Ecuadorean", "Guatemalan", "Honduran", "Jamaican", "Mexican", "Peruvian", "Puerto Rican", "Rest Caribbean", "Venezuelan"],
+        "European": ["Austrian", "Belgian", "Czech", "Danish", "Dutch", "English", "Finnish", "French", "German", "Greek", "Hungarian", "Icelandic", "Irish", "Italian", "Norwegian", "Polish", "Portuguese", "Rest Eastern European", "Russian", "Scottish", "Spanish", "Swedish", "Swiss", "UK", "Welsh"],
+        "North American": ["Canadian", "US"]
+      };
+      t.searchCountry.innerHTML = '<option value="">-- Any Country --</option>';
+      if (cont && cmap[cont]) {
+        cmap[cont].forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          t.searchCountry.appendChild(opt);
+        });
+      }
+    }),
+    t.advRegion.addEventListener("change", (e) => {
+      const cont = e.target.value.trim();
+      const cmap = {
+        "African": ["Angolan", "Egyptian", "Ethiopian", "Libyan", "Moroccan", "Namibian", "Nigerian", "Somalian", "Sudanese"],
+        "Asian": ["Bangladeshi", "Chinese", "Filipino", "Indian", "Indonesian", "Iraqi", "Israeli", "Japanese", "Korean", "Laotian", "Lebanese", "Malaysian", "Mongolian", "Nepalese", "Pakistani", "Palestinian", "Saudi Arabian", "Thai", "Turkish", "Vietnamese"],
+        "Australasian": ["Australian", "New Zealander"],
+        "Latin American": ["Argentine", "Brazilian", "Chilean", "Colombian", "Costa Rican", "Cuban", "Ecuadorean", "Guatemalan", "Honduran", "Jamaican", "Mexican", "Peruvian", "Puerto Rican", "Rest Caribbean", "Venezuelan"],
+        "European": ["Austrian", "Belgian", "Czech", "Danish", "Dutch", "English", "Finnish", "French", "German", "Greek", "Hungarian", "Icelandic", "Irish", "Italian", "Norwegian", "Polish", "Portuguese", "Rest Eastern European", "Russian", "Scottish", "Spanish", "Swedish", "Swiss", "UK", "Welsh"],
+        "North American": ["Canadian", "US"]
+      };
+      t.advCountry.innerHTML = '<option value="">-- Any Country --</option>';
+      if (cont && cmap[cont]) {
+        cmap[cont].forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          t.advCountry.appendChild(opt);
+        });
+      }
+    }),
     t.btnSubmitSearch.addEventListener("click", () => {
       J();
     }),
@@ -924,12 +964,12 @@ async function H() {
     const loaderEl = document.getElementById("featured-loading-state");
     (i.featuredRecipe = a),
       (t.featuredTitle.textContent = a.Recipe_title),
-      (t.featuredTime.textContent = a.total_time ? `${a.total_time} mins` : "");
+      (t.featuredTime.textContent = (a.total_time && a.total_time != "0") ? `${a.total_time} mins` : "");
     t.featuredRegion.textContent = a.Region || "Global";
     // Separate the bullet from region/time to avoid showing " • " when empty
     const metaEl = t.featuredRegion.parentElement;
     if (metaEl) {
-      metaEl.innerHTML = `<span id="featured-region">${a.Region || "Global"}</span>${a.total_time ? ` &bull; <span id="featured-time">${a.total_time} mins</span>` : ''}`;
+      metaEl.innerHTML = `<span id="featured-region">${a.Region || "Global"}</span>${(a.total_time && a.total_time != "0") ? ` &bull; <span id="featured-time">${a.total_time} mins</span>` : ''}`;
     }
     (t.featuredBadges.innerHTML = "");
     const n = (o, s) => {
@@ -1500,6 +1540,10 @@ async function v() {
       }
 
       const d = await T({ path, queryParams });
+      if (d && d.data && d.data.error === "Not enough tokens") {
+        t.tableBodyContainer.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #F87171; font-weight: bold;">Error: Your API Key is out of tokens. Please use the gear icon to update it.</td></tr>`;
+        return;
+      }
       if (d && d.data) {
         let data = [];
         let totalCount = 118083;
@@ -1578,6 +1622,7 @@ async function populateDetailsForSlice(slice) {
         });
         if (res && res.data && res.data.recipe) {
           Object.assign(recipe, res.data.recipe);
+          if (res.data.ingredients) recipe.ingredients = res.data.ingredients;
         }
       } catch (err) {
         console.warn("Failed to populate detailed recipe:", recipe.Recipe_id, err);
@@ -1624,7 +1669,8 @@ async function M(e) {
         </button>
       </td>
     `;
-    n.querySelector(".btn-view-details").addEventListener("click", () => _(a));
+    n.style.cursor = "pointer";
+    n.addEventListener("click", () => _(a));
     t.tableBodyContainer.appendChild(n);
   });
   I();
@@ -1848,6 +1894,17 @@ async function _(e) {
       }
     }
   }
+  if (e.Recipe_id && !e.ingredients) {
+    try {
+      const res = await T({ path: `/recipe2-api/search-recipe/${e.Recipe_id}` });
+      if (res && res.data) {
+        if (res.data.recipe) Object.assign(e, res.data.recipe);
+        if (res.data.ingredients) e.ingredients = res.data.ingredients;
+      }
+    } catch (err) {
+      console.warn("Could not load ingredients", err);
+    }
+  }
   ((t.detModalTitle.textContent = e.Recipe_title),
     (t.detTime.textContent = `${e.total_time || 30} mins`),
     (t.detServings.textContent = e.servings || "4 servings"),
@@ -1880,8 +1937,21 @@ async function _(e) {
   (parseFloat(e.vegan) === 1 && o("Vegan", "vegan"),
     parseFloat(e.lacto_vegetarian) === 1 && o("Lacto-Veg", "vegan"),
     parseFloat(e.pescetarian) === 1 && o("Pescetarian", ""),
-    parseFloat(e.Calories) < 200 && o("Low Calorie", "calories"),
-    (t.detInstructions.innerHTML = ""));
+    parseFloat(e.Calories) < 200 && o("Low Calorie", "calories"));
+  const detIng = document.getElementById("det-ingredients");
+  if (detIng) {
+    detIng.innerHTML = "";
+    if (e.ingredients && e.ingredients.length > 0) {
+      e.ingredients.forEach(ing => {
+        const d = document.createElement("div");
+        d.textContent = "• " + (ing.ingredient_Phrase || ing.ingredient);
+        detIng.appendChild(d);
+      });
+    } else {
+      detIng.innerHTML = "<div>No ingredients listed.</div>";
+    }
+  }
+  t.detInstructions.innerHTML = "";
   let s = [];
   (e.instructions
     ? (s = e.instructions.split(/\.\s+/).filter((f) => f.trim() !== ""))

@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 8085;
-const TARGET_HOST = 'recipedb2-api.foodoscope.com';
-const TARGET_PORT = 443;
-const TARGET_PROTOCOL = 'https';
+const TARGET_HOST = '192.168.1.92';
+const TARGET_PORT = 3030;
+const TARGET_PROTOCOL = 'http';
 
 // ============================================================
 //  SERVER-SIDE RECIPE OF THE DAY CACHE
@@ -25,7 +25,7 @@ function fetchRotdFromBackend(callback) {
     path: '/recipe2-api/recipe/recipeofday',
     method: 'GET'
   };
-  const req = http.request(options, (res) => {
+  const req = https.request(options, (res) => {
     let data = '';
     res.on('data', chunk => data += chunk);
     res.on('end', () => {
@@ -276,6 +276,7 @@ const server = http.createServer((req, res) => {
 
   // 1. Check if it's an API request
   if (req.url.startsWith('/recipe2-api')) {
+    console.log(`[Proxy] Intercepted request for: ${req.url}`);
     const options = {
       hostname: TARGET_HOST,
       port: TARGET_PORT,
@@ -304,11 +305,11 @@ const server = http.createServer((req, res) => {
   }
 
   // 2. Otherwise, serve static files from /dist
-  let filePath = path.join(__dirname, 'dist', req.url === '/' ? 'index.html' : req.url.split('?')[0]);
+  let filePath = path.join(__dirname, 'dist', req.url === '/' ? 'landing.html' : req.url.split('?')[0]);
   
-  // Handle directory requests (if it's a folder, serve index.html inside it)
+  // Handle directory requests
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-    filePath = path.join(filePath, 'index.html');
+    filePath = path.join(filePath, 'landing.html');
   }
 
   const ext = path.extname(filePath);
@@ -317,11 +318,11 @@ const server = http.createServer((req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        // SPA Routing fallback: serve index.html for unknown routes
-        fs.readFile(path.join(__dirname, 'dist', 'index.html'), (err2, content2) => {
+        // SPA Routing fallback
+        fs.readFile(path.join(__dirname, 'dist', 'landing.html'), (err2, content2) => {
           if (err2) {
             res.writeHead(500);
-            res.end('Error loading index.html');
+            res.end('Error loading landing.html');
           } else {
             res.writeHead(200, { 
               'Content-Type': 'text/html',

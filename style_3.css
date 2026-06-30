@@ -1,0 +1,85 @@
+<style>
+            /* Overrides for standard carousel card layouts to match custom dashboard themes */
+            #cuisine-carousel.cuisine-tabs-wrap {
+              display: flex !important;
+              flex-wrap: wrap !important;
+              gap: 8px !important;
+              border: none !important;
+              margin: 0 !important;
+              padding: 0.5rem 0 !important;
+              overflow-x: auto !important;
+              scrollbar-width: none !important;
+            }
+
+            #cuisine-carousel.cuisine-tabs-wrap::-webkit-scrollbar {
+              display: none !important;
+            }
+
+            #cuisine-carousel .cuisine-tab {
+              /* Wipe default CSS styles on sliding cards to apply custom paddings */
+              min-width: unset !important;
+              width: auto !important;
+              height: auto !important;
+              position: static !important;
+              overflow: visible !important;
+              flex-shrink: unset !important;
+              flex-direction: row !important;
+              justify-content: flex-start !important;
+              transform: none !important;
+              box-shadow: none !important;
+
+              /* Match tab item layouts to navigation links styling */
+              background: transparent !important;
+              border: 1px solid transparent !important;
+              color: var(--text-secondary) !important;
+              padding: 6px 14px !important;
+              border-radius: 6px !important;
+              font-weight: 600 !important;
+              font-size: 0.82rem !important;
+              transition: all 0.2s ease !important;
+              display: inline-flex !important;
+              align-items: center !important;
+              gap: 6px !important;
+              cursor: pointer !important;
+              user-select: none !important;
+              white-space: nowrap !important;
+            }
+
+            /* Hide default top-border bars and shadow overlays from carousel cards */
+            #cuisine-carousel .cuisine-tab::after {
+              display: none !important;
+              content: none !important;
+            }
+
+            #cuisine-carousel .cuisine-tab::before {
+              display: none !important;
+              content: none !important;
+            }
+
+            #cuisine-carousel .cuisine-tab:hover {
+              color: var(--text-primary) !important;
+              background: rgba(255, 255, 255, 0.04) !important;
+              transform: none !important;
+              border-color: transparent !important;
+              box-shadow: none !important;
+            }
+
+            #cuisine-carousel .cuisine-tab.active {
+              background: #F8FAFC !important;
+              border-color: var(--border-color) !important;
+              color: #2563EB !important;
+              /* Highlight brand colors using Recipe Portal corporate blue */
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+              transform: none !important;
+            }
+
+            #cuisine-carousel .tab-flag {
+              font-size: 1rem !important;
+              line-height: 1 !important;
+              filter: saturate(0.8);
+            }
+
+            #cuisine-carousel .cuisine-tab.active .tab-flag {
+              filter: saturate(1.2);
+            }
+          </style>

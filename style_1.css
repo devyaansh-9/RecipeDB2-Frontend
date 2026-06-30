@@ -1,0 +1,1377 @@
+<style>
+    /* Saffron golds, warm clay tones, and soft vanillas to make the UI look delicious */
+    :root {
+      --bg-main: transparent;
+      /* Deep warm cocoa black */
+      --bg-surface: rgba(255, 255, 255, 0.75);
+      /* Warm charcoal clay */
+      --bg-panel: rgba(255, 255, 255, 0.85);
+      /* Dark roasted coffee */
+      --bg-input: rgba(255, 255, 255, 0.90);
+      /* Clean dark input background */
+      --border-color: rgba(30, 58, 138, 0.15);
+      /* Faint warm copper wire */
+      --border-hover: rgba(0, 0, 0, 0.20);
+      /* Brighter warm copper */
+      --border-glow: transparent;
+
+      --text-primary: #111827;
+      /* Soft warm vanilla white */
+      --text-secondary: #000000;
+      /* Muted oat gray */
+      --text-muted: #9CA3AF;
+      /* Earthy stone dust */
+
+      --accent-cyan: #ea580c;
+      /* Saffron Gold */
+      --accent-cyan-rgb: 234, 88, 12;
+      --accent-emerald: #F97316;
+      /* Spicy Sunset Orange */
+      --accent-emerald-rgb: 249, 115, 22;
+      --accent-orange: #ea580c;
+      /* Saffron Gold */
+      --accent-orange-rgb: 234, 88, 12;
+      --accent-purple: #D97706;
+      /* Amber Spice */
+      --accent-red: #EF4444;
+
+      --shadow-glow: none;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes panBackground {
+      0% {
+        background-position: 0px 0px;
+      }
+
+      100% {
+        background-position: -2000px -2000px;
+      }
+    }
+
+    /* Reset the body styles and set up a warm, subtle background image */
+    html {
+      background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 30%, #93c5fd 60%, #ffffff 100%) !important;
+      min-height: 100vh;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: transparent !important;
+      background-attachment: fixed !important;
+      cursor: auto !important;
+      color: var(--text-primary);
+      position: relative;
+    }
+
+    body::after {
+      content: "" !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background-image: url('assets/portal_bg.png') !important;
+      background-repeat: repeat !important;
+      animation: panBackground 180s linear infinite !important;
+      filter: grayscale(1) brightness(0.3) contrast(1.5) !important;
+      z-index: -3 !important;
+      pointer-events: none !important;
+    }
+
+    body::before {
+      content: "" !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background-image: radial-gradient(rgba(234, 88, 12, 0.015) 1px, transparent 0) !important;
+      background-size: 24px 24px !important;
+      z-index: -2 !important;
+      pointer-events: none !important;
+    }
+
+    /* Turn off custom cursors on mobile screens to keep things clean */
+    #cursor,
+    #cursor-ring,
+    .cursor-trail {
+      display: none !important;
+      pointer-events: none !important;
+    }
+
+    /* Warm, blurry accent glows that float gently in the background */
+    .aurora,
+    .bg-grid {
+      display: none !important;
+    }
+
+    .glow-blob {
+      display: block !important;
+      position: fixed !important;
+      border-radius: 50% !important;
+      filter: blur(140px) !important;
+      opacity: 0.04 !important;
+      /* Keep the glow subtle so it doesn't distract from the content */
+      z-index: -1 !important;
+      pointer-events: none !important;
+      will-change: transform;
+      /* Help the browser render these movements smoothly by prompting hardware acceleration */
+    }
+
+    .blob-1 {
+      top: -10% !important;
+      left: 10% !important;
+      width: 600px !important;
+      height: 600px !important;
+      background: var(--accent-cyan) !important;
+      animation: float-blob-1 25s ease-in-out infinite !important;
+    }
+
+    .blob-2 {
+      bottom: 15% !important;
+      right: 5% !important;
+      width: 700px !important;
+      height: 700px !important;
+      background: var(--accent-emerald) !important;
+      animation: float-blob-2 30s ease-in-out infinite !important;
+    }
+
+    .blob-3 {
+      top: 40% !important;
+      left: 20% !important;
+      width: 500px !important;
+      height: 500px !important;
+      background: var(--accent-purple) !important;
+      animation: float-blob-3 20s ease-in-out infinite !important;
+    }
+
+    /* Floating animations to make the background blobs feel alive */
+    @keyframes float-blob-1 {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(40px, -60px) scale(1.15);
+      }
+
+      66% {
+        transform: translate(-30px, 30px) scale(0.9);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    @keyframes float-blob-2 {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(-50px, 50px) scale(0.85);
+      }
+
+      66% {
+        transform: translate(40px, -30px) scale(1.1);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    @keyframes float-blob-3 {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(30px, 40px) scale(1.08);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    /* Clean header style with a scaling logo and navigation tabs */
+    .navbar {
+      background: transparent !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+      height: 110px !important;
+      padding: 0 2rem !important;
+      position: relative !important;
+      z-index: 1000 !important;
+    }
+
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0px !important;
+    }
+
+    .brand-logo-img {
+      height: 72px !important;
+      width: auto !important;
+      object-fit: contain !important;
+      transition: all 0.25s var(--ease-out-expo) !important;
+      margin-right: 8px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .brand:hover .brand-logo-img {
+      transform: scale(1.08) !important;
+    }
+
+    .brand-title {
+      font-size: 32px !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.6px !important;
+      color: var(--text-primary) !important;
+      display: inline-block !important;
+    }
+
+    .brand-title span {
+      color: #8FBC8F !important;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-tab {
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      color: var(--text-secondary) !important;
+      padding: 6px 14px !important;
+      border-radius: 6px !important;
+      font-weight: 500 !important;
+      font-size: 0.82rem !important;
+      transition: all 0.2s var(--ease-out-expo) !important;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-tab:hover {
+      color: var(--text-primary) !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+    }
+
+    .nav-tab.active {
+      background: #F8FAFC !important;
+      border-color: var(--border-color) !important;
+      color: var(--text-primary) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .badge-engine.live {
+      background: rgba(34, 197, 94, 0.1) !important;
+      border-color: rgba(34, 197, 94, 0.25) !important;
+      color: var(--accent-cyan) !important;
+    }
+
+    .btn-settings {
+      background: transparent !important;
+      border: 1px solid var(--border-color) !important;
+      color: var(--text-secondary) !important;
+      border-radius: 6px !important;
+      transition: all 0.2s !important;
+    }
+
+    .btn-settings:hover {
+      color: var(--text-primary) !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      border-color: var(--border-hover) !important;
+    }
+
+    /* Design for our premium card surfaces with warm borders */
+    .glass-panel {
+      background: var(--bg-surface) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+      padding: 1.5rem !important;
+    }
+
+    .glass-panel:hover {
+      border-color: var(--border-color) !important;
+    }
+
+    /* Styled section titles for forms and parameters */
+    .panel-title {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: 1rem !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    .exclusion-subtitle {
+      font-size: 0.82rem !important;
+      font-weight: 500 !important;
+      color: var(--text-secondary) !important;
+      text-transform: none !important;
+      letter-spacing: normal !important;
+      margin-bottom: 0.75rem !important;
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+    }
+
+    /* High-level key metrics dashboard cards grid */
+    .kpi-row {
+      grid-column: span 12;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+    }
+
+    /* A standard 12-column layout to organize cards on larger viewports */
+    #analytics-pane .analytics-grid {
+      display: grid !important;
+      grid-template-columns: repeat(12, 1fr) !important;
+      gap: 24px !important;
+    }
+
+    #analytics-pane .analytics-grid>.glass-panel:nth-child(1) {
+      grid-column: span 7 !important;
+    }
+
+    #analytics-pane .analytics-grid>.glass-panel:nth-child(2) {
+      grid-column: span 5 !important;
+    }
+
+    /* Wrapper to style the continent calorie charts */
+    .chart-box {
+      background: #F1F5F9 !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+      padding: 1rem !important;
+      box-shadow: none !important;
+    }
+
+    /* Sleek styling for the target macronutrient bars */
+    .macro-chart-container {
+      background: #F8FAFC !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+      padding: 1rem !important;
+      box-shadow: none !important;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .macro-row {
+      margin-bottom: 0 !important;
+    }
+
+    .macro-header {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      color: var(--text-secondary) !important;
+      margin-bottom: 6px !important;
+    }
+
+    .macro-val {
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+    }
+
+    .macro-progress-bg {
+      background: #F1F5F9 !important;
+      height: 6px !important;
+      border-radius: 9999px !important;
+    }
+
+    .macro-progress-fill {
+      border-radius: 9999px !important;
+    }
+
+    .macro-progress-fill.carbs {
+      background: #3F3F46 !important;
+    }
+
+    .macro-progress-fill.protein {
+      background: var(--accent-cyan) !important;
+    }
+
+    .macro-progress-fill.fat {
+      background: #52525B !important;
+    }
+
+    /* Stylized list items for our dietary distributions overview */
+    .stats-pills-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0 !important;
+      background: transparent !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+      overflow: hidden;
+    }
+
+    .stats-pill {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 0.75rem 1rem !important;
+      background: var(--bg-surface) !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      font-size: 0.8rem !important;
+    }
+
+    .stats-pill:last-child {
+      border-bottom: none !important;
+    }
+
+    .stats-pill-name {
+      color: var(--text-secondary) !important;
+      font-weight: 500 !important;
+    }
+
+    .stats-pill-val {
+      color: var(--text-primary) !important;
+      font-weight: 600 !important;
+    }
+
+    /* Custom ranges and labels layout for calorie inputs */
+    .planner-sliders {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .slider-group {
+      margin-bottom: 0 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .slider-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .planner-range {
+      width: 100% !important;
+      accent-color: var(--accent-cyan) !important;
+      background: #E2E8F0 !important;
+      height: 4px !important;
+      border-radius: 9999px !important;
+      outline: none !important;
+    }
+
+    /* Small summary card to display calculated target values */
+    .macro-summary-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .macro-summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .macro-summary-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .macro-summary-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Styling for primary actions buttons to make them pop */
+    .btn-action-panel,
+    .btn-send {
+      background: #FAFAFA !important;
+      color: #09090B !important;
+      border: 1px solid var(--border-color) !important;
+      font-weight: 600 !important;
+      border-radius: 6px !important;
+      transition: background 0.2s !important;
+    }
+
+    .btn-action-panel:hover,
+    .btn-send:hover {
+      background: #E4E4E7 !important;
+    }
+
+    /* Styling for food plan suggestions card layout */
+    .planner-results {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .suggestion-card {
+      background: #F8FAFC !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+      padding: 0.75rem 1rem !important;
+      margin-bottom: 0 !important;
+      box-shadow: none !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s !important;
+    }
+
+    .suggestion-card:hover {
+      border-color: var(--border-hover) !important;
+    }
+
+    .suggestion-title {
+      font-size: 0.82rem !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+    }
+
+    .suggestion-meta {
+      font-size: 0.75rem !important;
+      color: var(--text-muted) !important;
+
+      /* Design overrides for the clean recipe discovery hub layout */
+
+      /* Restyle the main explorer view to focus on readability */
+      #explorer-pane {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 1.5rem !important;
+      }
+
+      /* Avoid nested card borders to make the layout feel less cluttered */
+      #explorer-pane .about-panel {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+
+      #explorer-pane .about-panel .about-title {
+        font-size: 1.6rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.03em !important;
+        margin-bottom: 1rem !important;
+        color: var(--text-primary) !important;
+      }
+
+      #explorer-pane .about-panel .about-divider {
+        display: none !important;
+      }
+
+      #explorer-pane .about-panel .about-text {
+        font-size: 0.95rem !important;
+        line-height: 1.7 !important;
+        color: var(--text-secondary) !important;
+        margin-bottom: 1.25rem !important;
+      }
+
+      /* Align database counters into a nice clean card layout */
+      #explorer-pane .stats-banner {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1.25rem !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 16px !important;
+        padding: 1.25rem !important;
+        margin-top: 2rem !important;
+      }
+
+      #explorer-pane .stat-card {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        text-align: center !important;
+        transform: none !important;
+      }
+
+      #explorer-pane .stat-number {
+        font-size: 1.8rem !important;
+        font-weight: 900 !important;
+        background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        line-height: 1.2 !important;
+      }
+
+      #explorer-pane .stat-label {
+        font-size: 0.75rem !important;
+        color: var(--text-muted) !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+      }
+
+      /* Style for horizontal scrolling marquee items */
+      #explorer-pane .carousel-section {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 0 3rem 0 !important;
+      }
+
+      /* Make the cuisine cards look bold with big fonts and subtle shadows */
+      .carousel-card {
+        min-width: 240px !important;
+        width: 240px !important;
+        height: 160px !important;
+        border-radius: 20px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      }
+
+      .carousel-card-img {
+        filter: brightness(1.1) saturate(1.2) contrast(1.05) !important;
+        background-size: cover !important;
+        background-position: center !important;
+        transition: filter 0.3s ease !important;
+      }
+
+      .carousel-card:hover .carousel-card-img {
+        filter: brightness(1.2) saturate(1.3) contrast(1.05) !important;
+      }
+
+      .carousel-card-info h4 {
+        font-size: 1.4rem !important;
+        font-weight: 900 !important;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9) !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 0.3rem !important;
+      }
+
+      .carousel-card-info p {
+        font-size: 0.85rem !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+      }
+
+      .carousel-card:hover {
+        transform: translateY(-8px) scale(1.03) !important;
+        box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+      }
+
+      .carousel-card::after {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 80%) !important;
+      }
+
+      /* Highlight the selected cuisine card with a clean white border */
+      .carousel-card.active {
+        border-color: var(--text-primary) !important;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15) !important;
+      }
+
+      .carousel-card.active::before {
+        background: var(--text-primary) !important;
+      }
+
+      /* Adjust title spacing for the search query panel */
+      #explorer-pane .search-by-container {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 3rem 0 !important;
+        margin-top: 1.5rem !important;
+      }
+
+      /* Match API console perfectly to the Query Parameters glass-panel style using forced light colors */
+      .console-panel {
+        background: rgba(255, 255, 255, 0.85) !important;
+        /* Forced bright frosted glass */
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
+        border-radius: 8px !important;
+      }
+
+      .console-header {
+        background: transparent !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Make text inside the console readable on the glass surface */
+      #pg-console-output {
+        color: #0f172a !important;
+        /* Forced dark text */
+        background: transparent !important;
+      }
+
+      /* Override JSON syntax highlighting tokens for light theme */
+      #pg-console-output .token-key {
+        color: #b91c1c !important;
+      }
+
+      /* Dark Red */
+      #pg-console-output .token-string {
+        color: #059669 !important;
+      }
+
+      /* Dark Emerald */
+      #pg-console-output .token-number {
+        color: #ea580c !important;
+      }
+
+      /* Dark Orange */
+      #pg-console-output .token-boolean {
+        color: #7c3aed !important;
+      }
+
+      /* Dark Purple */
+      #pg-console-output .token-null {
+        color: #475569 !important;
+      }
+
+      /* Dark Slate */
+
+      /* Set all API console tabs to orange as requested */
+      .console-tab {
+        color: #ea580c !important;
+        /* Orange accent */
+      }
+
+      .console-tab:not(.active) {
+        opacity: 0.7 !important;
+        /* Slightly dimmer so active tab still stands out */
+      }
+
+      /* Fix the API console metrics and copy button visibility for light theme */
+      .console-metrics .metric-pill,
+      .console-metrics .btn-copy-curl {
+        color: var(--text-secondary) !important;
+        background: rgba(0, 0, 0, 0.05) !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .console-metrics .btn-copy-curl:hover {
+        color: var(--text-primary) !important;
+        background: rgba(0, 0, 0, 0.1) !important;
+      }
+
+
+      #explorer-pane .search-by-header {
+        font-size: 2.2rem !important;
+        font-weight: 900 !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+        letter-spacing: -0.04em !important;
+        color: var(--text-primary) !important;
+      }
+
+      #explorer-pane .search-tab-bar {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        margin-bottom: 2.5rem !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        padding: 6px !important;
+        border-radius: 99px !important;
+        border: 1px solid var(--border-color) !important;
+        width: fit-content !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      #explorer-pane .search-tab-btn {
+        background: transparent !important;
+        border: none !important;
+        border-radius: 99px !important;
+        padding: 12px 28px !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: var(--text-secondary) !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      #explorer-pane .search-tab-btn:hover {
+        color: var(--text-primary) !important;
+      }
+
+      #explorer-pane .search-tab-btn.active {
+        background: var(--text-primary) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
+      }
+
+      /* Styling text inputs and custom selects for a uniform look */
+      #explorer-pane .param-input-group {
+        margin-bottom: 0 !important;
+      }
+
+      #explorer-pane .param-label {
+        font-size: 0.78rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: var(--text-muted) !important;
+        margin-bottom: 0.6rem !important;
+        display: block !important;
+      }
+
+      #explorer-pane .param-field {
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 14px !important;
+        color: var(--text-primary) !important;
+        height: 56px !important;
+        font-size: 1rem !important;
+        padding: 0 1.5rem !important;
+        font-weight: 500 !important;
+        transition: all 0.25s ease !important;
+      }
+
+      #explorer-pane .param-field:focus {
+        border-color: var(--text-primary) !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05) !important;
+        outline: none !important;
+      }
+
+      #explorer-pane .search-form-row {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+        gap: 2rem !important;
+      }
+
+      #explorer-pane .search-form-row.col-2 {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+      }
+
+      /* Arrange multiple nutritional sliders side by side */
+      #explorer-pane .nutrition-sliders-row {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+        gap: 2rem !important;
+      }
+
+      #explorer-pane .slider-group {
+        background: rgba(255, 255, 255, 0.01) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 14px !important;
+        padding: 1.25rem !important;
+      }
+
+      #explorer-pane .slider-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      #explorer-pane .slider-label {
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: var(--text-muted) !important;
+      }
+
+      #explorer-pane .slider-value {
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        color: var(--text-primary) !important;
+      }
+
+      #explorer-pane .planner-range {
+        accent-color: var(--text-primary) !important;
+        height: 4px !important;
+        background: #E2E8F0 !important;
+      }
+
+      /* Design a prominent search dispatch button with rounded corners */
+      #explorer-pane .btn-action-panel#btn-submit-search {
+        max-width: 280px !important;
+        width: 100% !important;
+        height: 54px !important;
+        font-size: 1.05rem !important;
+        border-radius: 14px !important;
+        font-weight: 800 !important;
+        background: var(--text-primary) !important;
+        color: #ffffff !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        margin: 2.5rem auto 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+      }
+
+      #explorer-pane .btn-action-panel#btn-submit-search:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15) !important;
+        background: #f4f4f5 !important;
+      }
+
+      /* Convert the traditional table layout into responsive cards on mobile */
+      #explorer-pane .recipe-results-panel {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-top: 3rem !important;
+      }
+
+      #explorer-pane .table-responsive {
+        border: none !important;
+        overflow: visible !important;
+      }
+
+      #explorer-pane .gastronomy-table {
+        display: block !important;
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+
+      #explorer-pane .gastronomy-table thead {
+        display: none !important;
+        /* Hide old developer table header */
+      }
+
+      #explorer-pane .gastronomy-table tbody {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: 1.5rem !important;
+        padding: 0.5rem 0 !important;
+      }
+
+      #explorer-pane .gastronomy-table tr {
+        display: flex !important;
+        flex-direction: column !important;
+        background: var(--bg-surface) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        position: relative !important;
+        min-height: 280px !important;
+        justify-content: space-between !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      #explorer-pane .gastronomy-table tr:hover {
+        transform: translateY(-5px) !important;
+        border-color: var(--border-hover) !important;
+        box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.6) !important;
+      }
+
+      #explorer-pane .gastronomy-table td {
+        display: block !important;
+        padding: 0 !important;
+        border: none !important;
+        text-align: left !important;
+        background: transparent !important;
+        color: var(--text-secondary) !important;
+      }
+
+      /* Card Title styling */
+      #explorer-pane .gastronomy-table td:nth-child(1) {
+        font-size: 1.25rem !important;
+        font-weight: 800 !important;
+        color: var(--text-primary) !important;
+        line-height: 1.4 !important;
+        margin-bottom: 1rem !important;
+        letter-spacing: -0.02em !important;
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(1) span {
+        display: inline-block !important;
+        font-size: 0.7rem !important;
+        color: var(--text-primary) !important;
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 2px 8px !important;
+        border-radius: 99px !important;
+        text-transform: uppercase !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.05em !important;
+        margin-top: 0.5rem !important;
+      }
+
+      /* Layout metadata cells as dashed rows */
+      #explorer-pane .gastronomy-table td:nth-child(n+2):nth-child(-n+7) {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.5rem !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0.4rem 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.06) !important;
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(2)::before {
+        content: "Region";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(3)::before {
+        content: "Country";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(4)::before {
+        content: "Servings";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(5)::before {
+        content: "Calories";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(6)::before {
+        content: "Protein";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      #explorer-pane .gastronomy-table td:nth-child(7)::before {
+        content: "Fat";
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      /* Hide target nutrition cells when filters are deactivated */
+      #explorer-pane .gastronomy-table td.hidden {
+        display: none !important;
+      }
+
+      /* Styling the direct details button on recipe cards */
+      #explorer-pane .gastronomy-table td:last-child {
+        margin-top: 1.25rem !important;
+        align-self: stretch !important;
+      }
+
+      #explorer-pane .gastronomy-table td:last-child button {
+        display: block !important;
+        width: 100% !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 10px !important;
+        padding: 0.75rem !important;
+        color: var(--text-primary) !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+      }
+
+      #explorer-pane .gastronomy-table td:last-child button:hover {
+        background: var(--text-primary) !important;
+        color: #ffffff !important;
+        border-color: var(--text-primary) !important;
+      }
+
+      /* Clean spacing for the results table search bar */
+      #explorer-pane .table-header-row {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding-bottom: 1.25rem !important;
+        margin-bottom: 2rem !important;
+        flex-wrap: wrap !important;
+        gap: 1.25rem !important;
+      }
+
+      #explorer-pane #results-table-title {
+        font-size: 1.6rem !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.03em !important;
+        margin: 0 !important;
+        color: var(--text-primary) !important;
+      }
+
+      #explorer-pane .table-header-row .search-bar {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 340px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 99px !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        transition: all 0.25s ease !important;
+      }
+
+      #explorer-pane .table-header-row .search-bar:focus-within {
+        border-color: var(--text-primary) !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
+      }
+
+      #explorer-pane .table-header-row .search-bar .search-input {
+        width: 100% !important;
+        height: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        padding-left: 3rem !important;
+        padding-right: 1.5rem !important;
+        color: var(--text-primary) !important;
+        font-size: 0.9rem !important;
+        outline: none !important;
+      }
+
+      #explorer-pane .table-header-row .search-bar .search-icon {
+        position: absolute !important;
+        left: 1.25rem !important;
+        color: var(--text-muted) !important;
+        display: flex !important;
+        align-items: center !important;
+        pointer-events: none !important;
+      }
+
+      /* Layout rules for page navigation and row count selectors */
+      .table-footer-controls {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 1rem 1.5rem !important;
+        border: 1px solid rgba(30, 58, 138, 0.15) !important;
+        background: rgba(255, 255, 255, 0.90) !important;
+        border-radius: 10px !important;
+        margin-top: 3rem !important;
+        flex-wrap: wrap !important;
+        gap: 1.5rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .table-footer-controls .rows-per-page {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+      }
+
+      .table-footer-controls .footer-label {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        font-size: 0.85rem !important;
+      }
+
+      .table-footer-controls .footer-select,
+      .table-footer-controls .goto-input {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.20) !important;
+        border-radius: 8px !important;
+        color: #0f172a !important;
+        padding: 0.5rem 0.75rem !important;
+        outline: none !important;
+        font-size: 0.85rem !important;
+        font-weight: 800 !important;
+      }
+
+      .table-footer-controls .table-pagination-nav {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        flex-wrap: wrap !important;
+      }
+
+      .table-footer-controls .pagination-arrows {
+        display: flex !important;
+        gap: 0.35rem !important;
+      }
+
+      .table-footer-controls .btn-arrow-nav {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.20) !important;
+        color: #000000 !important;
+        border-radius: 8px !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.1rem !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+      }
+
+      .table-footer-controls .btn-arrow-nav:hover:not(:disabled) {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border-color: #000000 !important;
+      }
+
+      .table-footer-controls .btn-arrow-nav:disabled {
+        background: rgba(0, 0, 0, 0.05) !important;
+        color: rgba(0, 0, 0, 0.3) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+      }
+
+      .table-footer-controls .goto-box {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+      }
+
+      /* Keep all text inside the results pagination bar dark black and high-contrast */
+      .table-footer-controls span,
+      .table-footer-controls label,
+      .table-footer-controls input,
+      .table-footer-controls select {
+        color: #0f172a !important;
+      }
+
+      /* Slow-spinning background orbital rings for depth and motion */
+      .portal-orbit {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: clamp(600px, 75vw, 1000px) !important;
+        height: clamp(600px, 75vw, 1000px) !important;
+        border-radius: 50% !important;
+        border: 1px solid rgba(234, 88, 12, 0.04) !important;
+        /* Gold color ring accent */
+        z-index: -2 !important;
+        pointer-events: none !important;
+        animation: portal-orbit-spin 60s linear infinite !important;
+        will-change: transform;
+      }
+
+      .portal-orbit-2 {
+        width: clamp(400px, 50vw, 700px) !important;
+        height: clamp(400px, 50vw, 700px) !important;
+        border-color: rgba(249, 115, 22, 0.03) !important;
+        /* Spicy orange color ring accent */
+        animation-duration: 80s !important;
+        animation-direction: reverse !important;
+      }
+
+      @keyframes portal-orbit-spin {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg) !important;
+        }
+
+        to {
+          transform: translate(-50%, -50%) rotate(360deg) !important;
+        }
+      }
+
+      .orbit-dot {
+        position: absolute !important;
+        width: 8px !important;
+        height: 8px !important;
+        background: var(--accent-cyan) !important;
+        /* Saffron gold accent color */
+        border-radius: 50% !important;
+        box-shadow: 0 0 12px var(--accent-cyan), 0 0 24px rgba(234, 88, 12, 0.4) !important;
+      }
+
+      .orbit-dot-2 {
+        position: absolute !important;
+        width: 6px !important;
+        height: 6px !important;
+        background: var(--accent-emerald) !important;
+        /* Spicy orange accent color */
+        border-radius: 50% !important;
+        box-shadow: 0 0 12px var(--accent-emerald), 0 0 24px rgba(249, 115, 22, 0.4) !important;
+      }
+
+      .orbit-dot:nth-child(1) {
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .orbit-dot:nth-child(2) {
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+      }
+
+      .orbit-dot:nth-child(3) {
+        top: 50%;
+        right: 0;
+        transform: translate(50%, -50%);
+      }
+
+      .orbit-dot-2:nth-child(1) {
+        top: 15%;
+        left: 5%;
+      }
+
+      .orbit-dot-2:nth-child(2) {
+        bottom: 10%;
+        right: 8%;
+      }
+
+      .orbit-dot-2:nth-child(3) {
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+      }
+  </style>
