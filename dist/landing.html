@@ -3075,38 +3075,264 @@
 
     <div class="live-grid">
 
-      <!-- Sandbox query preview builder with custom inputs -->
-      <div class="glass-card reveal reveal-delay-2" id="search-preview-card">
-        <div class="card-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          Live Search Preview
-        </div>
-        <div class="card-title">Find any recipe</div>
-        <div class="card-sub">Try searching by cuisine, ingredient, or recipe name.</div>
 
-        <div class="search-bar-demo">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <input type="text" id="hero-search-input" placeholder="e.g. Chicken Tikka, Sushi, Tacos..."
-            autocomplete="off">
-        </div>
-        <div class="load-bar" id="search-load-bar" style="display:none;">
-          <div class="load-bar-fill"></div>
-        </div>
-        <div id="search-results-container" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
-          <!-- Popular recipes display shown before the user runs a search query -->
+      <!-- Recipe of the Day — full details with Stability AI image -->
+      <div class="glass-card reveal reveal-delay-2" id="rotd-landing-card" style="display:flex;flex-direction:column;overflow:hidden;padding:0;position:relative;min-height:520px;">
+
+        <!-- Shimmer skeleton -->
+        <div id="rotd-skeleton" style="position:absolute;inset:0;z-index:10;background:var(--surface-card,#1a2a1a);">
+          <div style="width:100%;height:300px;background:linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.04) 75%);background-size:200% 100%;animation:rotd-shimmer 1.5s infinite;"></div>
+          <div style="padding:1.5rem;display:flex;flex-direction:column;gap:0.8rem;">
+            <div style="height:12px;width:90px;border-radius:99px;background:rgba(255,255,255,0.07);animation:rotd-shimmer 1.5s infinite;"></div>
+            <div style="height:26px;width:80%;border-radius:8px;background:rgba(255,255,255,0.09);animation:rotd-shimmer 1.5s infinite;"></div>
+            <div style="height:12px;width:60%;border-radius:8px;background:rgba(255,255,255,0.06);animation:rotd-shimmer 1.5s infinite;"></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-top:0.5rem;">
+              <div style="height:60px;border-radius:12px;background:rgba(255,255,255,0.05);animation:rotd-shimmer 1.5s infinite;"></div>
+              <div style="height:60px;border-radius:12px;background:rgba(255,255,255,0.05);animation:rotd-shimmer 1.5s infinite;"></div>
+              <div style="height:60px;border-radius:12px;background:rgba(255,255,255,0.05);animation:rotd-shimmer 1.5s infinite;"></div>
+              <div style="height:60px;border-radius:12px;background:rgba(255,255,255,0.05);animation:rotd-shimmer 1.5s infinite;"></div>
+            </div>
+          </div>
         </div>
 
-        <div style="margin-top:auto;padding-top:32px;border-top:1px solid var(--border);">
-          <p style="font-size:13px;color:var(--text-3);margin-bottom:16px;">Access full features in the portal</p>
-          <a href="index.html" class="btn-primary" style="width:100%;justify-content:center;display:flex;">
-            Open Full Portal →
-          </a>
+        <!-- Content -->
+        <div id="rotd-content" style="display:none;flex-direction:column;">
+
+          <!-- Hero image -->
+          <div style="position:relative;width:100%;height:300px;overflow:hidden;flex-shrink:0;">
+            <img id="rotd-lnd-img" src="" alt="Recipe of the Day"
+              style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.6s ease;opacity:0;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,26,15,0.92) 0%,rgba(15,26,15,0.2) 60%,transparent 100%);"></div>
+            <!-- Badge -->
+            <div style="position:absolute;top:14px;left:14px;background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);border:1px solid rgba(143,188,143,0.4);border-radius:99px;padding:5px 12px;font-size:0.68rem;font-weight:700;color:#8FBC8F;display:flex;align-items:center;gap:6px;letter-spacing:0.06em;text-transform:uppercase;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#8FBC8F;animation:rotd-pulse 2s infinite;flex-shrink:0;"></span>
+              Recipe of the Day
+            </div>
+            <!-- Title overlay on image -->
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.5rem;">
+              <div id="rotd-lnd-badges" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.5rem;"></div>
+              <h3 id="rotd-lnd-title" style="font-size:1.5rem;font-weight:900;line-height:1.2;margin:0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.5);"></h3>
+            </div>
+          </div>
+
+          <!-- Details section -->
+          <div style="padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1rem;">
+
+            <!-- Region / Source row -->
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span id="rotd-lnd-region" style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#8FBC8F;background:rgba(143,188,143,0.12);border:1px solid rgba(143,188,143,0.3);padding:3px 11px;border-radius:99px;"></span>
+              <span id="rotd-lnd-continent" style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#60a5fa;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:3px 11px;border-radius:99px;"></span>
+              <span id="rotd-lnd-source" style="font-size:0.7rem;color:var(--text-3,#7a8c7a);font-weight:600;"></span>
+            </div>
+
+            <!-- Nutrition macros grid -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;">
+              <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:0.75rem 0.5rem;text-align:center;">
+                <div id="rotd-lnd-cal" style="font-size:1.2rem;font-weight:900;color:#f59e0b;line-height:1;"></div>
+                <div style="font-size:0.62rem;color:var(--text-3,#7a8c7a);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">kcal</div>
+              </div>
+              <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:0.75rem 0.5rem;text-align:center;">
+                <div id="rotd-lnd-protein" style="font-size:1.2rem;font-weight:900;color:#ef4444;line-height:1;"></div>
+                <div style="font-size:0.62rem;color:var(--text-3,#7a8c7a);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">protein</div>
+              </div>
+              <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:0.75rem 0.5rem;text-align:center;">
+                <div id="rotd-lnd-fat" style="font-size:1.2rem;font-weight:900;color:#3b82f6;line-height:1;"></div>
+                <div style="font-size:0.62rem;color:var(--text-3,#7a8c7a);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">fat</div>
+              </div>
+              <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:0.75rem 0.5rem;text-align:center;">
+                <div id="rotd-lnd-carbs" style="font-size:1.2rem;font-weight:900;color:#8b5cf6;line-height:1;"></div>
+                <div style="font-size:0.62rem;color:var(--text-3,#7a8c7a);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">carbs</div>
+              </div>
+            </div>
+
+            <!-- Time + Servings row -->
+            <div id="rotd-lnd-meta" style="display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.8rem;color:var(--text-2,#a0b0a0);padding:0.75rem 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);"></div>
+
+            <!-- Scrollable content area for long details -->
+            <div style="display:flex;flex-direction:column;gap:1rem;max-height:200px;overflow-y:auto;padding-right:0.5rem;" class="custom-scrollbar">
+              
+              <!-- Ingredients -->
+              <div id="rotd-lnd-ingredients-wrap" style="display:none;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3,#7a8c7a);margin-bottom:0.5rem;">🥬 Ingredients</div>
+                <ul id="rotd-lnd-ingredients" style="margin:0;padding-left:1.2rem;font-size:0.8rem;color:var(--text-2,#a0b0a0);line-height:1.5;display:flex;flex-direction:column;gap:4px;"></ul>
+              </div>
+
+              <!-- Cooking processes -->
+              <div id="rotd-lnd-processes-wrap" style="display:none;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3,#7a8c7a);margin-bottom:0.5rem;">🔥 Cooking Methods</div>
+                <div id="rotd-lnd-processes" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+              </div>
+
+              <!-- Utensils -->
+              <div id="rotd-lnd-utensils-wrap" style="display:none;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3,#7a8c7a);margin-bottom:0.5rem;">🍳 Utensils</div>
+                <div id="rotd-lnd-utensils" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+              </div>
+
+            </div>
+
+            <!-- Diet tags -->
+            <div id="rotd-lnd-diet" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;"></div>
+
+            <!-- CTA -->
+            <a href="/index.html" class="btn-primary" style="width:100%;justify-content:center;display:flex;margin-top:0.25rem;flex-shrink:0;">
+              Explore Full Portal →
+            </a>
+          </div>
         </div>
       </div>
+
+      <style>
+        @keyframes rotd-shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+        @keyframes rotd-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(143,188,143,0.3); border-radius: 4px; }
+      </style>
+
+      <script>
+        (async function loadRotdLanding() {
+          try {
+            // Fetch directly from FoodOScope via server proxy
+            const res = await fetch('/recipe2-api/recipe/recipeofday', {
+              headers: { 'Authorization': 'Bearer LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz' }
+            });
+            if (!res.ok) throw new Error('API error ' + res.status);
+            const json = await res.json();
+            const recipe = json?.payload?.data || json?.payload || json?.data || json;
+            if (!recipe || !recipe.Recipe_title) throw new Error('No recipe');
+
+            // Extract all fields
+            const title    = recipe.Recipe_title || 'Unknown Recipe';
+            const region   = recipe.Region || recipe.Sub_region || '';
+            const continent= recipe.Continent || '';
+            const source   = recipe.Source || '';
+            const cal      = recipe['Energy (kcal)'] ? Math.round(+recipe['Energy (kcal)']) : (recipe.Calories ? Math.round(+recipe.Calories) : '—');
+            const protein  = recipe['Protein (g)']   ? Math.round(+recipe['Protein (g)'])   + 'g' : '—';
+            const fat      = recipe['Total lipid (fat) (g)'] ? Math.round(+recipe['Total lipid (fat) (g)']) + 'g' : '—';
+            const carbs    = recipe['Carbohydrate, by difference (g)'] ? Math.round(+recipe['Carbohydrate, by difference (g)']) + 'g' : '—';
+            const totalTime= recipe.total_time && +recipe.total_time > 0 ? recipe.total_time : '';
+            const cookTime = recipe.cook_time  && +recipe.cook_time  > 0 ? recipe.cook_time  : '';
+            const prepTime = recipe.prep_time  && +recipe.prep_time  > 0 ? recipe.prep_time  : '';
+            const servings = recipe.servings || '';
+            const isVegan  = +recipe.vegan === 1;
+            const isLactoVeg= +recipe.lacto_vegetarian === 1;
+            const isOvoLactoVeg = +recipe.ovo_lacto_vegetarian === 1;
+            const isPescetarian = +recipe.pescetarian === 1;
+
+            // Populate fields
+            document.getElementById('rotd-lnd-title').textContent     = title;
+            document.getElementById('rotd-lnd-region').textContent    = region || 'International';
+            document.getElementById('rotd-lnd-continent').textContent = continent || '';
+            document.getElementById('rotd-lnd-source').textContent    = source ? '📖 ' + source : '';
+            document.getElementById('rotd-lnd-cal').textContent       = cal !== '—' ? cal : '—';
+            document.getElementById('rotd-lnd-protein').textContent   = protein;
+            document.getElementById('rotd-lnd-fat').textContent       = fat;
+            document.getElementById('rotd-lnd-carbs').textContent     = carbs;
+
+            // Time + Servings row
+            const metaEl = document.getElementById('rotd-lnd-meta');
+            const metaParts = [];
+            if (prepTime)  metaParts.push(`<span><strong style="color:var(--text-1,#e8f0e8)">⏱ Prep:</strong> ${prepTime} min</span>`);
+            if (cookTime)  metaParts.push(`<span><strong style="color:var(--text-1,#e8f0e8)">🔥 Cook:</strong> ${cookTime} min</span>`);
+            if (totalTime) metaParts.push(`<span><strong style="color:var(--text-1,#e8f0e8)">⏰ Total:</strong> ${totalTime} min</span>`);
+            if (servings)  metaParts.push(`<span><strong style="color:var(--text-1,#e8f0e8)">🍽 Serves:</strong> ${servings}</span>`);
+            metaEl.innerHTML = metaParts.join('');
+            if (!metaParts.length) metaEl.style.display = 'none';
+
+            // Diet badges
+            const dietEl = document.getElementById('rotd-lnd-diet');
+            const badge = (label, color) => `<span style="font-size:0.68rem;font-weight:700;color:${color};background:${color}18;border:1px solid ${color}40;padding:3px 10px;border-radius:99px;">${label}</span>`;
+            if (isVegan)         dietEl.innerHTML += badge('🌱 Vegan', '#10b981');
+            if (isLactoVeg)      dietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e');
+            if (isOvoLactoVeg)   dietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80');
+            if (isPescetarian)   dietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8');
+
+            // Cooking processes
+            const procs = (recipe.Processes || '').split('||').map(p=>p.trim()).filter((p,i,a)=>p && a.indexOf(p)===i).slice(0,8);
+            if (procs.length) {
+              const procEl = document.getElementById('rotd-lnd-processes');
+              procs.forEach(p => {
+                procEl.innerHTML += `<span style="font-size:0.68rem;font-weight:600;color:var(--text-2,#a0b0a0);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:3px 9px;border-radius:6px;text-transform:capitalize;">${p}</span>`;
+              });
+              document.getElementById('rotd-lnd-processes-wrap').style.display = 'block';
+            }
+
+            // Utensils
+            const utensils = (recipe.Utensils || '').split('||').map(u=>u.trim()).filter((u,i,a)=>u && a.indexOf(u)===i).slice(0,6);
+            if (utensils.length) {
+              const utEl = document.getElementById('rotd-lnd-utensils');
+              utensils.forEach(u => {
+                utEl.innerHTML += `<span style="font-size:0.68rem;font-weight:600;color:var(--text-2,#a0b0a0);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);padding:3px 9px;border-radius:6px;text-transform:capitalize;">${u}</span>`;
+              });
+              document.getElementById('rotd-lnd-utensils-wrap').style.display = 'block';
+            }
+
+            // Show content immediately (before image loads)
+            document.getElementById('rotd-skeleton').style.display = 'none';
+            document.getElementById('rotd-content').style.display = 'flex';
+
+            // Fetch secondary detailed recipe data for Ingredients
+            if (recipe.Recipe_id) {
+              fetch('/recipe2-api/search-recipe/' + recipe.Recipe_id, {
+                headers: { 'Authorization': 'Bearer LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz' }
+              })
+              .then(r => r.ok ? r.json() : null)
+              .then(d => {
+                const fullRecipe = d?.payload || d?.data || d;
+                if (fullRecipe && fullRecipe.ingredients && fullRecipe.ingredients.length > 0) {
+                  const ingEl = document.getElementById('rotd-lnd-ingredients');
+                  fullRecipe.ingredients.slice(0, 15).forEach(ing => {
+                    const text = ing.ingredient_Phrase || ing.ingredient;
+                    if(text) ingEl.innerHTML += `<li>${text.trim()}</li>`;
+                  });
+                  if (fullRecipe.ingredients.length > 15) {
+                    ingEl.innerHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
+                  }
+                  document.getElementById('rotd-lnd-ingredients-wrap').style.display = 'block';
+                }
+              })
+              .catch(e => console.error('Failed to load ingredients', e));
+            }
+
+            // Generate AI image via Stability proxy
+            const imgEl = document.getElementById('rotd-lnd-img');
+            
+            fetch(`/api/generate-image?recipeName=${encodeURIComponent(title)}&region=${encodeURIComponent(region||'International')}`)
+              .then(r => {
+                if (!r.ok) throw new Error('Generation failed');
+                return r.blob();
+              })
+              .then(blob => {
+                const url = URL.createObjectURL(blob);
+                imgEl.style.opacity = '0';
+                setTimeout(() => {
+                  imgEl.src = url;
+                  imgEl.style.opacity = '1';
+                }, 100);
+              })
+              .catch(() => {
+                // The Stability AI key has run out of credits (402 Payment Required).
+                // Use the high-quality local placeholder instead of the ugly scraped image.
+                imgEl.style.opacity = '0';
+                setTimeout(() => {
+                  if (title.toLowerCase().includes('barbara') || title.toLowerCase().includes('margarita')) {
+                    imgEl.src = 'assets/recipe_of_the_day.webp';
+                  } else {
+                    imgEl.src = 'assets/hero-dish.png';
+                  }
+                  imgEl.style.opacity = '1';
+                }, 100);
+              });
+
+          } catch(err) {
+            document.getElementById('rotd-skeleton').style.display = 'none';
+            document.getElementById('rotd-landing-card').innerHTML =
+              '<div style="padding:3rem 2rem;text-align:center;color:var(--text-3,#7a8c7a);font-size:0.9rem;">⚠️ Recipe of the Day unavailable. <a href="/index.html" style="color:#8FBC8F;text-decoration:none;">Open Portal →</a></div>';
+          }
+        })();
+      </script>
+
     </div>
   </section>
 
