@@ -2850,6 +2850,7 @@
       <!-- Background visual layers -->
       <div id="ps-bg"></div>
       <div id="ps-bg-glow"></div>
+      <canvas id="particle-canvas"></canvas>
 
       <!-- Golden decorative orbit rings -->
       <div class="hero-orbit" style="top:50%;left:50%;transform:translate(-50%,-50%);">
@@ -6783,244 +6784,9 @@
       }
     }
 
-    async function loadRecipeOfDay() {
-      const imgEl = document.getElementById('rotd-img');
-      const titleEl = document.getElementById('rotd-title');
-      const regionEl = document.getElementById('rotd-region');
-      const metaEl = document.getElementById('rotd-meta');
-      const macroEl = document.getElementById('rotd-macros');
-      const ingEl = document.getElementById('rotd-ingredients');
 
-      // Fallback to a deterministic recipe selection if API recommendation is offline
-      const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
 
-      let responseData;
-      try {
-        const res = await fetch('/api/recipe-of-day');
-        if (!res.ok) throw new Error('Not OK');
-        responseData = await res.json();
-      } catch (err) {
-        console.warn('[Cache] Server cache fetch failed. Falling back to live API...', err);
-        try {
-          responseData = await apiFetch('/recipe2-api/recipe/recipeofday');
-        } catch (e) {
-          console.error('All fetch attempts failed:', e);
-        }
-      }
 
-      try {
-        const recipe = responseData?.payload?.data || responseData?.data;
-        if (!recipe) throw new Error('No data');
-
-        const title = recipe.Recipe_title || recipe.title || 'Unknown Recipe';
-        const region = recipe.Region || recipe.region || 'World';
-        const country = recipe.Country || recipe.country || '';
-        const cals = recipe.Calories || recipe['Energy (kcal)'] || '—';
-        const protein = recipe['Protein (g)'] || recipe.protein || '—';
-        const fat = recipe['Total lipid (fat) (g)'] || recipe.fat || '—';
-        const carbs = recipe['Carbohydrate, by difference (g)'] || recipe.carbs || '—';
-        const servings = recipe.servings || '—';
-        const processes = recipe.Processes ? recipe.Processes.split('||').map(p => p.trim()).filter(Boolean) : [];
-        const utensils = recipe.Utensils ? recipe.Utensils.split('||').map(u => u.trim()).filter(Boolean) : [];
-        const totalTime = recipe.total_time || '—';
-
-        // Load dynamic generated image or fallback to local assets
-        const rawImg = recipe.img_url || '';
-        const isPlaceholder = !rawImg ||
-          rawImg.toLowerCase().includes('geniuskitchen') ||
-          rawImg.toLowerCase().includes('food.com') ||
-          rawImg.toLowerCase().includes('logo') ||
-          rawImg.toLowerCase().includes('placeholder');
-
-        imgEl.src = isPlaceholder ? 'assets/chef_cooking.png' : rawImg;
-        imgEl.classList.remove('skeleton');
-
-        if (title && title !== 'Persian Shish Kabob' && !title.toLowerCase().includes('loading')) {
-          imgEl.style.transition = 'opacity 0.6s ease';
-          imgEl.style.opacity = '0';
-
-          // Check if the daily highlighted recipe has a pre-saved local asset copy
-          let useGitCache = false;
-          try {
-            const cacheRes = await fetch('assets/recipe_title.txt');
-            if (cacheRes.ok) {
-              const cachedTitle = (await cacheRes.text()).trim();
-              if (cachedTitle === title) {
-                useGitCache = true;
-              }
-            }
-          } catch (e) {
-            console.warn('[Git Cache] Check failed:', e);
-          }
-
-          if (useGitCache) {
-            console.log('[Git Cache] Loading cached image from Git...');
-            setTimeout(() => {
-              imgEl.onload = () => { imgEl.style.opacity = '1'; };
-              imgEl.onerror = () => { imgEl.style.opacity = '1'; imgEl.src = 'assets/chef_cooking.png'; };
-              imgEl.src = 'assets/recipe_of_the_day.webp?v=' + Date.now();
-            }, 300);
-          } else {
-            const blob = await generateRecipeImage(title, region);
-            if (blob) {
-              const dataUrl = URL.createObjectURL(blob);
-              setTimeout(() => {
-                imgEl.onload = () => { imgEl.style.opacity = '1'; };
-                imgEl.onerror = () => { imgEl.style.opacity = '1'; imgEl.src = 'assets/chef_cooking.png'; };
-                imgEl.src = dataUrl;
-              }, 300);
-            } else {
-              console.warn('[Stability] Failed. Falling back to chef cooking placeholder...');
-              imgEl.onload = () => { imgEl.style.opacity = '1'; };
-              imgEl.onerror = () => { imgEl.style.opacity = '1'; };
-              imgEl.src = 'assets/chef_cooking.png';
-            }
-          }
-        }
-
-        titleEl.textContent = title;
-        regionEl.textContent = region + (country ? ` · ${country}` : '');
-
-        metaEl.innerHTML = `
-        <span class="rotd-meta-item">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
-          Serves ${servings}
-        </span>
-        <span class="rotd-meta-item">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          ${totalTime} mins
-        </span>
-        <span class="rotd-meta-item">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-          ${region}
-        </span>`;
-
-        macroEl.innerHTML = `
-        <div class="macro-pill">
-          <div class="macro-pill-val">${parseFloat(cals).toFixed(0) || '—'}</div>
-          <div class="macro-pill-name">kcal</div>
-        </div>
-        <div class="macro-pill">
-          <div class="macro-pill-val">${parseFloat(protein).toFixed(1) || '—'}g</div>
-          <div class="macro-pill-name">Protein</div>
-        </div>
-        <div class="macro-pill">
-          <div class="macro-pill-val">${parseFloat(carbs).toFixed(1) || '—'}g</div>
-          <div class="macro-pill-name">Carbs</div>
-        </div>
-        <div class="macro-pill">
-          <div class="macro-pill-val">${parseFloat(fat).toFixed(1) || '—'}g</div>
-          <div class="macro-pill-name">Fat</div>
-        </div>`;
-
-        // List of cooking process categories for query construction
-        if (processes.length > 0) {
-          const uniqueProcesses = [...new Set(processes)];
-          ingEl.innerHTML = uniqueProcesses.slice(0, 10).map(p =>
-            `<span class="ing-chip" style="text-transform:capitalize;">${p}</span>`
-          ).join('');
-        } else if (utensils.length > 0) {
-          ingEl.innerHTML = utensils.map(u =>
-            `<span class="ing-chip" style="text-transform:capitalize;">${u}</span>`
-          ).join('');
-        } else {
-          ingEl.innerHTML = '<span style="color:var(--text-3);font-size:13px;">Details available in the portal</span>';
-        }
-      } catch (err) {
-        console.warn('ROTD fetch failed:', err.message);
-        // Render default popular recipe lists if query returns empty
-        imgEl.src = 'assets/sushi_platter.png';
-        imgEl.classList.remove('skeleton');
-        titleEl.textContent = 'Salmon Sushi Roll';
-        regionEl.textContent = 'East Asian · Japan';
-        metaEl.innerHTML = `<span class="rotd-meta-item">Serves 2</span><span class="rotd-meta-item">Japan</span>`;
-        macroEl.innerHTML = ['280 kcal', '14g Protein', '40g Carbs', '5g Fat'].map(v => {
-          const [n, l] = v.split(' ');
-          return `<div class="macro-pill"><div class="macro-pill-val">${n}</div><div class="macro-pill-name">${l || ''}</div></div>`;
-        }).join('');
-        ingEl.innerHTML = ['Sushi Rice', 'Nori', 'Fresh Salmon', 'Rice Vinegar', 'Soy Sauce', 'Wasabi'].map(i =>
-          `<span class="ing-chip">${i}</span>`).join('');
-      }
-    }
-
-    loadRecipeOfDay();
-
-    /* ========================================================
-       Sandbox search preview dashboard controller
-    ======================================================== */
-    const POPULAR_RECIPES = [
-      { emoji: '🍛', name: 'Butter Chicken', meta: 'Indian · North Indian', cal: '310 kcal' },
-      { emoji: '🍣', name: 'Salmon Sushi Roll', meta: 'Japanese · East Asian', cal: '280 kcal' },
-      { emoji: '🌮', name: 'Chicken Tacos', meta: 'Mexican · Latin American', cal: '340 kcal' },
-      { emoji: '🥗', name: 'Greek Salad', meta: 'Greek · Mediterranean', cal: '195 kcal' },
-      { emoji: '🍝', name: 'Pasta Carbonara', meta: 'Italian · European', cal: '520 kcal' },
-    ];
-
-    function renderDefaultResults() {
-      const container = document.getElementById('search-results-container');
-      container.innerHTML = POPULAR_RECIPES.map(r => `
-      <a href="index.html" class="recipe-result-item" style="text-decoration:none">
-        <div class="rr-icon">${r.emoji}</div>
-        <div>
-          <div class="rr-name">${r.name}</div>
-          <div class="rr-meta">${r.meta}</div>
-        </div>
-        <div class="rr-cal">${r.cal}</div>
-      </a>`).join('');
-    }
-    renderDefaultResults();
-
-    const searchInput = document.getElementById('hero-search-input');
-    const loadBar = document.getElementById('search-load-bar');
-    const resultsContainer = document.getElementById('search-results-container');
-    let searchTimer = null;
-
-    searchInput.addEventListener('input', () => {
-      clearTimeout(searchTimer);
-      const q = searchInput.value.trim();
-      if (!q) { renderDefaultResults(); loadBar.style.display = 'none'; return; }
-
-      loadBar.style.display = 'block';
-      resultsContainer.innerHTML = `<div style="color:var(--text-3);font-size:13px;padding:12px 0;">Searching "${q}"...</div>`;
-
-      searchTimer = setTimeout(async () => {
-        try {
-          const data = await apiFetch('/recipe2-api/recipe/recipesinfo', {
-            recipe_title: q, limit: 5
-          });
-          const recipes = data?.data || data || [];
-          loadBar.style.display = 'none';
-
-          if (!recipes.length) {
-            resultsContainer.innerHTML = `<div style="color:var(--text-3);font-size:13px;padding:12px 0;">No results for "${q}". Try another term.</div>`;
-            return;
-          }
-          const EMOJIS_POOL = ['🍲', '🥘', '🍜', '🥗', '🍛', '🫕', '🥩', '🍝', '🫔', '🥙'];
-          resultsContainer.innerHTML = recipes.map((r, i) => {
-            const title = r.Recipe_title || r.title || 'Unknown';
-            const region = r.Region || r.region || '';
-            const cals = r.Calories || r['Energy (kcal)'] || '—';
-            const calStr = cals !== '—' ? `${parseFloat(cals).toFixed(0)} kcal` : '—';
-            return `
-            <a href="index.html" class="recipe-result-item" style="text-decoration:none">
-              <div class="rr-icon">${EMOJIS_POOL[i % EMOJIS_POOL.length]}</div>
-              <div>
-                <div class="rr-name">${title}</div>
-                <div class="rr-meta">${region}</div>
-              </div>
-              <div class="rr-cal">${calStr}</div>
-            </a>`;
-          }).join('');
-        } catch (err) {
-          loadBar.style.display = 'none';
-          console.warn('Search failed:', err.message);
-          resultsContainer.innerHTML = `
-          <div style="color:var(--text-3);font-size:13px;padding:12px 0;">
-            Search preview unavailable. <a href="index.html" style="color:var(--amber)">Try the full portal →</a>
-          </div>`;
-        }
-      }, 550);
-    });
 
     /* ========================================================
        Pinned dish scrolling visualizer sequence
@@ -7183,6 +6949,62 @@
           }, 500);
         });
       });
+    })();
+
+    /* ========================================================
+       PARTICLE CANVAS (Floating vegetable/food science emojis)
+    ======================================================== */
+    (function initParticles() {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx    = canvas.getContext('2d');
+      const EMOJIS = ['🌿', '🍋', '🧄', '⭐', '🌶️', '🫚', '🌰', '🍂', '✨'];
+      let W, H, particles = [];
+
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      class Particle {
+        constructor() { this.reset(true); }
+        reset(init) {
+          this.x     = Math.random() * W;
+          this.y     = init ? Math.random() * H : H + 40;
+          this.vy    = -(Math.random() * 0.5 + 0.2);
+          this.vx    = (Math.random() - 0.5) * 0.4;
+          this.size  = Math.random() * 18 + 10;
+          this.alpha = Math.random() * 0.35 + 0.05;
+          this.rot   = Math.random() * Math.PI * 2;
+          this.vr    = (Math.random() - 0.5) * 0.005;
+          this.emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+          this.life  = 0;
+          this.maxLife = Math.random() * 400 + 200;
+        }
+        update() {
+          this.x += this.vx; this.y += this.vy; this.rot += this.vr; this.life++;
+          if (this.y < -40 || this.life > this.maxLife) this.reset(false);
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.alpha * Math.sin(this.life / this.maxLife * Math.PI);
+          ctx.translate(this.x, this.y); ctx.rotate(this.rot);
+          ctx.font = `${this.size}px serif`;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(this.emoji, 0, 0);
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < 35; i++) particles.push(new Particle());
+
+      function loop() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(loop);
+      }
+      loop();
     })();
 
   </script>
