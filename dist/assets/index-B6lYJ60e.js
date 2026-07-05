@@ -1906,7 +1906,7 @@ async function _(e) {
     }
   }
   ((t.detModalTitle.textContent = e.Recipe_title),
-    (t.detTime.textContent = `${e.total_time || 30} mins`),
+    (e.total_time == "0" || e.total_time === 0 ? (t.detTime.parentElement.style.display = "none") : (t.detTime.parentElement.style.display = "", t.detTime.textContent = `${e.total_time || 30} mins`)),
     (t.detServings.textContent = e.servings || "4 servings"),
     (t.detRegion.textContent = e.Region || "Global"),
     (t.detUtensils.innerHTML = ""),
