@@ -4420,6 +4420,7 @@
 
         </div>
       </div>
+      </div>
       <div id="analytics-pane" class="tab-pane">
 
         <!-- Fast-loading high-level database metrics -->
@@ -6370,6 +6371,13 @@
           if (target) target.classList.add('active');
           if (tid === 'lab-pane' && typeof resizeCanvasGlobal === 'function') {
             setTimeout(resizeCanvasGlobal, 50);
+          }
+          if (tid === 'analytics-pane' || tid === 'playground-pane' || tid === 'lab-pane') {
+            if (target) {
+              const yOffset = -120; // 110px navbar + 10px spacing
+              const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+            }
           }
         });
       });

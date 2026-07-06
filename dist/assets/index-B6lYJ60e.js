@@ -962,16 +962,23 @@ async function H() {
   if (e && e.data && e.data.payload) {
     const a = e.data.payload.data;
     const loaderEl = document.getElementById("featured-loading-state");
-    (i.featuredRecipe = a),
-      (t.featuredTitle.textContent = a.Recipe_title),
-      (t.featuredTime.textContent = (a.total_time && a.total_time != "0") ? `${a.total_time} mins` : "");
-    t.featuredRegion.textContent = a.Region || "Global";
-    // Separate the bullet from region/time to avoid showing " • " when empty
-    const metaEl = t.featuredRegion.parentElement;
-    if (metaEl) {
-      metaEl.innerHTML = `<span id="featured-region">${a.Region || "Global"}</span>${(a.total_time && a.total_time != "0") ? ` &bull; <span id="featured-time">${a.total_time} mins</span>` : ''}`;
+    (i.featuredRecipe = a);
+    if (t.featuredTitle) {
+      t.featuredTitle.textContent = a.Recipe_title;
     }
-    (t.featuredBadges.innerHTML = "");
+    if (t.featuredTime) {
+      t.featuredTime.textContent = (a.total_time && a.total_time != "0") ? `${a.total_time} mins` : "";
+    }
+    if (t.featuredRegion) {
+      t.featuredRegion.textContent = a.Region || "Global";
+      const metaEl = t.featuredRegion.parentElement;
+      if (metaEl) {
+        metaEl.innerHTML = `<span id="featured-region">${a.Region || "Global"}</span>${(a.total_time && a.total_time != "0") ? ` &bull; <span id="featured-time">${a.total_time} mins</span>` : ''}`;
+      }
+    }
+    if (t.featuredBadges) {
+      t.featuredBadges.innerHTML = "";
+    }
     const n = (o, s) => {
       const r = document.createElement("span");
       (r.className = `badge ${s}`), (r.textContent = o), t.featuredBadges.appendChild(r);
