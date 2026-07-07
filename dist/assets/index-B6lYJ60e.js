@@ -1921,6 +1921,10 @@ async function _(e) {
       (f) => {
         const m = document.createElement("span");
         ((m.className = "badge"),
+          (m.style.borderColor = "rgba(186, 184, 161, 0.25)"),
+          (m.style.color = "var(--text-2)"),
+          (m.style.fontSize = "0.8rem"),
+          (m.style.padding = "4px 12px"),
           (m.textContent = f),
           t.detUtensils.appendChild(m));
       },
@@ -1929,8 +1933,10 @@ async function _(e) {
     (e.Processes ? e.Processes.split("||") : ["cook", "heat"]).forEach((f) => {
       const m = document.createElement("span");
       ((m.className = "badge"),
-        (m.style.borderColor = "rgba(168, 85, 247, 0.2)"),
-        (m.style.color = "var(--accent-purple)"),
+        (m.style.borderColor = "rgba(186, 184, 161, 0.25)"),
+        (m.style.color = "var(--text-2)"),
+        (m.style.fontSize = "0.8rem"),
+        (m.style.padding = "4px 12px"),
         (m.textContent = f),
         t.detProcesses.appendChild(m));
     }),
@@ -1969,7 +1975,10 @@ async function _(e) {
         "Serve warm and enjoy your culinary creation!",
       ]),
     s.forEach((f, m) => {
-      const C = f.endsWith(".") ? f : `${f}.`,
+      let tText = f.trim();
+      if (tText.length > 0) tText = tText[0].toUpperCase() + tText.slice(1);
+      tText = tText.replace(/\s+,\s*/g, ", ");
+      const C = tText.endsWith(".") ? tText : `${tText}.`,
         S = document.createElement("div");
       ((S.className = "instruction-step"),
         (S.innerHTML = `

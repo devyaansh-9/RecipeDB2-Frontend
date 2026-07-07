@@ -1678,6 +1678,20 @@
       opacity: 1;
       display: block;
     }
+    /* Restore normal cursor */
+    body, a, button, input, select, textarea, [role="button"] {
+      cursor: auto !important;
+    }
+    a, button, [role="button"], select, input[type="submit"], input[type="button"], button * {
+      cursor: pointer !important;
+    }
+    #cursor, #cursor-ring, #cursor-trails, .cursor-trail {
+      display: none !important;
+      pointer-events: none !important;
+    }
+    #playground-pane, #tab-btn-playground {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -1685,9 +1699,7 @@
   <canvas id="particle-bg"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.85;"></canvas>
 
-  <!-- Decorative custom cursor overlay for premium interactive feedback -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
+  <!-- Custom cursor disabled -->
 
   <!-- Soft glowing blurred blobs that float in the background for a modern ambient look -->
   <div class="glow-blob blob-1"></div>
@@ -1731,12 +1743,14 @@
           </svg>
           Recipe Portal
         </button>
+        <!--
         <button class="nav-tab" id="tab-btn-playground" data-tab="playground-pane">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg>
           API Console
         </button>
+        -->
       </div>
 
       <!-- Connection status badge and credential settings drawer toggle -->
@@ -3156,7 +3170,7 @@
       <!-- ==========================================
            DEVELOPER PLAYGROUND VIEW (TAB 3)
            ========================================== -->
-      <div id="playground-pane" class="tab-pane">
+      <div id="playground-pane" class="tab-pane" style="display: none !important;">
         <div class="playground-grid">
 
           <!-- Sidebar listing all available RecipeDB2 API endpoints -->
@@ -4152,7 +4166,7 @@
             </div>
 
             <div class="exclusion-section">
-              <h4 class="detail-section-title">Preparation Instructions</h4>
+              <h4 class="detail-section-title">Cooking Instructions</h4>
               <div class="instruction-list" id="det-instructions">
                 <!-- Recipe instruction steps populated sequentially -->
               </div>
@@ -4957,89 +4971,7 @@
     })();
   </script>
   <!-- ===== CURSOR SCRIPT ===== -->
-  <script>
-    (function () {
-      const cursor = document.getElementById('cursor');
-      const cursorRing = document.getElementById('cursor-ring');
-      if (!cursor || !cursorRing) return;
-
-      let mouseX = -100, mouseY = -100;
-      let ringX = -100, ringY = -100;
-
-      // Create a pool of trail elements for the cursor follow effect
-      const TRAIL_COUNT = 10;
-      const trails = [];
-      for (let i = 0; i < TRAIL_COUNT; i++) {
-        const t = document.createElement('div');
-        t.className = 'cursor-trail';
-        document.body.appendChild(t);
-        trails.push({ el: t, x: -100, y: -100, life: 0 });
-      }
-      let trailIdx = 0;
-
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-
-        // Position and activate a cursor trail dot at the mouse position
-        const t = trails[trailIdx % TRAIL_COUNT];
-        t.x = mouseX; t.y = mouseY; t.life = 1;
-        t.el.style.left = mouseX + 'px';
-        t.el.style.top = mouseY + 'px';
-        t.el.style.opacity = '0.55';
-        t.el.style.transform = 'translate(-50%,-50%) scale(1)';
-        trailIdx++;
-
-        // Fade out and shrink the trail dot after a tiny delay
-        setTimeout(() => {
-          t.el.style.transition = 'opacity 0.5s, transform 0.5s';
-          t.el.style.opacity = '0';
-          t.el.style.transform = 'translate(-50%,-50%) scale(0.3)';
-        }, 30);
-        setTimeout(() => { t.el.style.transition = 'none'; }, 560);
-      });
-
-      // Smoothly interpolate the cursor ring position to create a lag effect
-      function animateRing() {
-        ringX += (mouseX - ringX) * 0.12;
-        ringY += (mouseY - ringY) * 0.12;
-        cursorRing.style.left = ringX + 'px';
-        cursorRing.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
-
-      // Grow the cursor pointer when hovering over interactive elements
-      document.querySelectorAll('a, button, input, select, [role="button"], .carousel-card, .nav-tab, .recipe-row').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursor.classList.add('cursor-hover');
-          cursorRing.classList.add('cursor-hover');
-        });
-        el.addEventListener('mouseleave', () => {
-          cursor.classList.remove('cursor-hover');
-          cursorRing.classList.remove('cursor-hover');
-        });
-      });
-
-      // Ensure dynamic cards and list items also trigger the hover scale effect
-      document.addEventListener('mouseover', (e) => {
-        const el = e.target.closest('a, button, input, select, [role="button"], tr, .carousel-card');
-        if (el) {
-          cursor.classList.add('cursor-hover');
-          cursorRing.classList.add('cursor-hover');
-        }
-      });
-      document.addEventListener('mouseout', (e) => {
-        const el = e.target.closest('a, button, input, select, [role="button"], tr, .carousel-card');
-        if (el) {
-          cursor.classList.remove('cursor-hover');
-          cursorRing.classList.remove('cursor-hover');
-        }
-      });
-    })();
-  </script>
+  <!-- Custom cursor script disabled -->
 
   <script>
     (function () {

@@ -1894,7 +1894,7 @@
     /* Layout parameters for the interactive center-dish scrolling presentation */
     #pinned-story {
       position: relative;
-      height: 350vh;
+      height: 200vh;
     }
 
     #pinned-sticky {
@@ -2790,6 +2790,29 @@
 .search-input::placeholder{color:var(--text-muted)}
 .featured-loading{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;background:var(--bg-panel);z-index:3;color:var(--text-muted);font-size:.8rem;font-weight:600}
 .loading-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.08);border-top-color:var(--accent-cyan);border-radius:50%;animation:spin .8s linear infinite}
+/* Restore normal cursor */
+body, a, button, input, select, textarea, [role="button"], #scroll-progress, #pinned-story, #live-section, #features-section {
+  cursor: auto !important;
+}
+a, button, [role="button"], select, input[type="submit"], input[type="button"], button * {
+  cursor: pointer !important;
+}
+#cursor, #cursor-ring, #cursor-trails, .cursor-trail {
+  display: none !important;
+  pointer-events: none !important;
+}
+#cuisines-section {
+  display: none !important;
+}
+[data-ptab="playground-pane"] {
+  display: none !important;
+}
+#playground-pane {
+  display: none !important;
+}
+.ing-card {
+  display: none !important;
+}
 </style>
 </head>
 
@@ -2818,11 +2841,7 @@
   <!-- Micro horizontal scroll progress indicator -->
   <div id="scroll-progress"></div>
 
-  <!-- Decorative custom cursor overlay for premium interactive feedback -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-  <!-- Small background trail dots that follow the custom pointer -->
-  <div id="cursor-trails"></div>
+  <!-- Custom cursor disabled -->
 
   <!-- Top fixed navigation header with brand and links -->
   <nav id="navbar">
@@ -2834,12 +2853,13 @@
     </a>
     <div class="nav-links">
       <a href="#stats-section">Database</a>
-      <a href="#cuisines-section">Cuisines</a>
+      <!-- <a href="#cuisines-section">Cuisines</a> -->
       <a href="#live-section">Explore</a>
-      <a href="#features-section">Features</a>
+      <a href="#how-to-use-section">How to Use</a>
+      <!-- <a href="#features-section">Features</a> -->
       <a href="https://cosylab.iiitd.edu.in" target="_blank">CoSyLab</a>
     </div>
-    <a href="#portal-section" class="nav-cta" onclick="event.preventDefault();document.getElementById('portal-section').scrollIntoView({behavior:'smooth'})">Launch App ↓</a>
+    <a href="#portal-section" class="nav-cta" onclick="event.preventDefault();document.getElementById('portal-section').scrollIntoView({behavior:'smooth'})">Search ↓</a>
   </nav>
 
   <!-- =========================================================
@@ -3050,7 +3070,7 @@
   </section>
 
   <!-- Continuous horizontal scrolling cuisine marquee -->
-  <section id="cuisines-section">
+  <section id="cuisines-section" style="display: none !important;">
     <div class="cuisines-intro">
       <div class="section-label reveal">Global Reach</div>
       <h2 class="section-heading reveal reveal-delay-1">Every cuisine<br>on <em>earth</em></h2>
@@ -3150,7 +3170,7 @@
             <div id="rotd-lnd-meta" style="display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.8rem;color:var(--text-2,#a0b0a0);padding:0.75rem 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);"></div>
 
             <!-- Scrollable content area for long details -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-height:200px;overflow-y:auto;padding-right:0.5rem;" class="custom-scrollbar">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-height:340px;overflow-y:auto;padding-right:0.5rem;" class="custom-scrollbar">
               
               <!-- Left Column: Ingredients -->
               <div id="rotd-lnd-ingredients-wrap" style="display:none;">
@@ -3178,10 +3198,11 @@
             <!-- Diet tags -->
             <div id="rotd-lnd-diet" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;"></div>
 
-            <!-- CTA -->
+            <!-- CTA
             <a href="/index.html" class="btn-primary" style="width:100%;justify-content:center;display:flex;margin-top:0.25rem;flex-shrink:0;">
               Explore Full Portal →
             </a>
+            -->
           </div>
         </div>
       </div>
@@ -3372,7 +3393,7 @@
     </div>
   </section>
 
-  <!-- Highlights of key developer tools, documentation and endpoints -->
+  <!-- Highlights of key developer tools, documentation and endpoints
   <section id="features-section">
     <div class="features-inner">
       <div class="section-label reveal">Capabilities</div>
@@ -3436,6 +3457,7 @@
       </div>
     </div>
   </section>
+  -->
 
 
   <!-- Instructional developer manual showing data flow and querying -->
@@ -3698,6 +3720,7 @@
 
 
   <!-- Visual invite section directing to the full api console -->
+  <!--
   <section id="cta-section">
     <div class="cta-bg"></div>
     <div class="cta-inner">
@@ -3721,6 +3744,7 @@
       </p>
     </div>
   </section>
+  -->
 
   <!-- Bottom menu with copyrights and quick navigation links -->
   
@@ -3728,7 +3752,7 @@
     <div class="p-inner">
       <div class="p-header">
         <div class="section-label reveal" style="justify-content:center;">RecipeDB2 Portal</div>
-        <h2 class="section-heading reveal reveal-delay-1">Full Database Access</h2>
+        <h2 class="section-heading reveal reveal-delay-1">Explore the Database</h2>
         <p class="reveal reveal-delay-2" style="max-width:580px;margin:0 auto;color:var(--text-2);font-size:1rem;line-height:1.7;">
           Search 128,942 recipes, analyse nutrition, test API endpoints, and explore food science.
         </p>
@@ -3737,7 +3761,7 @@
       <div class="ptabs" id="ptab-bar">
         <button class="ptab active" data-ptab="explorer-pane">Recipe Portal</button>
         <button class="ptab" data-ptab="analytics-pane">Analytics & Planner</button>
-        <button class="ptab" data-ptab="playground-pane">API Console</button>
+        <!-- <button class="ptab" data-ptab="playground-pane">API Console</button> -->
         <button class="ptab" data-ptab="lab-pane">Food Science Lab</button>
       </div>
 
@@ -4591,7 +4615,7 @@
 
         </div>
       </div>
-      <div id="playground-pane" class="tab-pane">
+      <div id="playground-pane" class="tab-pane" style="display: none !important;">
         <div class="playground-grid">
 
           <!-- Sidebar listing all available RecipeDB2 API endpoints -->
@@ -5550,7 +5574,7 @@
             </div>
 
             <div class="exclusion-section">
-              <h4 class="detail-section-title">Preparation Instructions</h4>
+              <h4 class="detail-section-title">Cooking Instructions</h4>
               <div class="instruction-list" id="det-instructions">
                 <!-- Recipe instruction steps populated sequentially -->
               </div>
@@ -6472,6 +6496,11 @@
     </div>
   </footer>
 
+  <style>
+    /* Force default cursor and remove custom cursor overrides */
+    body, a, button { cursor: auto !important; }
+  </style>
+
   <script>
     /* ========================================================
        Configuration settings
@@ -6508,87 +6537,7 @@
       }, 1800);
     });
 
-    /* ========================================================
-       Interactive custom cursor and trail particles
-       Tracks mouse pointer movement and handles active hover scaling
-    ======================================================== */
-    const cursor = document.getElementById('cursor');
-    const cursorRing = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    // Initialize pointer trail circles pool
-    const TRAIL_COUNT = 12;
-    const trailContainer = document.getElementById('cursor-trails');
-    const trails = [];
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'cursor-trail';
-      trailContainer.appendChild(dot);
-      trails.push({ el: dot, x: 0, y: 0, life: 0 });
-    }
-    let trailIndex = 0;
-    let lastTrailX = 0, lastTrailY = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-
-      // Only spawn a trail dot when the mouse moves past a minimum distance threshold
-      const dx = mx - lastTrailX, dy = my - lastTrailY;
-      if (dx * dx + dy * dy > 120) {
-        const trail = trails[trailIndex % TRAIL_COUNT];
-        trail.x = mx; trail.y = my; trail.life = 1;
-        trail.el.style.left = mx + 'px';
-        trail.el.style.top = my + 'px';
-        trail.el.style.opacity = '0.6';
-        trail.el.style.transform = 'translate(-50%,-50%) scale(1)';
-        trailIndex++;
-        lastTrailX = mx; lastTrailY = my;
-      }
-    });
-
-    // Shrink and fade out active trail dots over time
-    function animateTrails() {
-      trails.forEach(t => {
-        if (t.life > 0) {
-          t.life -= 0.03;
-          if (t.life <= 0) { t.life = 0; t.el.style.opacity = '0'; }
-          else {
-            t.el.style.opacity = (t.life * 0.5).toString();
-            t.el.style.transform = `translate(-50%,-50%) scale(${0.3 + t.life * 0.7})`;
-          }
-        }
-      });
-      requestAnimationFrame(animateTrails);
-    }
-    animateTrails();
-
-    function animateRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      cursorRing.style.left = rx + 'px';
-      cursorRing.style.top = ry + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    document.querySelectorAll('a,button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.width = '20px';
-        cursor.style.height = '20px';
-        cursorRing.style.width = '60px';
-        cursorRing.style.height = '60px';
-        cursorRing.style.borderColor = 'rgba(245,158,11,0.8)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.width = '12px';
-        cursor.style.height = '12px';
-        cursorRing.style.width = '40px';
-        cursorRing.style.height = '40px';
-        cursorRing.style.borderColor = 'rgba(245,158,11,0.5)';
-      });
-    });
+    /* Custom cursor script disabled */
 
     /* ========================================================
        Page scroll progress tracker and navbar backdrop blur controller
