@@ -862,9 +862,9 @@
     }
 
     .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--amber);
       margin-bottom: 16px;
@@ -2364,7 +2364,7 @@
     /* Explore Cuisines Spacing & Layout (Restored) */
     #cuisine-carousel.cuisine-tabs-wrap { display: flex !important; flex-wrap: wrap !important; gap: 10px !important; border: none !important; margin: 0 !important; padding: 1rem 0 !important; overflow-x: auto !important; scrollbar-width: none !important; }
     #cuisine-carousel.cuisine-tabs-wrap::-webkit-scrollbar { display: none !important; }
-    #cuisine-carousel .cuisine-tab { min-width: unset !important; width: auto !important; height: auto !important; position: static !important; overflow: visible !important; flex-shrink: unset !important; flex-direction: row !important; justify-content: flex-start !important; transform: none !important; box-shadow: none !important; background: transparent !important; border: 1px solid transparent !important; color: var(--text-2) !important; padding: 8px 16px !important; border-radius: 8px !important; font-weight: 600 !important; font-size: 0.95rem !important; transition: all 0.2s ease !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; cursor: pointer !important; user-select: none !important; white-space: nowrap !important; }
+    #cuisine-carousel .cuisine-tab { min-width: unset !important; width: auto !important; height: auto !important; position: static !important; overflow: visible !important; flex-shrink: unset !important; flex-direction: row !important; justify-content: flex-start !important; transform: none !important; box-shadow: none !important; background: transparent !important; border: 1px solid transparent !important; color: var(--text-2) !important; padding: 10px 20px !important; border-radius: 8px !important; font-weight: 600 !important; font-size: 1.1rem !important; transition: all 0.2s ease !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; cursor: pointer !important; user-select: none !important; white-space: nowrap !important; }
     #cuisine-carousel .cuisine-tab::after, #cuisine-carousel .cuisine-tab::before { display: none !important; content: none !important; }
     #cuisine-carousel .cuisine-tab:hover { color: var(--text-1) !important; background: rgba(255, 255, 255, 0.08) !important; }
     #cuisine-carousel .cuisine-tab.active { background: var(--amber) !important; border-color: var(--amber) !important; color: var(--black) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important; }
@@ -3778,7 +3778,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
       <div class="p-header">
         <div class="section-label reveal" style="justify-content:center;">RecipeDB2 Portal</div>
         <h2 class="section-heading reveal reveal-delay-1">Explore the Database</h2>
-        <p class="reveal reveal-delay-2" style="max-width:580px;margin:0 auto;color:var(--text-2);font-size:1rem;line-height:1.7;">
+        <p class="reveal reveal-delay-2" style="max-width:580px;margin:20px auto 0;color:var(--text-2);font-size:1rem;line-height:1.7;">
           Search 128,942 recipes, analyse nutrition, test API endpoints, and explore food science.
         </p>
       </div>
@@ -3800,7 +3800,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             <h3 class="search-by-header" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">Explore Cuisines
             </h3>
             <span id="cuisine-filter-label"
-              style="font-size:0.75rem; color:var(--text-muted); font-weight:600; letter-spacing:0.03em;">All cuisines
+              style="font-size:1rem; color:var(--text-muted); font-weight:700; letter-spacing:0.03em;">All cuisines
               shown</span>
           </div>
           
@@ -4606,7 +4606,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                         <div class="news-summary">${article.summary}</div>
                         <div class="news-meta">
                           <span>${article.date}</span>
-                          <a href="${searchUrl}" target="_blank" class="news-read-more" style="text-decoration:none;">Read Article &#8594;</a>
+                          <a href="${searchUrl}" target="_blank" class="news-read-more" style="text-decoration:none; color: #f59e0b; font-weight: 600;">Read Article &#8594;</a>
                         </div>
                       `;
                       container.appendChild(card);

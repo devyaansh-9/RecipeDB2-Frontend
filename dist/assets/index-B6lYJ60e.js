@@ -2019,7 +2019,7 @@ function j() {
       g = Math.round(u - (u / 4) * l);
     p += `
       <line x1="${o}" y1="${c}" x2="${a - o}" y2="${c}" stroke="var(--border-color)" stroke-width="1" />
-      <text x="${o - 8}" y="${c + 4}" fill="var(--text-muted)" font-size="9" text-anchor="end" font-family="var(--font-sans)">${g}</text>
+      <text x="${o - 8}" y="${c + 4}" fill="var(--text-muted)" font-size="12" text-anchor="end" font-family="var(--font-sans)">${g}</text>
     `;
   }
   const d = s / e.length - 12;
@@ -2037,8 +2037,8 @@ function j() {
         </linearGradient>
       </defs>
       <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "#d97706" : "#2563eb"}" stroke-width="1.2" rx="4" ry="4" style="transition: all 0.3s;" />
-      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#d97706" : "#1e3a8a"}" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
-      <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="9.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
+      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#d97706" : "#1e3a8a"}" font-size="13" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
+      <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="12.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
     `;
   }),
     (p += `
