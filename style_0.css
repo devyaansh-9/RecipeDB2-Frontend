@@ -141,6 +141,10 @@
     /* Custom slider styles to match our warm theme */
     .planner-range {
       accent-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.25);
+      height: 4px;
+      border-radius: 4px;
+      width: 100%;
     }
 
     /* Clean layout overrides to keep page sections white and legible */

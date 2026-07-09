@@ -793,11 +793,12 @@
 
     .planner-range {
       width: 100% !important;
-      accent-color: var(--accent-cyan) !important;
-      background: #E2E8F0 !important;
       height: 4px !important;
-      border-radius: 9999px !important;
+      background: rgba(255, 255, 255, 0.2) !important;
+      accent-color: var(--accent-cyan, #06b6d4) !important;
+      border-radius: 4px !important;
       outline: none !important;
+      margin: 10px 0 !important;
     }
 
     /* Small summary card to display calculated target values */
@@ -3127,12 +3128,14 @@
                       const card = document.createElement('div');
                       card.className = 'news-card';
                       const searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(article.title);
+                      card.style.cursor = 'pointer';
+                      card.onclick = () => window.open(searchUrl, '_blank');
                       card.innerHTML = `
                         <div class="news-title">${article.title}</div>
                         <div class="news-summary">${article.summary}</div>
                         <div class="news-meta">
                           <span>${article.date}</span>
-                          <a href="${searchUrl}" target="_blank" class="news-read-more" style="text-decoration:none;">Read Article &#8594;</a>
+                          <span class="news-read-more" style="color: #f59e0b; font-weight: 600;">Read Article &#8594;</span>
                         </div>
                       `;
                       container.appendChild(card);

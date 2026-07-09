@@ -2037,7 +2037,7 @@ function j() {
         </linearGradient>
       </defs>
       <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "#d97706" : "#2563eb"}" stroke-width="1.2" rx="4" ry="4" style="transition: all 0.3s;" />
-      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#d97706" : "#1e3a8a"}" font-size="13" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
+      <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#fbbf24" : "var(--text-primary)"}" font-size="13" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
       <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="12.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
     `;
   }),
