@@ -2007,9 +2007,9 @@ async function _(e) {
 }
 function j() {
   const e = A.averageCaloriesByContinent,
-    a = 450,
-    n = 230,
-    o = 40,
+    a = 800,
+    n = 320,
+    o = 50,
     s = a - o * 2,
     r = n - o * 2,
     u = Math.max(...e.map((l) => l.calories));
@@ -2019,12 +2019,12 @@ function j() {
       g = Math.round(u - (u / 4) * l);
     p += `
       <line x1="${o}" y1="${c}" x2="${a - o}" y2="${c}" stroke="var(--border-color)" stroke-width="1" />
-      <text x="${o - 8}" y="${c + 4}" fill="var(--text-muted)" font-size="12" text-anchor="end" font-family="var(--font-sans)">${g}</text>
+      <text x="${o - 8}" y="${c + 5}" fill="var(--text-primary)" font-size="15" font-weight="600" text-anchor="end" font-family="var(--font-sans)">${g}</text>
     `;
   }
-  const d = s / e.length - 12;
+  const d = s / e.length - 50;
   (e.forEach((l, c) => {
-    const g = o + (s / e.length) * c + 6,
+    const g = o + (s / e.length) * c + 25,
       h = (l.calories / u) * r,
       f = n - o - h,
       isMax = l.calories === u,
@@ -2038,7 +2038,7 @@ function j() {
       </defs>
       <rect x="${g}" y="${f}" width="${d}" height="${h}" fill="url(#${gradId})" stroke="${isMax ? "#d97706" : "#2563eb"}" stroke-width="1.2" rx="4" ry="4" style="transition: all 0.3s;" />
       <text x="${g + d / 2}" y="${f - 6}" fill="${isMax ? "#fbbf24" : "var(--text-primary)"}" font-size="13" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">${l.calories}</text>
-      <text x="${g + d / 2}" y="${n - o + 16}" fill="var(--text-secondary)" font-size="12.5" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
+      <text x="${g + d / 2}" y="${n - o + 22}" fill="var(--text-primary)" font-size="18" font-weight="600" text-anchor="middle" font-family="var(--font-sans)">${l.continent}</text>
     `;
   }),
     (p += `
