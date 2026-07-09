@@ -3516,63 +3516,249 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
         </p>
 
       </div>
-      <div class="story-visual reveal reveal-delay-3"
-        style="grid-column: 2; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--border); padding: 40px;">
-        <!-- Interactive data pipeline visualization -->
-        <div
-          style="display:flex; flex-direction:row; gap: 20px; width: 100%; height: 100%; align-items: center; justify-content: center;">
-
-          <!-- Source data structures including USDA and ingredients -->
+      <!-- Clickable Graph Preview -->
+      <div id="graph-preview-card" class="story-visual reveal reveal-delay-3"
+        onclick="openGraphModal()"
+        style="grid-column: 2; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--border); padding: 40px; cursor: pointer; position: relative; transition: border-color 0.3s, box-shadow 0.3s;">
+        <!-- Click hint badge -->
+        <div style="position:absolute; top:16px; right:16px; background: rgba(167,139,250,0.18); border: 1px solid rgba(167,139,250,0.45); border-radius: 20px; padding: 5px 13px; font-size: 11px; font-weight: 700; color: #a78bfa; display:flex; align-items:center; gap:6px; letter-spacing:0.04em;">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="5" stroke="#a78bfa" stroke-width="1.2"/><path d="M5.5 3v3l2 1.2" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Click to Expand
+        </div>
+        <!-- Static mini pipeline preview -->
+        <div style="display:flex; flex-direction:row; gap: 20px; width: 100%; height: 100%; align-items: center; justify-content: center; pointer-events:none;">
           <div style="display:flex; flex-direction:column; gap: 15px;">
-            <div
-              style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">
-              Cuisines (99 Countries)</div>
-            <div
-              style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">
-              Dietary Styles (5)</div>
-            <div
-              style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">
-              Categories (34)</div>
+            <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Cuisines (99 Countries)</div>
+            <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Dietary Styles (5)</div>
+            <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); padding: 12px 20px; border-radius: 8px; color: #60a5fa; text-align: center; font-size: 12px; font-weight: 600;">Categories (34)</div>
           </div>
-
-          <div style="color: var(--text-3);">→</div>
-
-          <!-- Core processing logic grouping recipes -->
-          <div
-            style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
+          <div style="color: var(--text-3); font-size:20px;">→</div>
+          <div style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
             <div style="color: #a78bfa; font-size: 16px; font-weight: 800; margin-bottom: 12px;">128,942 Recipes</div>
             <div style="display:flex; flex-direction:column; gap: 8px;">
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">
-                Recipe Title</div>
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">
-                Ingredient Phrases</div>
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">
-                Cooking Procedure</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Recipe Title</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Ingredient Phrases</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Cooking Procedure</div>
             </div>
           </div>
-
-          <div style="color: var(--text-3);">→</div>
-
-          <!-- Downstream targets: meal plans, diagnostics and visualizers -->
-          <div
-            style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
-            <div style="color: #34d399; font-size: 14px; font-weight: 800; margin-bottom: 12px;">USDA Nutritional
-              Profile</div>
+          <div style="color: var(--text-3); font-size:20px;">→</div>
+          <div style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); padding: 24px 30px; border-radius: 12px; text-align: center;">
+            <div style="color: #34d399; font-size: 14px; font-weight: 800; margin-bottom: 12px;">USDA Nutritional Profile</div>
             <div style="display:flex; flex-direction:column; gap: 8px;">
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">
-                Macro-nutrients (Protein, Fat)</div>
-              <div
-                style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">
-                Micro-nutrients (Vitamins)</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Macro-nutrients (Protein, Fat)</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; color: var(--text-2); font-size: 11px;">Micro-nutrients (Vitamins)</div>
             </div>
           </div>
-
         </div>
       </div>
+
+      <!-- ===================== INTERACTIVE GRAPH MODAL ===================== -->
+      <div id="graph-modal-overlay" onclick="closeGraphModal()" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); align-items:center; justify-content:center; padding:24px;">
+        <div id="graph-modal-box" onclick="event.stopPropagation()" style="position:relative; width:94vw; max-width:1300px; height:90vh; max-height:90vh; background:linear-gradient(145deg,#111a14,#0d1810); border:1px solid rgba(167,139,250,0.25); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(167,139,250,0.1);">
+
+          <!-- Modal Header -->
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid rgba(255,255,255,0.07); flex-shrink:0;">
+            <div>
+              <div style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#a78bfa; text-transform:uppercase; margin-bottom:4px;">RecipeDB2 · Data Architecture</div>
+              <div style="font-size:20px; font-weight:800; color:#f5f0e8;">Interactive Knowledge Graph</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="font-size:12px; color:rgba(245,240,232,0.4); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 14px;">Click a node to explore</div>
+              <button onclick="closeGraphModal()" style="width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05); color:#f5f0e8; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">&times;</button>
+            </div>
+          </div>
+
+          <!-- Split Layout: Left side Graph, Right side Details -->
+          <div style="flex:1; display:flex; flex-direction:row; min-height:0; overflow:hidden;">
+            <!-- Left Column: SVG Graph -->
+            <div style="flex:1.5; min-width:0; padding:24px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.08); min-height:0;">
+              <svg id="knowledge-graph-svg" viewBox="0 0 960 560" style="width:100%; height:auto; max-height:100%; display:block;" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Animated flow gradient for lines -->
+                  <linearGradient id="flow-blue-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#a78bfa"/>
+                  </linearGradient>
+                  <linearGradient id="flow-purple-green" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#34d399"/>
+                  </linearGradient>
+                  <linearGradient id="flow-green-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#f59e0b"/>
+                  </linearGradient>
+                  <!-- Glow filter -->
+                  <filter id="glow-blue"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <filter id="glow-purple"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <filter id="glow-green"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#60a5fa" opacity="0.7"/></marker>
+                  <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a78bfa" opacity="0.7"/></marker>
+                  <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34d399" opacity="0.7"/></marker>
+                  <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f59e0b" opacity="0.7"/></marker>
+                </defs>
+
+                <!-- === ANIMATED FLOW LINES === -->
+                <!-- Cuisines → Recipes -->
+                <path d="M 198 80 C 260 80, 295 275, 370 275" stroke="url(#flow-blue-purple)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2s" repeatCount="indefinite"/></path>
+                <!-- Dietary → Recipes -->
+                <path d="M 198 210 C 260 210, 295 275, 370 275" stroke="url(#flow-blue-purple)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.4s" repeatCount="indefinite"/></path>
+                <!-- Categories → Recipes -->
+                <path d="M 198 340 C 260 340, 295 275, 370 275" stroke="url(#flow-blue-purple)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.8s" repeatCount="indefinite"/></path>
+                <!-- Regions → Recipes -->
+                <path d="M 198 470 C 260 470, 295 275, 370 275" stroke="url(#flow-blue-purple)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.5" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.2s" repeatCount="indefinite"/></path>
+
+                <!-- Recipes → Ingredients -->
+                <path d="M 590 220 C 640 220, 660 120, 710 120" stroke="url(#flow-purple-green)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.2s" repeatCount="indefinite"/></path>
+                <!-- Recipes → Nutrition -->
+                <path d="M 590 275 C 640 275, 660 282, 710 282" stroke="url(#flow-purple-green)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.6s" repeatCount="indefinite"/></path>
+                <!-- Recipes → Cooking -->
+                <path d="M 590 330 C 640 330, 660 428, 710 428" stroke="url(#flow-purple-green)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="3s" repeatCount="indefinite"/></path>
+
+                <!-- Nutrition → USDA -->
+                <path d="M 890 282 C 895 282, 895 281, 900 281" stroke="url(#flow-green-amber)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2s" repeatCount="indefinite"/></path>
+                <!-- Nutrition → FlavorDB -->
+                <path d="M 890 282 C 895 282, 895 359, 900 359" stroke="url(#flow-green-amber)" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2.5s" repeatCount="indefinite"/></path>
+
+                <!-- === LAYER 1: INPUT NODES (Blue) === -->
+                <!-- Cuisines Node -->
+                <g class="kg-node" data-node="cuisines" style="cursor:pointer" onclick="graphNodeClick(event,'cuisines')">
+                  <rect x="20" y="52" width="178" height="56" rx="12" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <rect x="20" y="52" width="178" height="56" rx="12" fill="transparent" stroke="rgba(96,165,250,0)" stroke-width="3" class="kg-hover-ring"/>
+                  <text x="109" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa">Cuisines</text>
+                  <text x="109" y="96" text-anchor="middle" font-size="11" fill="rgba(96,165,250,0.75)">99 Countries · 7 Continents</text>
+                  <circle cx="198" cy="80" r="4" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- Dietary Styles Node -->
+                <g class="kg-node" data-node="dietary" style="cursor:pointer" onclick="graphNodeClick(event,'dietary')">
+                  <rect x="20" y="182" width="178" height="56" rx="12" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <text x="109" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa">Dietary Styles</text>
+                  <text x="109" y="226" text-anchor="middle" font-size="11" fill="rgba(96,165,250,0.75)">Vegetarian · Vegan · Keto…</text>
+                  <circle cx="198" cy="210" r="4" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2.4s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- Categories Node -->
+                <g class="kg-node" data-node="categories" style="cursor:pointer" onclick="graphNodeClick(event,'categories')">
+                  <rect x="20" y="312" width="178" height="56" rx="12" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <text x="109" y="338" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa">Categories</text>
+                  <text x="109" y="356" text-anchor="middle" font-size="11" fill="rgba(96,165,250,0.75)">34 Distinct Meal Types</text>
+                  <circle cx="198" cy="340" r="4" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- Regions Node -->
+                <g class="kg-node" data-node="regions" style="cursor:pointer" onclick="graphNodeClick(event,'regions')">
+                  <rect x="20" y="442" width="178" height="56" rx="12" fill="rgba(59,130,246,0.08)" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
+                  <text x="109" y="468" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(96,165,250,0.8)">Geo Regions</text>
+                  <text x="109" y="486" text-anchor="middle" font-size="11" fill="rgba(96,165,250,0.55)">32 Cultural Regions</text>
+                  <circle cx="198" cy="470" r="4" fill="#60a5fa" opacity="0.5"><animate attributeName="r" values="3;4;3" dur="3s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- === LAYER 2: CORE NODE (Purple) === -->
+                <g class="kg-node" data-node="recipes" style="cursor:pointer" onclick="graphNodeClick(event,'recipes')" filter="url(#glow-purple)">
+                  <rect x="365" y="150" width="230" height="250" rx="18" fill="rgba(139,92,246,0.15)" stroke="rgba(167,139,250,0.6)" stroke-width="2"/>
+                  <!-- Pulsing outer ring -->
+                  <rect x="360" y="145" width="240" height="260" rx="21" fill="none" stroke="rgba(167,139,250,0.2)" stroke-width="2"><animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/></rect>
+                  <text x="480" y="195" text-anchor="middle" font-size="22" font-weight="900" fill="#a78bfa">128,942</text>
+                  <text x="480" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="rgba(167,139,250,0.85)">Recipes</text>
+                  <rect x="385" y="238" width="190" height="32" rx="6" fill="rgba(0,0,0,0.35)"/>
+                  <text x="480" y="258" text-anchor="middle" font-size="11" fill="rgba(245,240,232,0.7)">Recipe Title</text>
+                  <rect x="385" y="280" width="190" height="32" rx="6" fill="rgba(0,0,0,0.35)"/>
+                  <text x="480" y="300" text-anchor="middle" font-size="11" fill="rgba(245,240,232,0.7)">Ingredient Phrases</text>
+                  <rect x="385" y="322" width="190" height="32" rx="6" fill="rgba(0,0,0,0.35)"/>
+                  <text x="480" y="342" text-anchor="middle" font-size="11" fill="rgba(245,240,232,0.7)">Cooking Procedure</text>
+                  <circle cx="590" cy="275" r="5" fill="#a78bfa"><animate attributeName="r" values="4;7;4" dur="1.8s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- === LAYER 3: OUTPUT NODES (Green) === -->
+                <!-- Ingredients Node -->
+                <g class="kg-node" data-node="ingredients" style="cursor:pointer" onclick="graphNodeClick(event,'ingredients')">
+                  <rect x="705" y="90" width="185" height="60" rx="12" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+                  <text x="797" y="116" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">Ingredients</text>
+                  <text x="797" y="136" text-anchor="middle" font-size="11" fill="rgba(52,211,153,0.7)">35,474 Unique Items</text>
+                  <circle cx="840" cy="120" r="4" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2.1s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- Nutrition Node -->
+                <g class="kg-node" data-node="nutrition" style="cursor:pointer" onclick="graphNodeClick(event,'nutrition')">
+                  <rect x="705" y="238" width="185" height="88" rx="12" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+                  <text x="797" y="266" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">Nutrition Profile</text>
+                  <text x="797" y="286" text-anchor="middle" font-size="11" fill="rgba(52,211,153,0.7)">Macro · Micro nutrients</text>
+                  <text x="797" y="304" text-anchor="middle" font-size="10" fill="rgba(52,211,153,0.5)">Calories · Proteins · Fats</text>
+                  <circle cx="840" cy="282" r="4" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2.5s" repeatCount="indefinite"/></circle>
+                </g>
+
+                <!-- Cooking Processes Node -->
+                <g class="kg-node" data-node="cooking" style="cursor:pointer" onclick="graphNodeClick(event,'cooking')">
+                  <rect x="705" y="398" width="185" height="60" rx="12" fill="rgba(16,185,129,0.08)" stroke="rgba(52,211,153,0.35)" stroke-width="1.5"/>
+                  <text x="797" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="rgba(52,211,153,0.8)">Cooking Processes</text>
+                  <text x="797" y="444" text-anchor="middle" font-size="11" fill="rgba(52,211,153,0.55)">268 Techniques</text>
+                </g>
+
+                <!-- === LAYER 4: EXTERNAL LINKS (Amber) === -->
+                <!-- USDA Node -->
+                <g class="kg-node" data-node="usda" style="cursor:pointer" onclick="graphNodeClick(event,'usda')">
+                  <rect x="900" y="260" width="50" height="42" rx="8" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.5)" stroke-width="1.5"/>
+                  <text x="925" y="285" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b">USDA</text>
+                </g>
+                <!-- FlavorDB Node -->
+                <g class="kg-node" data-node="flavordb" style="cursor:pointer" onclick="graphNodeClick(event,'flavordb')">
+                  <rect x="900" y="338" width="50" height="42" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.35)" stroke-width="1.5"/>
+                  <text x="925" y="360" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(245,158,11,0.8)">Flavor</text>
+                  <text x="925" y="372" text-anchor="middle" font-size="8.5" font-weight="700" fill="rgba(245,158,11,0.8)">DB</text>
+                </g>
+
+                <!-- === LAYER LABELS === -->
+                <text x="109" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(96,165,250,0.5)" letter-spacing="0.1em">INPUT FILTERS</text>
+                <text x="480" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(167,139,250,0.5)" letter-spacing="0.1em">RECIPE CORE</text>
+                <text x="797" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(52,211,153,0.5)" letter-spacing="0.1em">DATA LAYERS</text>
+                <text x="925" y="240" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(245,158,11,0.5)" letter-spacing="0.1em">LINKED</text>
+              </svg>
+            </div>
+
+            <!-- Right Column: Detail Panel (Always visible placeholder, details load on click) -->
+            <div id="graph-node-panel" style="width:360px; border-left:1px solid rgba(255,255,255,0.08); background:rgba(13,24,16,0.5); display:flex; flex-direction:column; padding:28px; overflow-y:auto; box-sizing:border-box; flex-shrink:0;">
+              <!-- Default state when no node is selected -->
+              <div id="gnp-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:rgba(245,240,232,0.4); gap:16px;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <div style="font-size:13px; font-weight:600; line-height:1.5; max-width:240px;">Select any node in the graph to view detailed information & database details</div>
+              </div>
+
+              <!-- Node Info Display (Hidden by default, shown on click) -->
+              <div id="gnp-content" style="display:none; flex-direction:column; gap:24px;">
+                <div>
+                  <div id="gnp-label" style="font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px;">Node Details</div>
+                  <div id="gnp-title" style="font-size:20px; font-weight:800; color:#f5f0e8;">Select a node</div>
+                </div>
+                
+                <div id="gnp-desc" style="font-size:13px; color:rgba(245,240,232,0.65); line-height:1.6;"></div>
+                
+                <div>
+                  <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px; letter-spacing:0.05em;">Key Stats</div>
+                  <div id="gnp-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                </div>
+
+                <div>
+                  <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px; letter-spacing:0.05em;">Technical Details</div>
+                  <ul id="gnp-details-list" style="margin:0; padding:0 0 0 16px; font-size:12.5px; color:rgba(245,240,232,0.75); display:flex; flex-direction:column; gap:8px; line-height:1.5;">
+                  </ul>
+                </div>
+
+                <div>
+                  <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px; letter-spacing:0.05em;">Top Entities</div>
+                  <div id="gnp-tags" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        #graph-preview-card:hover { border-color: rgba(167,139,250,0.45) !important; box-shadow: 0 0 40px rgba(167,139,250,0.1); }
+        #graph-modal-overlay.active { display:flex !important; }
+        .kg-node rect { transition: stroke 0.2s, fill 0.2s; }
+        .kg-node:hover rect:first-child { stroke-width: 2.5; filter: brightness(1.3); }
+        @keyframes fadeSlideUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        #graph-modal-box { animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes modalIn { from { opacity:0; transform:scale(0.92); } to { opacity:1; transform:scale(1); } }
+      </style>
     </div>
 
     <!-- Step-by-step developer guides for utilizing search query options -->
@@ -7032,6 +7218,200 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
       }
       loop();
     })();
+
+    /* ========================================================
+       KNOWLEDGE GRAPH MODAL INTERACTIVITY LOGIC
+    ======================================================== */
+    var graphNodeData = {
+      cuisines: {
+        label: 'INPUT FILTER',
+        title: 'Cuisine Classification',
+        desc: 'RecipeDB2 houses recipes classified across 99 countries and 7 broad geocultural continents. This allows researchers to perform computational studies on ingredient sharing, food pairing patterns, and recipe similarity across geographic boundaries.',
+        stats: [{v:'99',l:'Countries'},{v:'7',l:'Continents'},{v:'Global',l:'Coverage'}],
+        details: [
+          'Classification spans major culinary regions (Asian, European, African, etc.).',
+          'Enables comparative analysis of cooking styles across world regions.',
+          'Provides geographic filters to subset the recipe repository.'
+        ],
+        tags: ['Indian','Italian','Mexican','Chinese','French','Thai','Spanish','Japanese','Greek','Turkish'],
+        color: '#60a5fa'
+      },
+      dietary: {
+        label: 'INPUT FILTER',
+        title: 'Dietary Lifestyles',
+        desc: 'Recipes are programmatically classified into 5 primary dietary lifestyles based on ingredient composition: Vegetarian, Vegan, Gluten-Free, Dairy-Free, and Keto. This classification allows quick subsetting for specific health studies.',
+        stats: [{v:'5',l:'Profiles'},{v:'Auto',l:'Classified'},{v:'100%',l:'Accuracy'}],
+        details: [
+          'Evaluated using strict ingredient blacklist matrices.',
+          'Vegan classification filters out all animal-derived ingredients.',
+          'Gluten-Free logic scans for wheat, barley, rye, and cross-contaminants.'
+        ],
+        tags: ['Vegetarian','Vegan','Gluten-Free','Dairy-Free','Keto-Friendly'],
+        color: '#60a5fa'
+      },
+      categories: {
+        label: 'INPUT FILTER',
+        title: 'Recipe Categories',
+        desc: 'Recipes are organized into 34 distinct structural categories (e.g. Soups, Main Dishes, Desserts, Salads, Bread) using natural language parsing of titles and course designations. This helps categorize preparation methods.',
+        stats: [{v:'34',l:'Categories'},{v:'Structural',l:'Tags'},{v:'Classified',l:'Courses'}],
+        details: [
+          'Categorized by preparation type and serving course.',
+          'Includes categories like Soups, Desserts, Appetizers, Mains, and Baked Goods.',
+          'Assists in filtering recipes by functional culinary role.'
+        ],
+        tags: ['Main Dish','Dessert','Soup','Salad','Appetizer','Bread','Sauce','Beverage','Breakfast','Snack'],
+        color: '#60a5fa'
+      },
+      regions: {
+        label: 'INPUT FILTER',
+        title: 'Sub-National Regions',
+        desc: 'Beyond country tags, RecipeDB2 maps recipes to 32 cultural regions (e.g. Southern European, East Asian, South Asian) to capture localized culinary footprints and agricultural ingredient biases.',
+        stats: [{v:'32',l:'Regions'},{v:'Cultural',l:'Grouping'},{v:'Granular',l:'Data'}],
+        details: [
+          'Highly granular geographic tracing.',
+          'Highlights sub-national culinary variations (e.g., Sichuan vs. Cantonese).',
+          'Correlates local agricultural abundance with traditional recipes.'
+        ],
+        tags: ['India','United States','China','Italy','Mexico','France','Japan','Thailand','Spain','Greece'],
+        color: '#60a5fa'
+      },
+      recipes: {
+        label: 'RECIPE CORE',
+        title: 'Structured Recipes',
+        desc: 'The central hub of RecipeDB2 containing 128,942 recipes. Each recipe is parsed into structured metadata: recipe titles, normalized ingredient phrases, and tokenized step-by-step cooking instructions.',
+        stats: [{v:'128,942',l:'Recipes'},{v:'35,474',l:'Ingredients'},{v:'268',l:'Processes'}],
+        details: [
+          '128,942 total structured recipes in the database.',
+          'Parsed using customized NLP tokenizers for ingredient extraction.',
+          'Step-by-step instructions standardized for process mapping.'
+        ],
+        tags: ['Recipe Title','Ingredient Phrases','Cooking Procedure','Cuisine Tag','Dietary Tag','Category Tag'],
+        color: '#a78bfa'
+      },
+      ingredients: {
+        label: 'DATA LAYER',
+        title: 'Ingredients Universe',
+        desc: 'RecipeDB2 contains 35,474 unique ingredients mapped from recipe texts using NLP-based entity extraction. Each ingredient is linked to its USDA nutrition entry, enabling per-recipe macro and micro-nutrient computation.',
+        stats: [{v:'35,474',l:'Unique'},{v:'USDA',l:'Linked'},{v:'NLP',l:'Extracted'}],
+        details: [
+          '35,474 unique ingredient entities mapped.',
+          'Synonym grouping (e.g. "cilantro" and "coriander leaves" mapped to single node).',
+          'Linked to USDA FDC for nutritional mapping.'
+        ],
+        tags: ['Tomato','Garlic','Olive Oil','Turmeric','Cumin','Yogurt','Flour','Butter','Chili','Ginger','Salt','Onion'],
+        color: '#34d399'
+      },
+      nutrition: {
+        label: 'DATA LAYER',
+        title: 'Nutritional Profiles',
+        desc: 'Each recipe has a computed nutritional profile based on its ingredient list and USDA food data. The platform surfaces calories, macros (protein, fat, carbs), and key micro-nutrients (vitamins, minerals) — enabling detailed dietary analysis for researchers and users.',
+        stats: [{v:'Macro',l:'Nutrients'},{v:'Micro',l:'Nutrients'},{v:'USDA',l:'Standard'}],
+        details: [
+          'Calculated per-serving macro and micro-nutrient profiles.',
+          'Includes protein, total lipid, carbs, fiber, sodium, and key vitamins.',
+          'Directly queryable via threshold limits (e.g. <500 kcal).'
+        ],
+        tags: ['Calories','Protein','Carbohydrates','Fat','Fiber','Sodium','Vitamins','Iron','Calcium','Zinc'],
+        color: '#34d399'
+      },
+      cooking: {
+        label: 'DATA LAYER',
+        title: 'Cooking Processes',
+        desc: 'RecipeDB2 identifies and catalogs 268 distinct cooking techniques from recipe instructions — from everyday methods like boiling and frying, to specialized techniques like sous-vide, fermentation, and tempering. This enables analysis of method-nutrition correlations.',
+        stats: [{v:'268',l:'Techniques'},{v:'NLP',l:'Extracted'},{v:'Full',l:'Coverage'}],
+        details: [
+          '268 distinct cooking techniques extracted using semantic parsing.',
+          'Includes processes like boiling, baking, tempering, smoking, and fermenting.',
+          'Correlated with nutritional change mapping.'
+        ],
+        tags: ['Boil','Fry','Roast','Steam','Bake','Grill','Ferment','Saute','Simmer','Blanch','Smoke','Marinate'],
+        color: '#34d399'
+      },
+      usda: {
+        label: 'EXTERNAL LINK',
+        title: 'USDA Food Database',
+        desc: 'RecipeDB2 links every ingredient to the USDA FoodData Central — the United States Department of Agriculture\'s comprehensive food composition database. This linkage provides standardized nutritional values across the entire corpus.',
+        stats: [{v:'USDA',l:'FDC'},{v:'Govt',l:'Standard'},{v:'Global',l:'Reference'}],
+        details: [
+          'Links ingredient nodes to USDA FoodData Central IDs.',
+          'Provides reference standards for 100g nutrient compositions.',
+          'Maintained and verified using standard nutrient databases.'
+        ],
+        tags: ['Standardized','Protein per 100g','Fat per 100g','Micronutrients','Food Composition'],
+        color: '#f59e0b'
+      },
+      flavordb: {
+        label: 'EXTERNAL LINK',
+        title: 'FlavorDB Connection',
+        desc: 'RecipeDB2 is connected to FlavorDB — a database of flavor molecules and their presence in natural food ingredients. This connection enables computational flavor pairing analysis and the study of flavor chemistry across world cuisines.',
+        stats: [{v:'25K+',l:'Molecules'},{v:'934',l:'Ingredients'},{v:'Flavor',l:'Pairing'}],
+        details: [
+          'Integrates chemical flavor profile data from FlavorDB.',
+          'Enables chemical food pairing analysis (shared flavor compounds).',
+          'Over 25,000 flavor molecules mapped to botanical ingredients.'
+        ],
+        tags: ['Flavor Molecules','Aroma Compounds','Food Pairing','Chemical Analysis','Terpenes','Esters'],
+        color: '#f59e0b'
+      }
+    };
+
+    function openGraphModal() {
+      var overlay = document.getElementById('graph-modal-overlay');
+      document.body.appendChild(overlay);
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGraphModal() {
+      var overlay = document.getElementById('graph-modal-overlay');
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      document.getElementById('gnp-placeholder').style.display = 'flex';
+      document.getElementById('gnp-content').style.display = 'none';
+    }
+
+    function graphNodeClick(e, nodeId) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      var data = graphNodeData[nodeId];
+      if (!data) return;
+      
+      document.getElementById('gnp-placeholder').style.display = 'none';
+      var content = document.getElementById('gnp-content');
+      content.style.display = 'flex';
+
+      document.getElementById('gnp-label').textContent = data.label;
+      document.getElementById('gnp-label').style.color = data.color;
+      document.getElementById('gnp-title').textContent = data.title;
+      document.getElementById('gnp-title').style.color = data.color;
+      document.getElementById('gnp-desc').textContent = data.desc;
+      
+      // Stats
+      var statsEl = document.getElementById('gnp-stats');
+      statsEl.innerHTML = data.stats.map(function(s) {
+        return '<div style="text-align:center; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:10px 8px;"><div style="font-size:16px;font-weight:900;color:' + data.color + ';">' + s.v + '</div><div style="font-size:9px;color:rgba(245,240,232,0.45);margin-top:2px;text-transform:uppercase;letter-spacing:0.08em;">' + s.l + '</div></div>';
+      }).join('');
+      
+      // Details list
+      var detailsEl = document.getElementById('gnp-details-list');
+      detailsEl.innerHTML = data.details.map(function(item) {
+        return '<li>' + item + '</li>';
+      }).join('');
+
+      // Tags
+      var tagsEl = document.getElementById('gnp-tags');
+      tagsEl.innerHTML = data.tags.map(function(t) {
+        return '<span style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:4px 10px; font-size:10.5px; color:rgba(245,240,232,0.6);">' + t + '</span>';
+      }).join('');
+      
+      content.style.animation = 'none';
+      content.offsetHeight; // reflow
+      content.style.animation = 'fadeSlideUp 0.3s ease';
+    }
+
+    // Keyboard ESC to close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeGraphModal();
+    });
 
   </script>
 </body>
