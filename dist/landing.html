@@ -3573,7 +3573,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
           <div style="flex:1; display:flex; flex-direction:row; min-height:0; overflow:hidden;">
             <!-- Left Column: SVG Graph -->
             <div style="flex:1.5; min-width:0; padding:24px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.08); min-height:0;">
-              <svg id="knowledge-graph-svg" viewBox="0 0 1120 560" style="width:100%; height:auto; max-height:100%; display:block;" xmlns="http://www.w3.org/2000/svg">
+              <svg id="knowledge-graph-svg" viewBox="0 0 1220 570" style="width:100%; height:auto; max-height:100%; display:block;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <!-- Animated flow gradient for lines -->
                   <linearGradient id="flow-blue-purple" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -3597,121 +3597,125 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <!-- === ANIMATED FLOW LINES === -->
                 <!-- Cuisines → Recipes -->
-                <path d="M 230 76 C 300 76, 330 270, 410 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2s" repeatCount="indefinite"/></path>
+                <path d="M 250 70 C 320 70, 350 270, 430 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2s" repeatCount="indefinite"/></path>
                 <!-- Dietary → Recipes -->
-                <path d="M 230 206 C 300 206, 330 270, 410 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.4s" repeatCount="indefinite"/></path>
+                <path d="M 250 210 C 320 210, 350 270, 430 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.4s" repeatCount="indefinite"/></path>
                 <!-- Categories → Recipes -->
-                <path d="M 230 336 C 300 336, 330 270, 410 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.8s" repeatCount="indefinite"/></path>
+                <path d="M 250 350 C 320 350, 350 270, 430 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.8s" repeatCount="indefinite"/></path>
                 <!-- Regions → Recipes -->
-                <path d="M 230 466 C 300 466, 330 270, 410 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.5" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.2s" repeatCount="indefinite"/></path>
+                <path d="M 250 490 C 320 490, 350 270, 430 270" stroke="url(#flow-blue-purple)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.5" marker-end="url(#arrow-purple)"><animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.2s" repeatCount="indefinite"/></path>
 
                 <!-- Recipes → Ingredients -->
-                <path d="M 670 215 C 730 215, 750 106, 810 106" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.2s" repeatCount="indefinite"/></path>
+                <path d="M 710 210 C 780 210, 810 100, 890 100" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.2s" repeatCount="indefinite"/></path>
                 <!-- Recipes → Nutrition -->
-                <path d="M 670 270 C 730 270, 750 273, 810 273" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.6s" repeatCount="indefinite"/></path>
+                <path d="M 710 270 C 780 270, 810 275, 890 275" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="2.6s" repeatCount="indefinite"/></path>
                 <!-- Recipes → Cooking -->
-                <path d="M 670 325 C 730 325, 750 426, 810 426" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="3s" repeatCount="indefinite"/></path>
+                <path d="M 710 330 C 780 330, 810 440, 890 440" stroke="url(#flow-purple-green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-green)"><animate attributeName="stroke-dashoffset" from="80" to="0" dur="3s" repeatCount="indefinite"/></path>
 
                 <!-- Nutrition → USDA -->
-                <path d="M 1020 273 C 1025 273, 1025 273, 1035 273" stroke="url(#flow-green-amber)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2s" repeatCount="indefinite"/></path>
+                <path d="M 1120 275 C 1125 275, 1125 272, 1140 272" stroke="url(#flow-green-amber)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.7" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2s" repeatCount="indefinite"/></path>
                 <!-- Nutrition → FlavorDB -->
-                <path d="M 1020 273 C 1025 273, 1025 361, 1035 361" stroke="url(#flow-green-amber)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2.5s" repeatCount="indefinite"/></path>
+                <path d="M 1120 275 C 1125 275, 1125 364, 1140 364" stroke="url(#flow-green-amber)" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.6" marker-end="url(#arrow-amber)"><animate attributeName="stroke-dashoffset" from="60" to="0" dur="2.5s" repeatCount="indefinite"/></path>
 
                 <!-- === LAYER 1: INPUT NODES (Blue) === -->
                 <!-- Cuisines Node -->
                 <g class="kg-node" data-node="cuisines" style="cursor:pointer" onclick="graphNodeClick(event,'cuisines')">
-                  <rect x="20" y="40" width="210" height="72" rx="14" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
-                  <rect x="20" y="40" width="210" height="72" rx="14" fill="transparent" stroke="rgba(96,165,250,0)" stroke-width="3" class="kg-hover-ring"/>
-                  <text x="125" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#60a5fa">Cuisines</text>
-                  <text x="125" y="90" text-anchor="middle" font-size="12" fill="rgba(96,165,250,0.75)">99 Countries · 7 Continents</text>
-                  <circle cx="230" cy="76" r="5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/></circle>
+                  <rect x="20" y="30" width="230" height="80" rx="16" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <rect x="20" y="30" width="230" height="80" rx="16" fill="transparent" stroke="rgba(96,165,250,0)" stroke-width="3" class="kg-hover-ring"/>
+                  <text x="135" y="62" text-anchor="middle" font-size="16" font-weight="700" fill="#60a5fa">Cuisines</text>
+                  <text x="135" y="85" text-anchor="middle" font-size="13" fill="rgba(96,165,250,0.75)">99 Countries · 7 Continents</text>
+                  <circle cx="250" cy="70" r="5.5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3.5;6.5;3.5" dur="2s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- Dietary Styles Node -->
                 <g class="kg-node" data-node="dietary" style="cursor:pointer" onclick="graphNodeClick(event,'dietary')">
-                  <rect x="20" y="170" width="210" height="72" rx="14" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
-                  <text x="125" y="200" text-anchor="middle" font-size="15" font-weight="700" fill="#60a5fa">Dietary Styles</text>
-                  <text x="125" y="220" text-anchor="middle" font-size="12" fill="rgba(96,165,250,0.75)">Vegetarian · Vegan · Keto…</text>
-                  <circle cx="230" cy="206" r="5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;6;3" dur="2.4s" repeatCount="indefinite"/></circle>
+                  <rect x="20" y="170" width="230" height="80" rx="16" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <text x="135" y="202" text-anchor="middle" font-size="16" font-weight="700" fill="#60a5fa">Dietary Styles</text>
+                  <text x="135" y="225" text-anchor="middle" font-size="13" fill="rgba(96,165,250,0.75)">Vegetarian · Vegan · Keto…</text>
+                  <circle cx="250" cy="210" r="5.5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3.5;6.5;3.5" dur="2.4s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- Categories Node -->
                 <g class="kg-node" data-node="categories" style="cursor:pointer" onclick="graphNodeClick(event,'categories')">
-                  <rect x="20" y="300" width="210" height="72" rx="14" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
-                  <text x="125" y="330" text-anchor="middle" font-size="15" font-weight="700" fill="#60a5fa">Categories</text>
-                  <text x="125" y="350" text-anchor="middle" font-size="12" fill="rgba(96,165,250,0.75)">34 Distinct Meal Types</text>
-                  <circle cx="230" cy="336" r="5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3;6;3" dur="2.8s" repeatCount="indefinite"/></circle>
+                  <rect x="20" y="310" width="230" height="80" rx="16" fill="rgba(59,130,246,0.12)" stroke="rgba(96,165,250,0.5)" stroke-width="1.5"/>
+                  <text x="135" y="342" text-anchor="middle" font-size="16" font-weight="700" fill="#60a5fa">Categories</text>
+                  <text x="135" y="365" text-anchor="middle" font-size="13" fill="rgba(96,165,250,0.75)">34 Distinct Meal Types</text>
+                  <circle cx="250" cy="350" r="5.5" fill="#60a5fa" opacity="0.8"><animate attributeName="r" values="3.5;6.5;3.5" dur="2.8s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- Regions Node -->
                 <g class="kg-node" data-node="regions" style="cursor:pointer" onclick="graphNodeClick(event,'regions')">
-                  <rect x="20" y="430" width="210" height="72" rx="14" fill="rgba(59,130,246,0.08)" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
-                  <text x="125" y="460" text-anchor="middle" font-size="15" font-weight="700" fill="rgba(96,165,250,0.8)">Geo Regions</text>
-                  <text x="125" y="480" text-anchor="middle" font-size="12" fill="rgba(96,165,250,0.55)">32 Cultural Regions</text>
-                  <circle cx="230" cy="466" r="5" fill="#60a5fa" opacity="0.5"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/></circle>
+                  <rect x="20" y="450" width="230" height="80" rx="16" fill="rgba(59,130,246,0.08)" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
+                  <text x="135" y="482" text-anchor="middle" font-size="16" font-weight="700" fill="rgba(96,165,250,0.8)">Geo Regions</text>
+                  <text x="135" y="505" text-anchor="middle" font-size="13" fill="rgba(96,165,250,0.55)">32 Cultural Regions</text>
+                  <circle cx="250" cy="490" r="5.5" fill="#60a5fa" opacity="0.5"><animate attributeName="r" values="3.5;5.5;3.5" dur="3s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- === LAYER 2: CORE NODE (Purple) === -->
                 <g class="kg-node" data-node="recipes" style="cursor:pointer" onclick="graphNodeClick(event,'recipes')">
-                  <rect x="410" y="125" width="260" height="290" rx="20" fill="rgba(139,92,246,0.15)" stroke="rgba(167,139,250,0.6)" stroke-width="2"/>
+                  <rect x="430" y="110" width="280" height="320" rx="24" fill="rgba(139,92,246,0.15)" stroke="rgba(167,139,250,0.6)" stroke-width="2"/>
                   <!-- Pulsing outer ring -->
-                  <rect x="403" y="118" width="274" height="304" rx="23" fill="none" stroke="rgba(167,139,250,0.2)" stroke-width="2"><animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/></rect>
-                  <text x="540" y="174" text-anchor="middle" font-size="26" font-weight="900" fill="#a78bfa">128,942</text>
-                  <text x="540" y="198" text-anchor="middle" font-size="15" font-weight="700" fill="rgba(167,139,250,0.85)">Recipes</text>
+                  <rect x="423" y="103" width="294" height="334" rx="27" fill="none" stroke="rgba(167,139,250,0.2)" stroke-width="2"><animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/></rect>
+                  <text x="570" y="160" text-anchor="middle" font-size="30" font-weight="900" fill="#a78bfa">128,942</text>
+                  <text x="570" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="rgba(167,139,250,0.85)">Recipes</text>
                   
-                  <rect x="435" y="222" width="210" height="36" rx="8" fill="rgba(0,0,0,0.35)"/>
-                  <text x="540" y="244" text-anchor="middle" font-size="13" fill="rgba(245,240,232,0.75)">Recipe Title</text>
+                  <rect x="460" y="210" width="220" height="40" rx="10" fill="rgba(0,0,0,0.35)"/>
+                  <text x="570" y="234" text-anchor="middle" font-size="14" fill="rgba(245,240,232,0.75)">Recipe Title</text>
                   
-                  <rect x="435" y="268" width="210" height="36" rx="8" fill="rgba(0,0,0,0.35)"/>
-                  <text x="540" y="290" text-anchor="middle" font-size="13" fill="rgba(245,240,232,0.75)">Ingredient Phrases</text>
+                  <rect x="460" y="265" width="220" height="40" rx="10" fill="rgba(0,0,0,0.35)"/>
+                  <text x="570" y="289" text-anchor="middle" font-size="14" fill="rgba(245,240,232,0.75)">Ingredient Phrases</text>
                   
-                  <rect x="435" y="314" width="210" height="36" rx="8" fill="rgba(0,0,0,0.35)"/>
-                  <text x="540" y="336" text-anchor="middle" font-size="13" fill="rgba(245,240,232,0.75)">Cooking Procedure</text>
+                  <rect x="460" y="320" width="220" height="40" rx="10" fill="rgba(0,0,0,0.35)"/>
+                  <text x="570" y="344" text-anchor="middle" font-size="14" fill="rgba(245,240,232,0.75)">Cooking Procedure</text>
                   
-                  <circle cx="670" cy="270" r="6" fill="#a78bfa"><animate attributeName="r" values="4;8;4" dur="1.8s" repeatCount="indefinite"/></circle>
+                  <circle cx="710" cy="270" r="6.5" fill="#a78bfa"><animate attributeName="r" values="4.5;8.5;4.5" dur="1.8s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- === LAYER 3: OUTPUT NODES (Green) === -->
                 <!-- Ingredients Node -->
                 <g class="kg-node" data-node="ingredients" style="cursor:pointer" onclick="graphNodeClick(event,'ingredients')">
-                  <rect x="810" y="70" width="210" height="72" rx="14" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
-                  <text x="915" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399">Ingredients</text>
-                  <text x="915" y="120" text-anchor="middle" font-size="12" fill="rgba(52,211,153,0.7)">35,474 Unique Items</text>
-                  <circle cx="1020" cy="106" r="5" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3;6;3" dur="2.1s" repeatCount="indefinite"/></circle>
+                  <rect x="890" y="60" width="230" height="80" rx="16" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+                  <text x="1005" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">Ingredients</text>
+                  <text x="1005" y="115" text-anchor="middle" font-size="13" fill="rgba(52,211,153,0.7)">35,474 Unique Items</text>
+                  <circle cx="1120" cy="100" r="5.5" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3.5;6.5;3.5" dur="2.1s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- Nutrition Node -->
                 <g class="kg-node" data-node="nutrition" style="cursor:pointer" onclick="graphNodeClick(event,'nutrition')">
-                  <rect x="810" y="224" width="210" height="98" rx="14" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
-                  <text x="915" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399">Nutrition Profile</text>
-                  <text x="915" y="276" text-anchor="middle" font-size="12" fill="rgba(52,211,153,0.7)">Macro · Micro nutrients</text>
-                  <text x="915" y="296" text-anchor="middle" font-size="11" fill="rgba(52,211,153,0.5)">Calories · Proteins · Fats</text>
-                  <circle cx="1020" cy="273" r="5" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3;6;3" dur="2.5s" repeatCount="indefinite"/></circle>
+                  <rect x="890" y="220" width="230" height="110" rx="16" fill="rgba(16,185,129,0.12)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+                  <text x="1005" y="252" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">Nutrition Profile</text>
+                  <text x="1005" y="275" text-anchor="middle" font-size="13" fill="rgba(52,211,153,0.7)">Macro · Micro nutrients</text>
+                  <text x="1005" y="298" text-anchor="middle" font-size="12" fill="rgba(52,211,153,0.5)">Calories · Proteins · Fats</text>
+                  <circle cx="1120" cy="275" r="5.5" fill="#34d399" opacity="0.8"><animate attributeName="r" values="3.5;6.5;3.5" dur="2.5s" repeatCount="indefinite"/></circle>
                 </g>
 
                 <!-- Cooking Processes Node -->
                 <g class="kg-node" data-node="cooking" style="cursor:pointer" onclick="graphNodeClick(event,'cooking')">
-                  <rect x="810" y="390" width="210" height="72" rx="14" fill="rgba(16,185,129,0.08)" stroke="rgba(52,211,153,0.35)" stroke-width="1.5"/>
-                  <text x="915" y="420" text-anchor="middle" font-size="15" font-weight="700" fill="rgba(52,211,153,0.8)">Cooking Processes</text>
-                  <text x="915" y="440" text-anchor="middle" font-size="12" fill="rgba(52,211,153,0.55)">268 Techniques</text>
+                  <rect x="890" y="400" width="230" height="80" rx="16" fill="rgba(16,185,129,0.08)" stroke="rgba(52,211,153,0.35)" stroke-width="1.5"/>
+                  <text x="1005" y="432" text-anchor="middle" font-size="16" font-weight="700" fill="rgba(52,211,153,0.8)">Cooking Processes</text>
+                  <text x="1005" y="455" text-anchor="middle" font-size="13" fill="rgba(52,211,153,0.55)">268 Techniques</text>
                 </g>
 
                 <!-- === LAYER 4: EXTERNAL LINKS (Amber) === -->
                 <!-- USDA Node -->
                 <g class="kg-node" data-node="usda" style="cursor:pointer" onclick="graphNodeClick(event,'usda')">
-                  <rect x="1035" y="248" width="55" height="50" rx="10" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.5)" stroke-width="1.5"/>
-                  <text x="1062.5" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="#f59e0b">USDA</text>
+                  <rect x="1140" y="244" width="65" height="56" rx="12" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.5)" stroke-width="1.5"/>
+                  <text x="1172.5" y="278" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f59e0b">USDA</text>
                 </g>
                 <!-- FlavorDB Node -->
                 <g class="kg-node" data-node="flavordb" style="cursor:pointer" onclick="graphNodeClick(event,'flavordb')">
-                  <rect x="1035" y="336" width="55" height="50" rx="10" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.35)" stroke-width="1.5"/>
-                  <text x="1062.5" y="360" text-anchor="middle" font-size="10.5" font-weight="700" fill="rgba(245,158,11,0.8)">Flavor</text>
-                  <text x="1062.5" y="373" text-anchor="middle" font-size="10.5" font-weight="700" fill="rgba(245,158,11,0.8)">DB</text>
+                  <rect x="1140" y="336" width="65" height="56" rx="12" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.35)" stroke-width="1.5"/>
+                  <text x="1172.5" y="362" text-anchor="middle" font-size="11.5" font-weight="700" fill="rgba(245,158,11,0.8)">Flavor</text>
+                  <text x="1172.5" y="377" text-anchor="middle" font-size="11.5" font-weight="700" fill="rgba(245,158,11,0.8)">DB</text>
                 </g>
 
                 <!-- === LAYER LABELS === -->
-                <text x="125" y="26" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(96,165,250,0.55)" letter-spacing="0.1em">INPUT FILTERS</text>
-                <text x="540" y="105" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(167,139,250,0.55)" letter-spacing="0.1em">RECIPE CORE</text>
+                <text x="135" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="rgba(96,165,250,0.55)" letter-spacing="0.1em">INPUT FILTERS</text>
+                <text x="570" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="rgba(167,139,250,0.55)" letter-spacing="0.1em">RECIPE CORE</text>
+                <text x="1005" y="45" text-anchor="middle" font-size="12.5" font-weight="700" fill="rgba(52,211,153,0.55)" letter-spacing="0.1em">DATA LAYERS</text>
+                <text x="1172.5" y="222" text-anchor="middle" font-size="12.5" font-weight="700" fill="rgba(245,158,11,0.55)" letter-spacing="0.1em">LINKED</text>
+              </svg>
+            </div>ont-size="11" font-weight="700" fill="rgba(167,139,250,0.55)" letter-spacing="0.1em">RECIPE CORE</text>
                 <text x="915" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(52,211,153,0.55)" letter-spacing="0.1em">DATA LAYERS</text>
                 <text x="1062.5" y="228" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(245,158,11,0.55)" letter-spacing="0.1em">LINKED</text>
               </svg>
