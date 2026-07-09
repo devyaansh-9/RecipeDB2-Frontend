@@ -2276,13 +2276,13 @@
     .heatmap-header:nth-child(7n+1) { text-align: left; justify-content: flex-start; padding-left: 8px; color: var(--text-1); }
     .heatmap-cell { padding: 8px 4px; text-align: center; font-size: 0.8rem; font-weight: 600; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; }
     .heatmap-cell:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 10; position: relative; }
-    #portal-section .gastronomy-table { width:100%; border-collapse:collapse; font-size:.9rem; }
+    #portal-section .gastronomy-table { width:100%; border-collapse:collapse; font-size:1.05rem; }
     #portal-section .gastronomy-table th {
-      padding:14px 16px; font-size:.8rem; font-weight:700; text-transform:uppercase;
+      padding:14px 16px; font-size:.95rem; font-weight:800; text-transform:uppercase;
       color:var(--amber); border-bottom:2px solid var(--border);
     }
-    #portal-section .gastronomy-table td { padding:12px 16px; border-bottom:1px solid var(--border); color:var(--text-2); }
-    #portal-section .gastronomy-table tbody tr:hover td { background:rgba(143,188,143,.06); color:var(--text-1); }
+    #portal-section .gastronomy-table td { padding:14px 16px; border-bottom:1px solid var(--border); color:var(--text-1); }
+    #portal-section .gastronomy-table tbody tr:hover td { background:rgba(143,188,143,.12); color:var(--text-1); }
 
     /* Modals & Toasts (No conflict) */
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:9000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
@@ -2624,7 +2624,7 @@
         gap: 1.25rem !important;
       }
 #explorer-pane #results-table-title {
-        font-size: 1.6rem !important;
+        font-size: 2.2rem !important;
         font-weight: 900 !important;
         letter-spacing: -0.03em !important;
         margin: 0 !important;
@@ -2776,11 +2776,11 @@
 .table-responsive{width:100%;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--border-hover) transparent;border-top:1px solid var(--border-color);margin-top:1rem}
 .table-responsive::-webkit-scrollbar{height:5px}
 .table-responsive::-webkit-scrollbar-thumb{background:var(--border-color)}
-.gastronomy-table{width:100%;border-collapse:collapse;text-align:left;font-size:.85rem}
-.gastronomy-table th{background:#0f172a66;padding:1rem 1.25rem;font-weight:700;color:var(--text-primary);border-bottom:1px solid var(--border-color);-webkit-user-select:none;user-select:none;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px}
+.gastronomy-table{width:100%;border-collapse:collapse;text-align:left;font-size:1.05rem}
+.gastronomy-table th{background:#0f172a66;padding:1.15rem 1.25rem;font-weight:800;color:#f3f4f6;border-bottom:1px solid var(--border-color);-webkit-user-select:none;user-select:none;font-size:.95rem;text-transform:uppercase;letter-spacing:.5px}
 .gastronomy-table th.sortable{cursor:pointer;transition:color var(--transition-fast)}
 .gastronomy-table th.sortable:hover{color:var(--accent-cyan);background:#06b6d408}
-.gastronomy-table td{padding:.9rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text-secondary)}
+.gastronomy-table td{padding:1.1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.06);color:#e5e7eb;font-weight:500;}
 .gastronomy-table tr{transition:background var(--transition-fast)}
 .gastronomy-table tbody tr:hover{background:#ffffff05}
 .gastronomy-table tbody tr:last-child td{border-bottom:none}
@@ -2789,15 +2789,15 @@
 .table-footer-controls{background:#0f172a66;padding:.85rem 1.5rem;border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:1rem}
 .table-footer-controls{flex-direction:row;justify-content:space-between;align-items:center}
 .rows-per-page{display:flex;align-items:center;gap:.5rem}
-.footer-label{font-size:.75rem;color:var(--text-muted)}
-.footer-select{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);padding:.35rem .5rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.75rem;outline:none}
+.footer-label{font-size:.9rem;color:var(--text-muted);font-weight:600}
+.footer-select{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);padding:.4rem .6rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.9rem;font-weight:600;outline:none}
 .table-pagination-nav{display:flex;align-items:center;flex-wrap:wrap;gap:1.25rem}
 .pagination-arrows{display:flex;gap:.25rem}
-.btn-arrow-nav{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);width:30px;height:30px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;font-weight:700;transition:all var(--transition-fast)}
+.btn-arrow-nav{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);width:34px;height:34px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;font-weight:700;transition:all var(--transition-fast)}
 .btn-arrow-nav:hover:not(:disabled){border-color:var(--accent-cyan);color:var(--accent-cyan);background:#06b6d40d}
 .btn-arrow-nav:disabled{opacity:.35;cursor:not-allowed}
 .goto-box{display:flex;align-items:center;gap:.5rem}
-.goto-input{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);width:50px;padding:.35rem;border-radius:var(--radius-sm);font-size:.75rem;text-align:center;outline:none}
+.goto-input{background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);width:65px;padding:.4rem;border-radius:var(--radius-sm);font-size:.9rem;font-weight:600;text-align:center;outline:none}
 .params-grid{display:grid;grid-template-columns:1fr;gap:1rem}
 .params-grid{grid-template-columns:repeat(2,1fr)}
 .param-input-group{display:flex;flex-direction:column;gap:.35rem}
