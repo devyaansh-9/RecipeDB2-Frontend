@@ -976,7 +976,7 @@
 
     /* Grid columns styling for database metric counters */
     #stats-section {
-      padding: 120px 48px;
+      padding: 60px 48px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -1066,7 +1066,7 @@
 
     /* Alternating image-text layouts showcasing what users can achieve */
     #story-section {
-      padding: 0 48px 80px;
+      padding: 0 48px 60px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -1272,7 +1272,7 @@
 
     /* Interactive grid demonstrating live database query capabilities */
     #live-section {
-      padding: 60px 48px 120px;
+      padding: 60px 48px 60px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -1591,7 +1591,7 @@
 
     /* Highlight cards detailing the platform's core developer features */
     #features-section {
-      padding: 120px 48px;
+      padding: 60px 48px 40px;
       border-top: 1px solid var(--border);
       background: linear-gradient(to bottom, var(--near-black), var(--black));
     }
@@ -1681,7 +1681,7 @@
 
     /* Visual closing section to encourage trying out the API */
     #cta-section {
-      padding: 160px 48px;
+      padding: 80px 48px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -1715,7 +1715,7 @@
     /* Footer section with quick links, legal credits and copyrights */
     footer {
       border-top: 1px solid var(--border);
-      padding: 64px 48px 40px;
+      padding: 32px 48px 40px;
     }
 
     .footer-grid {
@@ -1724,7 +1724,7 @@
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1fr;
       gap: 48px;
-      margin-bottom: 64px;
+      margin-bottom: 12px;
     }
 
     .footer-brand p {
@@ -1756,12 +1756,15 @@
     .footer-col a:hover {
       color: var(--amber);
     }
+    .footer-col a svg {
+      pointer-events: none;
+    }
 
     .footer-bottom {
       max-width: 1400px;
       margin: 0 auto;
       border-top: 1px solid var(--border);
-      padding-top: 32px;
+      padding-top: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -2194,7 +2197,7 @@
     #portal-section .p-inner {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 80px 48px 80px;
+      padding: 40px 48px 20px;
     }
     #portal-section .p-header {
       text-align: center;
@@ -2203,7 +2206,7 @@
     .ptabs {
       display: flex; gap: 6px; background: var(--surface);
       border: 1px solid var(--border); border-radius: 14px;
-      padding: 8px; margin-bottom: 36px; flex-wrap: wrap; justify-content: center;
+      padding: 8px; margin-bottom: 16px; flex-wrap: wrap; justify-content: center;
     }
     .ptab {
       display: inline-flex; align-items: center; gap: 8px;
@@ -2226,7 +2229,7 @@
       color: var(--text-1) !important;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(143, 188, 143, 0.3) !important;
       border-radius: 16px;
       box-shadow: 0 8px 36px rgba(0,0,0,.4);
       padding: 1.5rem;
@@ -2360,7 +2363,7 @@
       grid-column: auto !important;
     }
     #explorer-pane .glass-panel.search-by-container {
-      margin-bottom: 2rem !important;
+      margin-bottom: 0.75rem !important;
     }
     .featured-box-tag { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--amber); letter-spacing: 0.15em; margin-bottom: 0.75rem; }
     .featured-box-title { font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1.1; }
@@ -2467,8 +2470,8 @@
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        padding: 3rem 0 !important;
-        margin-top: 1.5rem !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
       }
 #explorer-pane .search-by-header {
         font-size: 2.2rem !important;
@@ -2617,11 +2620,7 @@
         background: #f4f4f5 !important;
       }
 #explorer-pane .recipe-results-panel {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        margin-top: 3rem !important;
+        margin-top: 0.75rem !important;
       }
 #explorer-pane .table-responsive {
         border: none !important;
@@ -4586,7 +4585,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
         </div>
 
         <!-- Grid list of results returned from the current query -->
-        <div class="glass-panel search-by-container recipe-results-panel" style="margin-top: 2rem;">
+        <div class="glass-panel search-by-container recipe-results-panel">
           <div class="table-header-row" style="padding-bottom: 1.5rem;">
             <h3 class="search-by-header" id="results-table-title" style="margin-bottom:0;">Showing All Recipes</h3>
 
@@ -6734,9 +6733,41 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
       </div>
       <div class="footer-col">
         <h5>Institute</h5>
-        <a href="https://iiitd.ac.in" target="_blank">IIIT Delhi</a>
-        <a href="https://iiitd.ac.in/bagler" target="_blank">Prof. Ganesh Bagler</a>
-        <a href="https://www.foodoscope.com" target="_blank">Foodoscope API</a>
+        <a href="https://iiitd.ac.in" target="_blank" style="display:flex; align-items:center;">
+          <svg width="34" height="17" viewBox="0 0 60 30" style="margin-right: 8px;">
+            <rect x="0" y="2" width="6" height="26" fill="#9d9fa2"/>
+            <rect x="10" y="2" width="6" height="26" fill="#7c7e81"/>
+            <rect x="20" y="2" width="6" height="26" fill="#5b5d60"/>
+            <path d="M 30 2 L 44 2 L 44 8 L 36 8 L 36 28 L 30 28 Z" fill="#3a3c3f"/>
+            <path d="M 44 2 C 62 2, 62 28, 44 28 L 36 28 L 36 22 L 44 22 C 52 22, 52 8, 44 8 Z" fill="#33A59D"/>
+          </svg>
+          IIIT Delhi
+        </a>
+        <a href="https://in.linkedin.com/in/ganeshbagler" target="_blank" style="display:flex; align-items:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right: 8px;">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill="#0077b5"/>
+          </svg>
+          Prof. Ganesh Bagler
+        </a>
+        <a href="https://www.foodoscope.com" target="_blank" style="display:flex; align-items:center;">
+          <svg width="22" height="22" viewBox="0 0 100 100" style="margin-right: 8px;">
+            <g stroke="#E78314" stroke-linecap="round" fill="none">
+              <path d="M 52 17 L 82 47" stroke-width="6"/>
+              <path d="M 18 53 L 48 83" stroke-width="6"/>
+              <path d="M 48 17 L 30 35" stroke-width="6"/>
+              <path d="M 52 83 L 70 65" stroke-width="6"/>
+              <path d="M 66 61 L 74 69" stroke-width="5"/>
+              <path d="M 66 61 L 78 49" stroke-width="3"/>
+              <path d="M 70 65 L 82 53" stroke-width="3"/>
+              <path d="M 74 69 L 86 57" stroke-width="3"/>
+            </g>
+            <ellipse cx="20" cy="45" rx="14" ry="8" transform="rotate(-45 20 45)" fill="#E78314"/>
+            <circle cx="50" cy="50" r="16" fill="#00C985"/>
+            <circle cx="50" cy="50" r="9" fill="#2C2C2C"/>
+            <circle cx="53" cy="47" r="3.5" fill="#FFFFFF"/>
+          </svg>
+          Foodoscope
+        </a>
       </div>
     </div>
     <div class="footer-bottom">
