@@ -1460,6 +1460,7 @@
         display: flex !important;
         align-items: center !important;
         transition: all 0.25s ease !important;
+        margin-top: 0.9rem !important;
       }
 
       #explorer-pane .table-header-row .search-bar:focus-within {
@@ -2008,7 +2009,7 @@
         </div>
 
         <!-- Multi-mode query builder for narrowing down the recipe catalog -->
-        <div class="glass-panel search-by-container">
+        <div class="glass-panel search-by-container" style="padding-bottom: 2.5rem !important; position: relative; z-index: 50;">
           <h3 class="search-by-header">Search By</h3>
 
           <!-- Switch query criteria: Cuisine, Ingredients, Category, Nutrition, or Advanced -->
@@ -2190,15 +2191,11 @@
                     style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
                     <option value="">-- Any Category --</option>
                     <option value="vegan">Vegan 🌱</option>
-                    <option value="veg">Vegetarian 🥦</option>
-                    <option value="dairy">Dairy 🥛</option>
-                    <option value="meat">Meat 🥩</option>
-                    <option value="seafood">Seafood 🐟</option>
-                    <option value="chicken">Chicken 🍗</option>
-                    <option value="egg">Egg 🥚</option>
-                    <option value="dessert">Dessert 🍰</option>
-                    <option value="nuts">Nuts 🥜</option>
-                    <option value="gluten">Gluten 🌾</option>
+                    <option value="lacto-veg">Lacto-Veg 🧀</option>
+                    <option value="ovo-veg">Ovo-Veg 🥚</option>
+                    <option value="lacto-ovo-veg">Lacto-Ovo-Veg 🥗</option>
+                    <option value="pescetarian">Pescetarian 🐟</option>
+                    <option value="omnivore">Omnivore 🥩</option>
                   </select>
                 </div>
                 <div class="param-input-group">
@@ -2206,13 +2203,12 @@
                   <select class="param-field" id="search-cat-notused"
                     style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
                     <option value="">-- None Excluded --</option>
-                    <option value="nuts">Nuts 🥜</option>
-                    <option value="gluten">Gluten 🌾</option>
-                    <option value="dairy">Dairy 🥛</option>
-                    <option value="meat">Meat 🥩</option>
-                    <option value="seafood">Seafood 🐟</option>
-                    <option value="egg">Egg 🥚</option>
-                    <option value="sugar">Sugar 🍬</option>
+                    <option value="vegan">Vegan 🌱</option>
+                    <option value="lacto-veg">Lacto-Veg 🧀</option>
+                    <option value="ovo-veg">Ovo-Veg 🥚</option>
+                    <option value="lacto-ovo-veg">Lacto-Ovo-Veg 🥗</option>
+                    <option value="pescetarian">Pescetarian 🐟</option>
+                    <option value="omnivore">Omnivore 🥩</option>
                   </select>
                 </div>
               </div>
@@ -2487,7 +2483,7 @@
           </div>
 
           <!-- Search dispatch trigger that executes the structured query -->
-          <button class="btn-action-panel" id="btn-submit-search" style="max-width: 200px; margin: 1.5rem auto 0 auto;">
+          <button class="btn-action-panel" id="btn-submit-search" style="max-width: 200px; margin: 2rem auto 0 auto;">
             Submit Search
           </button>
         </div>
@@ -5145,6 +5141,356 @@
     <span id="val-slide-fat"></span>
     <div id="planner-results-container"></div>
   </div>
+  <!-- Tag Autocomplete System -->
+  <style>
+    /* Fix for CSS animation creating a lower stacking context than the submit button */
+    .search-tab-pane.active {
+      position: relative;
+      z-index: 10;
+    }
+
+    .tag-input-container {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+      border-radius: 8px; min-height: 56px; padding: 6px 14px;
+      cursor: text; transition: all 0.2s ease; position: relative; width: 100%;
+      z-index: 10;
+    }
+    .tag-input-container:focus-within {
+      border-color: var(--amber); box-shadow: 0 0 0 3px rgba(143,188,143,0.15);
+      z-index: 20;
+    }
+    .tag-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: rgba(143,188,143,0.15); border: 1px solid rgba(143,188,143,0.3);
+      color: var(--amber); font-size: 0.85rem; font-weight: 600;
+      padding: 4px 8px; border-radius: 6px; white-space: nowrap;
+    }
+    .tag-chip-remove {
+      cursor: pointer; opacity: 0.7; font-size: 1.15rem; font-weight: 700; line-height: 1; padding: 0 2px;
+    }
+    .tag-chip-remove:hover { opacity: 1; color: #ef4444; }
+    .tag-input-field {
+      flex: 1; min-width: 80px; background: transparent !important; border: none !important;
+      outline: none !important; color: var(--text-1) !important; font-size: 0.95rem !important;
+      font-weight: 500 !important; height: 36px !important; padding: 0 !important; box-shadow: none !important;
+    }
+    .tag-input-field::placeholder { color: rgba(255,255,255,0.3); }
+    .autocomplete-dropdown {
+      position: absolute;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      max-height: 260px; overflow-y: auto; z-index: 999999;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6); display: none;
+      scrollbar-width: thin; scrollbar-color: #5a8a5a rgba(0,0,0,0.2);
+    }
+    .autocomplete-dropdown::-webkit-scrollbar { width: 8px; background-color: rgba(0,0,0,0.2); border-radius: 8px; }
+    .autocomplete-dropdown::-webkit-scrollbar-track { background-color: rgba(0,0,0,0.2); border-radius: 8px; }
+    .autocomplete-dropdown::-webkit-scrollbar-thumb { background-color: #5a8a5a; border-radius: 8px; border: 2px solid rgba(38,58,35,0.95); }
+    .autocomplete-dropdown::-webkit-scrollbar-thumb:hover { background-color: #71a971; }
+    .autocomplete-option {
+      padding: 10px 14px; cursor: pointer; color: var(--text-2); font-size: 0.9rem; font-weight: 500;
+    }
+    .autocomplete-option:hover { background: rgba(255,255,255,0.05); color: var(--text-1); }
+    .autocomplete-option.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; font-style: italic; }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const INGS = ["Garlic","Ginger","Cumin","Cayenne","Basil","Tomato","Lemon","Lime","Olive Oil","Butter","Paneer","Yogurt","Lentils","Soy Sauce","Chicken","Parmesan","Onion","Potato","Carrot","Cilantro","Beef","Pork","Fish","Egg","Milk","Cheese","Rice","Flour","Sugar","Cinnamon","Bell Pepper","Mushroom","Spinach","Broccoli","Mustard","Oregano","Pepper","Salt","Coconut Milk","Coriander","Turmeric","Cardamom","Cloves","Honey","Vinegar","Parsley","Rosemary","Thyme","Mint","Shrimp","Tofu","Olive","Apple","Banana","Orange","Strawberry","Blueberry","Bacon","Ham","Turkey","Lamb","Sausage","Salmon","Tuna","Cod","Crab","Lobster","Cream","Sour Cream","Mayonnaise","Vanilla","Chocolate","Cocoa","Peanuts","Almonds","Walnuts","Cashews","Pecans","Oats","Quinoa","Barley","Corn","Peas","Green Beans","Celery","Cucumber","Zucchini","Eggplant","Cabbage","Lettuce","Kale","Avocado","Asparagus","Brussels Sprouts","Sweet Potato","Pumpkin","Squash","Paprika","Chili Powder","Fennel","Dill","Sage","Nutmeg","Sesame Oil","Coconut Oil","Baking Powder","Baking Soda","Cornstarch","Tomato Paste","Hot Sauce","Ketchup","BBQ Sauce","Worcestershire Sauce","Maple Syrup","Brown Sugar","Wine","Beer","Yeast","Pesto","Almond Milk","Soy Milk","Ghee","Tamarind","Star Anise","Bay Leaf","Mace","Asafoetida","Fenugreek","Curry Leaves","Kashmiri Chili","Amchur","Saffron","Pistachios","Hazelnuts","Pine Nuts","Sunflower Seeds","Pumpkin Seeds","Sesame Seeds","Flaxseed","Chia Seeds","Tahini","Miso","Fish Sauce","Oyster Sauce","Hoisin Sauce","Sriracha","Chili Flakes","White Pepper","Curry Powder","Garam Masala","Smoked Paprika","Onion Powder","Garlic Powder","Mixed Herbs","Dried Thyme","Dried Basil","Dried Oregano"];
+      const MAX = 2;
+      const PAIRS = [['search-ing-used', 'search-ing-notused'], ['adv-ing-used', 'adv-ing-notused']];
+
+      function wire(selId, compId) {
+        const sel = document.getElementById(selId);
+        if (!sel || sel.hasAttribute('data-wired')) return;
+        sel.setAttribute('data-wired', 'true');
+        sel.style.setProperty('display', 'none', 'important');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tag-input-container';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'tag-input-field';
+        input.placeholder = sel.options[0].text;
+        input.autocomplete = 'off';
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'autocomplete-dropdown';
+
+        wrapper.appendChild(input);
+        document.body.appendChild(dropdown);
+        sel.parentElement.insertBefore(wrapper, sel);
+
+        let tags = [];
+        
+        Object.defineProperty(sel, 'value', {
+          get: () => tags.join(','),
+          set: (v) => { 
+            tags = (v || '').split(',').map(s => s.trim()).filter(Boolean); 
+            renderTags(); 
+          },
+          configurable: true
+        });
+
+        function getCompanionTags() {
+          const c = document.getElementById(compId);
+          return c ? (c.value || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean) : [];
+        }
+
+        function renderTags() {
+          wrapper.querySelectorAll('.tag-chip').forEach(c => c.remove());
+          tags.forEach(t => {
+            const chip = document.createElement('span');
+            chip.className = 'tag-chip';
+            chip.textContent = t + '\u00a0';
+            const x = document.createElement('span');
+            x.className = 'tag-chip-remove';
+            x.textContent = '\u00d7';
+            x.dataset.val = t;
+            chip.appendChild(x);
+            wrapper.insertBefore(chip, input);
+          });
+          if (tags.length >= MAX) {
+            input.style.display = 'none';
+          } else {
+            input.style.display = '';
+            input.placeholder = tags.length ? 'Add more...' : sel.options[0].text;
+          }
+        }
+
+        function renderDropdown() {
+          const query = input.value.trim().toLowerCase();
+          const compTags = getCompanionTags();
+          const usedTags = tags.map(t => t.toLowerCase());
+          dropdown.innerHTML = '';
+          
+          let shownCount = 0;
+          for (let i = 0; i < INGS.length; i++) {
+            const ing = INGS[i];
+            const lower = ing.toLowerCase();
+            
+            if (usedTags.includes(lower)) continue;
+            if (query && !lower.includes(query)) continue;
+            
+            const opt = document.createElement('div');
+            opt.className = 'autocomplete-option';
+            opt.textContent = ing;
+            
+            if (compTags.includes(lower)) {
+              opt.classList.add('disabled');
+              opt.title = 'Already used in the other filter';
+            }
+            
+            opt.addEventListener('mousedown', (e) => {
+              e.preventDefault();
+              if (opt.classList.contains('disabled')) return;
+              if (tags.length < MAX) {
+                tags.push(ing);
+                renderTags();
+                input.value = '';
+                dropdown.style.display = 'none';
+                sel.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+            });
+            dropdown.appendChild(opt);
+            
+            shownCount++;
+            if (shownCount >= 20) break;
+          }
+          
+          const rect = wrapper.getBoundingClientRect();
+          dropdown.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+          dropdown.style.left = (rect.left + window.scrollX + 8) + 'px';
+          dropdown.style.width = (rect.width - 16) + 'px';
+          dropdown.style.display = shownCount ? 'block' : 'none';
+        }
+
+        wrapper.addEventListener('click', (e) => {
+          if (e.target.classList.contains('tag-chip-remove')) {
+            tags = tags.filter(t => t !== e.target.dataset.val);
+            renderTags();
+            input.focus();
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+            return;
+          }
+          input.focus();
+        });
+
+        input.addEventListener('input', renderDropdown);
+        input.addEventListener('focus', renderDropdown);
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const firstOpt = dropdown.querySelector('.autocomplete-option:not(.disabled)');
+            if (firstOpt) firstOpt.dispatchEvent(new MouseEvent('mousedown'));
+          }
+          if (e.key === 'Backspace' && !input.value && tags.length) {
+            tags.pop();
+            renderTags();
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!wrapper.contains(e.target) && !dropdown.contains(e.target)) dropdown.style.display = 'none';
+        }, true);
+        
+        renderTags();
+      }
+
+      function wireSingle(selId) {
+        const sel = document.getElementById(selId);
+        if (!sel || sel.hasAttribute('data-wired-single') || sel.hasAttribute('data-wired')) return;
+        sel.setAttribute('data-wired-single', 'true');
+        sel.style.setProperty('display', 'none', 'important');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tag-input-container';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'tag-input-field';
+        input.autocomplete = 'off';
+        
+        let opts = Array.from(sel.options);
+        let placeholderOpt = opts.length > 0 && opts[0].value === '' ? opts[0] : null;
+        input.placeholder = placeholderOpt ? placeholderOpt.text : 'Select...';
+
+        if (sel.value && sel.value !== '') {
+          const selectedOpt = opts.find(o => o.value === sel.value);
+          if (selectedOpt) input.value = selectedOpt.text;
+        }
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'autocomplete-dropdown';
+
+        wrapper.appendChild(input);
+        document.body.appendChild(dropdown);
+        sel.parentElement.insertBefore(wrapper, sel);
+
+        function renderDropdown() {
+          opts = Array.from(sel.options);
+          placeholderOpt = opts.length > 0 && opts[0].value === '' ? opts[0] : null;
+          const query = input.value.trim().toLowerCase();
+          dropdown.innerHTML = '';
+          
+          let shownCount = 0;
+          opts.forEach(opt => {
+            if (placeholderOpt === opt && query) return;
+            
+            const text = opt.text;
+            const lower = text.toLowerCase();
+            if (query && opt !== placeholderOpt && !lower.includes(query)) return;
+            
+            const div = document.createElement('div');
+            div.className = 'autocomplete-option';
+            div.textContent = text;
+            if (sel.value === opt.value) {
+              div.style.background = 'rgba(143,188,143,0.15)';
+            }
+            
+            div.addEventListener('mousedown', (e) => {
+              e.preventDefault();
+              sel.value = opt.value;
+              input.value = opt === placeholderOpt ? '' : text;
+              dropdown.style.display = 'none';
+              sel.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+            dropdown.appendChild(div);
+            shownCount++;
+          });
+          
+          const rect = wrapper.getBoundingClientRect();
+          dropdown.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+          dropdown.style.left = (rect.left + window.scrollX + 8) + 'px';
+          dropdown.style.width = (rect.width - 16) + 'px';
+          dropdown.style.display = shownCount ? 'block' : 'none';
+        }
+
+        input.addEventListener('input', renderDropdown);
+        input.addEventListener('focus', () => { input.value = ''; renderDropdown(); });
+        input.addEventListener('blur', () => { 
+          const selectedOpt = Array.from(sel.options).find(o => o.value === sel.value);
+          input.value = selectedOpt && selectedOpt !== placeholderOpt ? selectedOpt.text : '';
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const firstOpt = dropdown.querySelector('.autocomplete-option');
+            if (firstOpt) firstOpt.dispatchEvent(new MouseEvent('mousedown'));
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!wrapper.contains(e.target) && !dropdown.contains(e.target)) dropdown.style.display = 'none';
+        }, true);
+      }
+
+      const continentToCountriesMap = {
+        "African": ["Moroccan", "Egyptian", "Nigerian", "Somalian", "Namibian", "Angolan", "Libyan", "Sudanese", "Ethiopian"],
+        "Asian": ["Bangladeshi", "Chinese", "Filipino", "Indian", "Indonesian", "Iraqi", "Israeli", "Japanese", "Korean", "Laotian", "Lebanese", "Malaysian", "Mongolian", "Nepalese", "Pakistani", "Palestinian", "Saudi Arabian", "Thai", "Turkish", "Vietnamese"],
+        "Australasian": ["Australian", "New Zealander"],
+        "Latin American": ["Mexican", "Rest Caribbean", "Puerto Rican", "Jamaican", "Cuban", "Argentine", "Brazilian", "Peruvian", "Chilean", "Colombian", "Honduran", "Costa Rican", "Guatemalan", "Ecuadorean", "Venezuelan"],
+        "European": ["Russian", "Danish", "English", "Hungarian", "Swedish", "Scottish", "UK", "Belgian", "Welsh", "Norwegian", "Austrian", "Greek", "French", "Swiss", "Portuguese", "Italian", "Polish", "Dutch", "Irish", "German", "Rest Eastern European", "Spanish", "Finnish", "Czech", "Icelandic"],
+        "North American": ["US", "Canadian"]
+      };
+
+      function updateCountryDropdown(continentId, countryId) {
+        const continent = document.getElementById(continentId)?.value;
+        const countrySel = document.getElementById(countryId);
+        if (!countrySel) return;
+        
+        countrySel.innerHTML = '<option value="">-- Any Country --</option>';
+        if (continent && continentToCountriesMap[continent]) {
+          continentToCountriesMap[continent].forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            countrySel.appendChild(opt);
+          });
+        } else {
+          // If no continent, show all countries
+          Object.values(continentToCountriesMap).flat().sort().forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            countrySel.appendChild(opt);
+          });
+        }
+        
+        countrySel.value = '';
+        const wrapper = countrySel.previousElementSibling;
+        if (wrapper && wrapper.classList.contains('tag-input-container')) {
+          const inp = wrapper.querySelector('input');
+          if (inp) {
+            inp.value = '';
+            inp.placeholder = '-- Any Country --';
+          }
+        }
+      }
+
+      let widgetInitialized = false;
+      function initWidget() {
+        PAIRS.forEach(p => { wire(p[0], p[1]); wire(p[1], p[0]); });
+        
+        const singles = ['search-region', 'search-country', 'adv-continent', 'adv-region', 'adv-country', 'search-cat-used', 'search-cat-notused', 'adv-process', 'adv-utensil'];
+        singles.forEach(wireSingle);
+
+        if (!widgetInitialized) {
+          updateCountryDropdown('search-region', 'search-country');
+          updateCountryDropdown('adv-continent', 'adv-country');
+
+          document.getElementById('search-region')?.addEventListener('change', () => updateCountryDropdown('search-region', 'search-country'));
+          document.getElementById('adv-continent')?.addEventListener('change', () => updateCountryDropdown('adv-continent', 'adv-country'));
+          widgetInitialized = true;
+        }
+      }
+      
+      initWidget();
+      const observer = new MutationObserver(initWidget);
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  </script>
 </body>
 
 </html>
