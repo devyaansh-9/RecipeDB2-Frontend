@@ -1094,6 +1094,7 @@ function x() {
     }));
 }
 function checkActiveFilters() {
+  if (t.tableSearchInput.value.trim() !== "") return true;
   if (i.activeSearchTab === "tab-cuisine") {
     return t.searchTitle.value.trim() !== "";
   }
