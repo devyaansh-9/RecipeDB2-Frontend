@@ -3418,12 +3418,12 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
               const detDietEl = document.getElementById('det-diet-tags');
               detDietEl.innerHTML = '';
-              const badge = (label, color) => `<span style="font-size:0.68rem;font-weight:700;color:${color};background:${color}18;border:1px solid ${color}40;padding:3px 10px;border-radius:99px;">${label}</span>`;
-              if (isVegan)         detDietEl.innerHTML += badge('🌱 Vegan', '#10b981');
-              if (isLactoVeg)      detDietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e');
-              if (isOvoLactoVeg)   detDietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80');
-              if (isPescetarian)   detDietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8');
-              if (!detDietEl.innerHTML) detDietEl.innerHTML = '<span style="font-size:0.85rem;font-weight:600;color:#9ca3af;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;">Standard</span>';
+              const badge = (label, cls) => `<span class="badge ${cls}">${label}</span>`;
+              if (isVegan)         detDietEl.innerHTML += badge('Vegan', 'vegan');
+              if (isLactoVeg)      detDietEl.innerHTML += badge('Lacto-Veg', 'vegan');
+              if (isOvoLactoVeg)   detDietEl.innerHTML += badge('Vegetarian', 'vegan');
+              if (isPescetarian)   detDietEl.innerHTML += badge('Pescetarian', '');
+              if (!detDietEl.innerHTML) detDietEl.innerHTML = '<span class="badge">Standard</span>';
 
               document.getElementById('det-processes').innerHTML = window.rotdProcsHTML || '';
               document.getElementById('det-utensils').innerHTML = window.rotdUtensilsHTML || '';
@@ -3439,12 +3439,12 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
             // Diet badges
             const dietEl = document.getElementById('rotd-lnd-diet');
-            const badge = (label, color) => `<span style="font-size:0.68rem;font-weight:700;color:${color};background:${color}18;border:1px solid ${color}40;padding:3px 10px;border-radius:99px;">${label}</span>`;
-            if (isVegan)         dietEl.innerHTML += badge('🌱 Vegan', '#10b981');
-            if (isLactoVeg)      dietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e');
-            if (isOvoLactoVeg)   dietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80');
-            if (isPescetarian)   dietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8');
-            if (!dietEl.innerHTML) dietEl.innerHTML = '<span style="font-size:0.85rem;font-weight:600;color:#9ca3af;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;">Standard</span>';
+            const badge = (label, cls) => `<span class="badge ${cls}">${label}</span>`;
+            if (isVegan)         dietEl.innerHTML += badge('Vegan', 'vegan');
+            if (isLactoVeg)      dietEl.innerHTML += badge('Lacto-Veg', 'vegan');
+            if (isOvoLactoVeg)   dietEl.innerHTML += badge('Vegetarian', 'vegan');
+            if (isPescetarian)   dietEl.innerHTML += badge('Pescetarian', '');
+            if (!dietEl.innerHTML) dietEl.innerHTML = '<span class="badge">Standard</span>';
 
             // Cooking processes
             window.rotdProcsHTML = '';
@@ -3452,7 +3452,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             if (procs.length) {
               const procEl = document.getElementById('rotd-lnd-processes');
               procs.forEach(p => {
-                const b = `<span style="font-size:0.85rem;font-weight:600;color:#e5e7eb;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;text-transform:capitalize;">${p}</span>`;
+                const b = `<span class="badge" style="text-transform:capitalize;">${p}</span>`;
                 procEl.innerHTML += b;
                 window.rotdProcsHTML += b;
               });
@@ -3465,7 +3465,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             if (utensils.length) {
               const utEl = document.getElementById('rotd-lnd-utensils');
               utensils.forEach(u => {
-                const b = `<span style="font-size:0.85rem;font-weight:600;color:#e5e7eb;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;text-transform:capitalize;">${u}</span>`;
+                const b = `<span class="badge" style="text-transform:capitalize;">${u}</span>`;
                 utEl.innerHTML += b;
                 window.rotdUtensilsHTML += b;
               });
@@ -3490,13 +3490,13 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                   fullRecipe.ingredients.slice(0, 15).forEach(ing => {
                     const text = ing.ingredient_Phrase || ing.ingredient;
                     if(text) {
-                      ingEl.innerHTML += `<li>${text.trim()}</li>`;
-                      window.rotdIngHTML += `<li>${text.trim()}</li>`;
+                      ingEl.innerHTML += `<div>• ${text.trim()}</div>`;
+                      window.rotdIngHTML += `<div>• ${text.trim()}</div>`;
                     }
                   });
                   if (fullRecipe.ingredients.length > 15) {
-                    ingEl.innerHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
-                    window.rotdIngHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
+                    ingEl.innerHTML += `<div><em>+ ${fullRecipe.ingredients.length - 15} more...</em></div>`;
+                    window.rotdIngHTML += `<div><em>+ ${fullRecipe.ingredients.length - 15} more...</em></div>`;
                   }
                   document.getElementById('rotd-lnd-ingredients-wrap').style.display = 'block';
                 }
