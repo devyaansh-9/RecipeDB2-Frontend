@@ -3135,10 +3135,18 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
 
       <!-- Recipe of the Day — full details with Stability AI image -->
-      <div class="glass-card reveal reveal-delay-2" id="rotd-landing-card" style="display:flex;flex-direction:column;overflow:hidden;padding:0;position:relative;min-height:520px;">
+      <style>
+        #rotd-landing-card { cursor: pointer; min-height: auto !important; transition: all 0.3s ease; }
+        #rotd-landing-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        #rotd-landing-card .rotd-details-container, #rotd-landing-card .rotd-skeleton-info { display: none !important; }
+        #rotd-landing-card.expanded .rotd-details-container, #rotd-landing-card.expanded .rotd-skeleton-info { display: flex !important; }
+        #rotd-landing-card .expand-icon { transition: transform 0.3s ease; }
+        #rotd-landing-card.expanded .expand-icon { transform: rotate(180deg); }
+      </style>
+      <div class="glass-card reveal reveal-delay-2" id="rotd-landing-card" style="display:flex;flex-direction:column;overflow:hidden;padding:0;position:relative;" onclick="this.classList.toggle('expanded')">
 
         <!-- Shimmer skeleton -->
-        <div id="rotd-skeleton" style="position:absolute;inset:0;z-index:10;background:var(--surface-card,#1a2a1a);display:flex;flex-direction:column;">
+        <div id="rotd-skeleton" style="z-index:10;background:var(--surface-card,#1a2a1a);display:flex;flex-direction:column;">
           <div class="rotd-skeleton-img" style="width:100%;height:300px;background:linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.04) 75%);background-size:200% 100%;animation:rotd-shimmer 1.5s infinite;flex-shrink:0;"></div>
           <div class="rotd-skeleton-info" style="padding:1.5rem;display:flex;flex-direction:column;gap:0.8rem;flex-grow:1;">
             <div style="height:12px;width:90px;border-radius:99px;background:rgba(255,255,255,0.07);animation:rotd-shimmer 1.5s infinite;"></div>
@@ -3167,9 +3175,14 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
               Recipe of the Day
             </div>
             <!-- Title overlay on image -->
-            <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.5rem;">
-              <div id="rotd-lnd-badges" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0.5rem;font-size:0.9rem;"></div>
-              <h3 id="rotd-lnd-title" style="font-size:1.75rem;font-weight:900;line-height:1.2;margin:0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);"></h3>
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;">
+              <div style="flex-grow:1;">
+                <div id="rotd-lnd-badges" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0.5rem;font-size:0.9rem;"></div>
+                <h3 id="rotd-lnd-title" style="font-size:1.75rem;font-weight:900;line-height:1.2;margin:0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.7);"></h3>
+              </div>
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg class="expand-icon" style="width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
             </div>
           </div>
 
