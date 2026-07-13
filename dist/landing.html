@@ -5,7 +5,7 @@
   <style>
     /* Increase modal text size and readability */
     #det-ingredients { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
-    #det-ingredients li { font-size: 1.1rem !important; padding-bottom: 0.3rem; color: #ffffff !important; font-weight: 500 !important; }
+    #det-ingredients li, #det-ingredients div { font-size: 1.1rem !important; padding-bottom: 0.3rem; color: #ffffff !important; font-weight: 500 !important; }
     .instruction-list { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
     .instruction-step { font-size: 1.1rem !important; color: #ffffff !important; font-weight: 500 !important; }
     .instruction-step div:not(.step-num) { font-size: 1.1rem !important; line-height: 1.6; padding-top: 2px; color: #ffffff !important; font-weight: 500 !important; }
@@ -3521,7 +3521,10 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                       formattedStep = step;
                     }
                     instEl.innerHTML += `<li style="margin-bottom:4px;">${formattedStep}</li>`;
-                    window.rotdInstHTML += `<div style="display:flex;gap:12px;margin-bottom:12px;"><div class="step-num" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;font-weight:700;">${idx+1}</div><div>${formattedStep}</div></div>`;
+                    window.rotdInstHTML += `<div class="instruction-step">
+      <div class="step-num">${idx+1}</div>
+      <div>${formattedStep}</div>
+    </div>`;
                   });
                   document.getElementById('rotd-lnd-instructions-wrap').style.display = 'block';
                 }
