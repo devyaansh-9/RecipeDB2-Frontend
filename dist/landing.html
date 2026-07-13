@@ -3207,7 +3207,10 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             <div id="rotd-lnd-meta" style="display:flex;gap:1.5rem;flex-wrap:wrap;font-size:1rem;font-weight:600;color:#f3f4f6;padding:0.85rem 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);"></div>
 
             <!-- Scrollable content area for long details -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-height:340px;overflow-y:auto;padding-right:0.5rem;" class="custom-scrollbar">
+            <div style="display:flex;flex-direction:column;gap:1.5rem;max-height:340px;overflow-y:auto;padding-right:0.5rem;" class="custom-scrollbar">
+              
+              <!-- Grid for Ingredients & Methods -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
               
               <!-- Left Column: Ingredients -->
               <div id="rotd-lnd-ingredients-wrap" style="display:none;">
@@ -3228,6 +3231,13 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                   <div style="font-size:0.85rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:0.75rem;">🍳 Utensils</div>
                   <div id="rotd-lnd-utensils" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
                 </div>
+              </div>
+              </div>
+
+              <!-- Instructions -->
+              <div id="rotd-lnd-instructions-wrap" style="display:none;">
+                <div style="font-size:0.85rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:0.75rem;">📝 Instructions</div>
+                <ol id="rotd-lnd-instructions" style="margin:0;padding-left:1.2rem;font-size:0.95rem;color:#f3f4f6;line-height:1.6;display:flex;flex-direction:column;gap:8px;"></ol>
               </div>
 
             </div>
@@ -3387,6 +3397,22 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                 }
               })
               .catch(e => console.error('Failed to load ingredients', e));
+              
+              // Fetch Instructions
+              fetch('/recipe2-api/instructions/' + recipe.Recipe_id, {
+                headers: { 'Authorization': 'Bearer LgYd5lGemnqS9A7plQ0owVpkk_wcJKgCNOi80NIiHY79gVfz' }
+              })
+              .then(r => r.ok ? r.json() : null)
+              .then(d => {
+                if (d && d.steps && d.steps.length > 0) {
+                  const instEl = document.getElementById('rotd-lnd-instructions');
+                  d.steps.forEach(step => {
+                    instEl.innerHTML += `<li style="margin-bottom:4px;">${step}</li>`;
+                  });
+                  document.getElementById('rotd-lnd-instructions-wrap').style.display = 'block';
+                }
+              })
+              .catch(e => console.error('Failed to load instructions', e));
             }
 
             // Generate AI image via Stability proxy

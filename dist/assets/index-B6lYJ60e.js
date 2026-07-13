@@ -1283,7 +1283,9 @@ async function v() {
 
       if (isFiltering) {
         let allRecipes = [];
-        const numPagesToFetch = 100;
+        let tokenError = false;
+        const dbTotalCount = 118083;
+        const numPagesToFetch = Math.ceil(dbTotalCount / 10);
         const limitKey = responseKey === "root" ? "page_size" : "limit";
         
         async function fetchPageWithRetry(pIndex) {
@@ -1320,6 +1322,11 @@ async function v() {
           for (let idx = 0; idx < results.length; idx++) {
             const r = results[idx];
             if (r && r.data) {
+              if (r.data.error === "Not enough tokens" || r.status === 429) {
+                tokenError = true;
+                shouldStop = true;
+                break;
+              }
               let data = [];
               if (responseKey === "root") {
                 data = r.data.data || [];
@@ -1332,6 +1339,7 @@ async function v() {
                 shouldStop = true;
               }
             } else {
+              tokenError = true;
               shouldStop = true;
             }
           }
@@ -1539,7 +1547,9 @@ async function v() {
         const endIndex = Math.min(i.itemsPerPage, displayData.length);
         const slice = displayData.slice(startIndex, endIndex);
         t.tableBodyContainer.innerHTML = "";
-        if (slice.length === 0) {
+        if (tokenError) {
+          t.tableBodyContainer.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #F87171; font-weight: bold;">Error: Your API Key is out of tokens or rate-limited. Please use the gear icon to update it, or try again later.</td></tr>`;
+        } else if (slice.length === 0) {
           t.tableBodyContainer.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-muted);">No matches found.</td></tr>`;
         }
         M(slice);
