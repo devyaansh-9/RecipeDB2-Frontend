@@ -2,8 +2,49 @@
 <html lang="en">
 
 <head>
+  <style>
+    /* Increase modal text size and readability */
+    #det-ingredients { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
+    #det-ingredients li { font-size: 1.1rem !important; padding-bottom: 0.3rem; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-list { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-step { font-size: 1.1rem !important; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-step div:not(.step-num) { font-size: 1.1rem !important; line-height: 1.6; padding-top: 2px; color: #ffffff !important; font-weight: 500 !important; }
+    .step-num { width: 30px !important; height: 30px !important; font-size: 0.9rem !important; color: var(--accent-cyan) !important; font-weight: 700 !important; }
+  </style>
 
   <script>
+    // Fetch interceptor to fix Excel-mangled date values in "servings" from the API
+    const _fetch = window.fetch;
+    window.fetch = async function(...args) {
+      const response = await _fetch.apply(this, args);
+      if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+        const cloned = response.clone();
+        try {
+          const data = await cloned.json();
+          const fixServings = (obj) => {
+            if (!obj || typeof obj !== 'object') return;
+            if (Array.isArray(obj)) { obj.forEach(fixServings); return; }
+            if (typeof obj.servings === 'string') {
+              const months = { 'Jan':1, 'Feb':2, 'Mar':3, 'Apr':4, 'May':5, 'Jun':6, 'Jul':7, 'Aug':8, 'Sep':9, 'Oct':10, 'Nov':11, 'Dec':12 };
+              let m = obj.servings.match(/^(\d{2})-([a-zA-Z]{3})$/);
+              if (m && months[m[2]]) obj.servings = `${Math.min(parseInt(m[1]), months[m[2]])}-${Math.max(parseInt(m[1]), months[m[2]])}`;
+              else {
+                m = obj.servings.match(/^([a-zA-Z]{3})-(\d{2})$/);
+                if (m && months[m[1]]) obj.servings = `${Math.min(months[m[1]], parseInt(m[2]))}-${Math.max(months[m[1]], parseInt(m[2]))}`;
+              }
+            }
+            Object.values(obj).forEach(fixServings);
+          };
+          fixServings(data);
+          return new Response(JSON.stringify(data), {
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          });
+        } catch(e) {}
+      }
+      return response;
+    };
     (function () {
       window.addEventListener('error', function (e) {
         const errInfo = 'Error: ' + e.message + ' at ' + e.filename + ':' + e.lineno;
@@ -3141,7 +3182,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
         #rotd-landing-card .expand-icon { transition: transform 0.3s ease; }
         #rotd-landing-card.expanded .expand-icon { transform: rotate(180deg); }
       </style>
-      <div class="glass-card reveal reveal-delay-2" id="rotd-landing-card" style="display:flex;flex-direction:column;overflow:hidden;padding:0;position:relative;" onclick="document.getElementById('modal-recipe-detail').classList.add('active')">
+      <div class="glass-card reveal reveal-delay-2" id="rotd-landing-card" style="display:flex;flex-direction:column;overflow:hidden;padding:0;position:relative;" onclick="if(window.openRotdModal) window.openRotdModal()">
 
         <!-- Shimmer skeleton -->
         <div id="rotd-skeleton" style="z-index:10;background:var(--surface-card,#1a2a1a);display:flex;flex-direction:column;">
@@ -3355,24 +3396,42 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             metaEl.innerHTML = metaParts.join('');
             if (!metaParts.length) metaEl.style.display = 'none';
 
-            // Also populate modal metadata
-            document.getElementById('det-modal-title').textContent = title;
-            document.getElementById('det-time').textContent = totalTime ? totalTime + ' mins' : '--';
-            document.getElementById('det-servings').textContent = servings || '--';
-            document.getElementById('det-region').textContent = region || 'Global';
-            document.getElementById('det-nut-cal').textContent = cal !== '—' ? cal + ' kcal' : '--';
-            document.getElementById('det-nut-carbs').textContent = carbs;
-            document.getElementById('det-nut-protein').textContent = protein;
-            document.getElementById('det-nut-fat').textContent = fat;
-            
-            const calFill = Math.min((parseFloat(cal) / 1200) * 100, 100) || 0;
-            const carbsFill = Math.min((parseFloat(carbs) / 300) * 100, 100) || 0;
-            const proteinFill = Math.min((parseFloat(protein) / 100) * 100, 100) || 0;
-            const fatFill = Math.min((parseFloat(fat) / 80) * 100, 100) || 0;
-            document.getElementById('det-fill-cal').style.width = calFill + '%';
-            document.getElementById('det-fill-carbs').style.width = carbsFill + '%';
-            document.getElementById('det-fill-protein').style.width = proteinFill + '%';
-            document.getElementById('det-fill-fat').style.width = fatFill + '%';
+            // Build openRotdModal to repopulate modal on click
+            window.openRotdModal = () => {
+              document.getElementById('det-modal-title').textContent = title;
+              document.getElementById('det-time').textContent = totalTime ? totalTime + ' mins' : '--';
+              document.getElementById('det-servings').textContent = servings || '--';
+              document.getElementById('det-region').textContent = region || 'Global';
+              document.getElementById('det-nut-cal').textContent = cal !== '—' ? cal + ' kcal' : '--';
+              document.getElementById('det-nut-carbs').textContent = carbs;
+              document.getElementById('det-nut-protein').textContent = protein;
+              document.getElementById('det-nut-fat').textContent = fat;
+              
+              const calFill = Math.min((parseFloat(cal) / 1200) * 100, 100) || 0;
+              const carbsFill = Math.min((parseFloat(carbs) / 300) * 100, 100) || 0;
+              const proteinFill = Math.min((parseFloat(protein) / 100) * 100, 100) || 0;
+              const fatFill = Math.min((parseFloat(fat) / 80) * 100, 100) || 0;
+              document.getElementById('det-fill-cal').style.width = calFill + '%';
+              document.getElementById('det-fill-carbs').style.width = carbsFill + '%';
+              document.getElementById('det-fill-protein').style.width = proteinFill + '%';
+              document.getElementById('det-fill-fat').style.width = fatFill + '%';
+
+              const detDietEl = document.getElementById('det-diet-tags');
+              detDietEl.innerHTML = '';
+              const badge = (label, color) => `<span style="font-size:0.68rem;font-weight:700;color:${color};background:${color}18;border:1px solid ${color}40;padding:3px 10px;border-radius:99px;">${label}</span>`;
+              if (isVegan)         detDietEl.innerHTML += badge('🌱 Vegan', '#10b981');
+              if (isLactoVeg)      detDietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e');
+              if (isOvoLactoVeg)   detDietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80');
+              if (isPescetarian)   detDietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8');
+              if (!detDietEl.innerHTML) detDietEl.innerHTML = '<span style="font-size:0.85rem;font-weight:600;color:#9ca3af;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;">Standard</span>';
+
+              document.getElementById('det-processes').innerHTML = window.rotdProcsHTML || '';
+              document.getElementById('det-utensils').innerHTML = window.rotdUtensilsHTML || '';
+              document.getElementById('det-ingredients').innerHTML = window.rotdIngHTML || '';
+              document.getElementById('det-instructions').innerHTML = window.rotdInstHTML || '';
+
+              document.getElementById('modal-recipe-detail').classList.add('active');
+            };
             
             document.getElementById('btn-close-recipe').onclick = () => document.getElementById('modal-recipe-detail').classList.remove('active');
 
@@ -3380,38 +3439,35 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
             // Diet badges
             const dietEl = document.getElementById('rotd-lnd-diet');
-            const detDietEl = document.getElementById('det-diet-tags');
-            detDietEl.innerHTML = '';
             const badge = (label, color) => `<span style="font-size:0.68rem;font-weight:700;color:${color};background:${color}18;border:1px solid ${color}40;padding:3px 10px;border-radius:99px;">${label}</span>`;
-            if (isVegan)         { dietEl.innerHTML += badge('🌱 Vegan', '#10b981'); detDietEl.innerHTML += badge('🌱 Vegan', '#10b981'); }
-            if (isLactoVeg)      { dietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e'); detDietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e'); }
-            if (isOvoLactoVeg)   { dietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80'); detDietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80'); }
-            if (isPescetarian)   { dietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8'); detDietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8'); }
+            if (isVegan)         dietEl.innerHTML += badge('🌱 Vegan', '#10b981');
+            if (isLactoVeg)      dietEl.innerHTML += badge('🥛 Lacto-Veg', '#22c55e');
+            if (isOvoLactoVeg)   dietEl.innerHTML += badge('🥦 Vegetarian', '#4ade80');
+            if (isPescetarian)   dietEl.innerHTML += badge('🐟 Pescetarian', '#38bdf8');
+            if (!dietEl.innerHTML) dietEl.innerHTML = '<span style="font-size:0.85rem;font-weight:600;color:#9ca3af;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;">Standard</span>';
 
             // Cooking processes
+            window.rotdProcsHTML = '';
             const procs = (recipe.Processes || '').split('||').map(p=>p.trim()).filter((p,i,a)=>p && a.indexOf(p)===i).slice(0,8);
             if (procs.length) {
               const procEl = document.getElementById('rotd-lnd-processes');
-              const detProcEl = document.getElementById('det-processes');
-              detProcEl.innerHTML = '';
               procs.forEach(p => {
                 const b = `<span style="font-size:0.85rem;font-weight:600;color:#e5e7eb;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;text-transform:capitalize;">${p}</span>`;
                 procEl.innerHTML += b;
-                detProcEl.innerHTML += b;
+                window.rotdProcsHTML += b;
               });
               document.getElementById('rotd-lnd-processes-wrap').style.display = 'block';
             }
 
             // Utensils
+            window.rotdUtensilsHTML = '';
             const utensils = (recipe.Utensils || '').split('||').map(u=>u.trim()).filter((u,i,a)=>u && a.indexOf(u)===i).slice(0,6);
             if (utensils.length) {
               const utEl = document.getElementById('rotd-lnd-utensils');
-              const detUtEl = document.getElementById('det-utensils');
-              detUtEl.innerHTML = '';
               utensils.forEach(u => {
                 const b = `<span style="font-size:0.85rem;font-weight:600;color:#e5e7eb;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:6px;text-transform:capitalize;">${u}</span>`;
                 utEl.innerHTML += b;
-                detUtEl.innerHTML += b;
+                window.rotdUtensilsHTML += b;
               });
               document.getElementById('rotd-lnd-utensils-wrap').style.display = 'block';
             }
@@ -3430,18 +3486,17 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                 const fullRecipe = d?.payload || d?.data || d;
                 if (fullRecipe && fullRecipe.ingredients && fullRecipe.ingredients.length > 0) {
                   const ingEl = document.getElementById('rotd-lnd-ingredients');
-                  const detIngEl = document.getElementById('det-ingredients');
-                  detIngEl.innerHTML = '';
+                  window.rotdIngHTML = '';
                   fullRecipe.ingredients.slice(0, 15).forEach(ing => {
                     const text = ing.ingredient_Phrase || ing.ingredient;
                     if(text) {
                       ingEl.innerHTML += `<li>${text.trim()}</li>`;
-                      detIngEl.innerHTML += `<li>${text.trim()}</li>`;
+                      window.rotdIngHTML += `<li>${text.trim()}</li>`;
                     }
                   });
                   if (fullRecipe.ingredients.length > 15) {
                     ingEl.innerHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
-                    detIngEl.innerHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
+                    window.rotdIngHTML += `<li><em>+ ${fullRecipe.ingredients.length - 15} more...</em></li>`;
                   }
                   document.getElementById('rotd-lnd-ingredients-wrap').style.display = 'block';
                 }
@@ -3456,11 +3511,17 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
               .then(d => {
                 if (d && d.steps && d.steps.length > 0) {
                   const instEl = document.getElementById('rotd-lnd-instructions');
-                  const detInstEl = document.getElementById('det-instructions');
-                  detInstEl.innerHTML = '';
+                  window.rotdInstHTML = '';
                   d.steps.forEach((step, idx) => {
-                    instEl.innerHTML += `<li style="margin-bottom:4px;">${step}</li>`;
-                    detInstEl.innerHTML += `<div style="display:flex;gap:12px;margin-bottom:12px;"><div class="step-num" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;font-weight:700;">${idx+1}</div><div>${step}</div></div>`;
+                    let formattedStep = step.trim();
+                    if (formattedStep.length > 0) {
+                      formattedStep = formattedStep.charAt(0).toUpperCase() + formattedStep.slice(1);
+                      if (!formattedStep.endsWith('.')) formattedStep += '.';
+                    } else {
+                      formattedStep = step;
+                    }
+                    instEl.innerHTML += `<li style="margin-bottom:4px;">${formattedStep}</li>`;
+                    window.rotdInstHTML += `<div style="display:flex;gap:12px;margin-bottom:12px;"><div class="step-num" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;font-weight:700;">${idx+1}</div><div>${formattedStep}</div></div>`;
                   });
                   document.getElementById('rotd-lnd-instructions-wrap').style.display = 'block';
                 }

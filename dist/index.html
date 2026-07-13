@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+  <style>
+    /* Increase modal text size and readability */
+    #det-ingredients { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
+    #det-ingredients li { font-size: 1.1rem !important; padding-bottom: 0.3rem; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-list { font-size: 1.1rem !important; line-height: 1.6; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-step { font-size: 1.1rem !important; color: #ffffff !important; font-weight: 500 !important; }
+    .instruction-step div:not(.step-num) { font-size: 1.1rem !important; line-height: 1.6; padding-top: 2px; color: #ffffff !important; font-weight: 500 !important; }
+    .step-num { width: 30px !important; height: 30px !important; font-size: 0.9rem !important; color: var(--accent-cyan) !important; font-weight: 700 !important; }
+  </style>
   <meta name="darkreader-lock">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +18,39 @@
   <meta name="description"
     content="A comprehensive interactive client and developer console for accessing over 128,942 recipes, nutritional metrics, and meal planning features of RecipeDB2.">
   <script>
+    // Fetch interceptor to fix Excel-mangled date values in "servings" from the API
+    const _fetch = window.fetch;
+    window.fetch = async function(...args) {
+      const response = await _fetch.apply(this, args);
+      if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+        const cloned = response.clone();
+        try {
+          const data = await cloned.json();
+          const fixServings = (obj) => {
+            if (!obj || typeof obj !== 'object') return;
+            if (Array.isArray(obj)) { obj.forEach(fixServings); return; }
+            if (typeof obj.servings === 'string') {
+              const months = { 'Jan':1, 'Feb':2, 'Mar':3, 'Apr':4, 'May':5, 'Jun':6, 'Jul':7, 'Aug':8, 'Sep':9, 'Oct':10, 'Nov':11, 'Dec':12 };
+              let m = obj.servings.match(/^(\d{2})-([a-zA-Z]{3})$/);
+              if (m && months[m[2]]) obj.servings = `${Math.min(parseInt(m[1]), months[m[2]])}-${Math.max(parseInt(m[1]), months[m[2]])}`;
+              else {
+                m = obj.servings.match(/^([a-zA-Z]{3})-(\d{2})$/);
+                if (m && months[m[1]]) obj.servings = `${Math.min(months[m[1]], parseInt(m[2]))}-${Math.max(months[m[1]], parseInt(m[2]))}`;
+              }
+            }
+            Object.values(obj).forEach(fixServings);
+          };
+          fixServings(data);
+          return new Response(JSON.stringify(data), {
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          });
+        } catch(e) {}
+      }
+      return response;
+    };
+
     // Set up our early diagnostics tracker and send any runtime exceptions to our backend logger
     (function () {
       window.consoleErrors = [];

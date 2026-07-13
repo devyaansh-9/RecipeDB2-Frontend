@@ -137,6 +137,9 @@ function generateImage(prompt, callback) {
     `Content-Disposition: form-data; name="prompt"\r\n\r\n`,
     `${prompt}\r\n`,
     `--${boundary}\r\n`,
+    `Content-Disposition: form-data; name="aspect_ratio"\r\n\r\n`,
+    `21:9\r\n`,
+    `--${boundary}\r\n`,
     `Content-Disposition: form-data; name="output_format"\r\n\r\n`,
     `webp\r\n`,
     `--${boundary}--\r\n`
@@ -176,6 +179,8 @@ function generateImage(prompt, callback) {
   req.end();
 }
 
+const imageCache = new Map();
+
 const server = http.createServer((req, res) => {
   // 0. Secure Groq API proxy endpoint
   
@@ -210,6 +215,16 @@ const server = http.createServer((req, res) => {
     const region = params.get('region') || 'International';
     const prompt = `Stunning professional food photography of ${recipeName}, ${region} cuisine, beautifully plated on a rustic table, warm lighting, restaurant quality, appetizing colors`;
 
+    if (imageCache.has(prompt)) {
+      console.log(`[Stability Proxy] Serving cached image for: "${recipeName}"`);
+      res.writeHead(200, { 
+        'Content-Type': 'image/webp',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(imageCache.get(prompt));
+      return;
+    }
+
     console.log(`[Stability Proxy] Generating image for: "${recipeName}" (${region})...`);
     generateImage(prompt, (err, imageBuffer) => {
       if (err) {
@@ -218,6 +233,7 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ error: err.message }));
       } else {
         console.log('[Stability Proxy] Image generated successfully.');
+        imageCache.set(prompt, imageBuffer);
         res.writeHead(200, { 
           'Content-Type': 'image/webp',
           'Access-Control-Allow-Origin': '*'
