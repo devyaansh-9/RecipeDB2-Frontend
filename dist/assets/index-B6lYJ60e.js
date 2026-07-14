@@ -573,10 +573,14 @@ const i = {
     searchIngNotUsed: document.getElementById("search-ing-notused"),
     searchCatUsed: document.getElementById("search-cat-used"),
     searchCatNotUsed: document.getElementById("search-cat-notused"),
-    searchNutCal: document.getElementById("search-nut-cal"),
-    searchNutCarbs: document.getElementById("search-nut-carbs"),
-    searchNutProtein: document.getElementById("search-nut-protein"),
-    searchNutFat: document.getElementById("search-nut-fat"),
+    searchNutCalMin: document.getElementById("search-nut-cal-min"),
+    searchNutCalMax: document.getElementById("search-nut-cal-max"),
+    searchNutCarbsMin: document.getElementById("search-nut-carbs-min"),
+    searchNutCarbsMax: document.getElementById("search-nut-carbs-max"),
+    searchNutProteinMin: document.getElementById("search-nut-protein-min"),
+    searchNutProteinMax: document.getElementById("search-nut-protein-max"),
+    searchNutFatMin: document.getElementById("search-nut-fat-min"),
+    searchNutFatMax: document.getElementById("search-nut-fat-max"),
     valSearchCal: document.getElementById("val-search-cal"),
     valSearchCarbs: document.getElementById("val-search-carbs"),
     valSearchProtein: document.getElementById("val-search-protein"),
@@ -763,18 +767,29 @@ function z() {
     t.btnSubmitSearch.addEventListener("click", () => {
       J();
     }),
-    t.searchNutCal.addEventListener("input", (a) => {
-      t.valSearchCal.textContent = `${a.target.value} KCal`;
-    }),
-    t.searchNutCarbs.addEventListener("input", (a) => {
-      t.valSearchCarbs.textContent = `${a.target.value}g`;
-    }),
-    t.searchNutProtein.addEventListener("input", (a) => {
-      t.valSearchProtein.textContent = `${a.target.value}g`;
-    }),
-    t.searchNutFat.addEventListener("input", (a) => {
-      t.valSearchFat.textContent = `${a.target.value}g`;
-    }),
+    (() => {
+      const setupDualSlider = (minSlider, maxSlider, label, suffix) => {
+        const updateLabel = () => {
+          let minVal = parseInt(minSlider.value);
+          let maxVal = parseInt(maxSlider.value);
+          if (minVal > maxVal) { let tmp = minVal; minVal = maxVal; maxVal = tmp; }
+          label.textContent = `${minVal} - ${maxVal}${suffix}`;
+        };
+        minSlider.addEventListener("input", () => {
+          if (parseInt(minSlider.value) >= parseInt(maxSlider.value)) { minSlider.value = maxSlider.value - 1; }
+          updateLabel();
+        });
+        maxSlider.addEventListener("input", () => {
+          if (parseInt(maxSlider.value) <= parseInt(minSlider.value)) { maxSlider.value = parseInt(minSlider.value) + 1; }
+          updateLabel();
+        });
+      };
+      setupDualSlider(t.searchNutCalMin, t.searchNutCalMax, t.valSearchCal, " KCal");
+      setupDualSlider(t.searchNutCarbsMin, t.searchNutCarbsMax, t.valSearchCarbs, "g");
+      setupDualSlider(t.searchNutProteinMin, t.searchNutProteinMax, t.valSearchProtein, "g");
+      setupDualSlider(t.searchNutFatMin, t.searchNutFatMax, t.valSearchFat, "g");
+    })(),
+    t.advRegion.addEventListener("change", () => {}),
     t.advShowNutri.addEventListener("change", () => {
       I();
     }));
@@ -1285,14 +1300,15 @@ async function v() {
         let allRecipes = [];
         let tokenError = false;
         const dbTotalCount = 118083;
-        const numPagesToFetch = Math.ceil(dbTotalCount / 10);
+        const limitVal = 1000;
+        const numPagesToFetch = Math.ceil(dbTotalCount / limitVal);
         const limitKey = responseKey === "root" ? "page_size" : "limit";
         
         async function fetchPageWithRetry(pIndex) {
           const qParams = {
             ...queryParams,
             page: pIndex,
-            [limitKey]: 10
+            [limitKey]: limitVal
           };
           if (qParams.category === "") delete qParams.category;
           
@@ -1309,7 +1325,7 @@ async function v() {
           return null;
         }
 
-        const batchSize = 10;
+        const batchSize = 20;
         let shouldStop = false;
         for (let batchStart = 1; batchStart <= numPagesToFetch; batchStart += batchSize) {
           if (shouldStop) break;
@@ -1442,20 +1458,20 @@ async function v() {
             });
           }
         } else if (i.activeSearchTab === "tab-nutrition") {
-          const maxCal = parseInt(t.searchNutCal.value),
-            maxCarbs = parseInt(t.searchNutCarbs.value),
-            minProt = parseInt(t.searchNutProtein.value),
-            maxFat = parseInt(t.searchNutFat.value);
+          const minCal = parseInt(t.searchNutCalMin.value), maxCal = parseInt(t.searchNutCalMax.value),
+            minCarbs = parseInt(t.searchNutCarbsMin.value), maxCarbs = parseInt(t.searchNutCarbsMax.value),
+            minProt = parseInt(t.searchNutProteinMin.value), maxProt = parseInt(t.searchNutProteinMax.value),
+            minFat = parseInt(t.searchNutFatMin.value), maxFat = parseInt(t.searchNutFatMax.value);
           data = data.filter((item) => {
-            const c = parseFloat(item.Calories) || 120,
-              carb = parseFloat(item["Carbohydrate, by difference (g)"]) || 30,
-              prot = parseFloat(item["Protein (g)"]) || 10,
-              fat = parseFloat(item["Total lipid (fat) (g)"]) || 5;
+            const c = parseFloat(item.Calories) || 0,
+              carb = parseFloat(item["Carbohydrate, by difference (g)"]) || 0,
+              prot = parseFloat(item["Protein (g)"]) || 0,
+              fat = parseFloat(item["Total lipid (fat) (g)"]) || 0;
             return (
-              c <= maxCal &&
-              carb <= maxCarbs &&
-              prot >= minProt &&
-              fat <= maxFat
+              c >= minCal && c <= maxCal &&
+              carb >= minCarbs && carb <= maxCarbs &&
+              prot >= minProt && prot <= maxProt &&
+              fat >= minFat && fat <= maxFat
             );
           });
         } else if (i.activeSearchTab === "tab-advanced") {
@@ -1648,7 +1664,25 @@ async function populateDetailsForSlice(slice) {
     })
   );
 }
+let boundsCalculated = false;
 async function M(e) {
+  if (!boundsCalculated && i.allFetchedRecipes && i.allFetchedRecipes.length > 0) {
+    boundsCalculated = true;
+    const getStats = (key) => {
+      let valid = i.allFetchedRecipes.map(r => parseFloat(r[key])).filter(v => !isNaN(v));
+      if (valid.length === 0) return { min: 0, max: 100 };
+      const mean = valid.reduce((a, b) => a + b, 0) / valid.length;
+      const std = Math.sqrt(valid.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / valid.length);
+      return { min: Math.max(0, Math.floor(mean - std / 2)), max: Math.ceil(mean + std / 2) };
+    };
+    const cal = getStats("Calories"), carb = getStats("Carbohydrate, by difference (g)"), prot = getStats("Protein (g)"), fat = getStats("Total lipid (fat) (g)");
+    t.searchNutCalMin.value = cal.min; t.searchNutCalMax.value = cal.max;
+    t.searchNutCarbsMin.value = carb.min; t.searchNutCarbsMax.value = carb.max;
+    t.searchNutProteinMin.value = prot.min; t.searchNutProteinMax.value = prot.max;
+    t.searchNutFatMin.value = fat.min; t.searchNutFatMax.value = fat.max;
+    t.searchNutCalMin.dispatchEvent(new Event('input')); t.searchNutCarbsMin.dispatchEvent(new Event('input'));
+    t.searchNutProteinMin.dispatchEvent(new Event('input')); t.searchNutFatMin.dispatchEvent(new Event('input'));
+  }
   const renderPage = i.currentPage;
   await populateDetailsForSlice(e);
   if (renderPage !== i.currentPage) return;
@@ -1820,16 +1854,16 @@ function J() {
         )),
       (t.resultsTableTitle.textContent = "Diet categories filtered results"));
   } else if (i.activeSearchTab === "tab-nutrition") {
-    const a = parseInt(t.searchNutCal.value),
-      n = parseInt(t.searchNutCarbs.value),
-      o = parseInt(t.searchNutProtein.value),
-      s = parseInt(t.searchNutFat.value);
+    const minCal = parseInt(t.searchNutCalMin.value), maxCal = parseInt(t.searchNutCalMax.value),
+      minCarbs = parseInt(t.searchNutCarbsMin.value), maxCarbs = parseInt(t.searchNutCarbsMax.value),
+      minProt = parseInt(t.searchNutProteinMin.value), maxProt = parseInt(t.searchNutProteinMax.value),
+      minFat = parseInt(t.searchNutFatMin.value), maxFat = parseInt(t.searchNutFatMax.value);
     ((e = e.filter((r) => {
-      const u = parseFloat(r.Calories) || 120,
-        p = parseFloat(r["Carbohydrate, by difference (g)"]) || 30,
-        d = parseFloat(r["Protein (g)"]) || 10,
-        l = parseFloat(r["Total lipid (fat) (g)"]) || 5;
-      return u <= a && p <= n && d >= o && l <= s;
+      const u = parseFloat(r.Calories) || 0,
+        p = parseFloat(r["Carbohydrate, by difference (g)"]) || 0,
+        d = parseFloat(r["Protein (g)"]) || 0,
+        l = parseFloat(r["Total lipid (fat) (g)"]) || 0;
+      return u >= minCal && u <= maxCal && p >= minCarbs && p <= maxCarbs && d >= minProt && d <= maxProt && l >= minFat && l <= maxFat;
     })),
       (t.resultsTableTitle.textContent = "Nutritional thresholds matches"));
   } else if (i.activeSearchTab === "tab-advanced") {

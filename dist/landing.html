@@ -10,6 +10,15 @@
     .instruction-step { font-size: 1.1rem !important; color: #ffffff !important; font-weight: 500 !important; }
     .instruction-step div:not(.step-num) { font-size: 1.1rem !important; line-height: 1.6; padding-top: 2px; color: #ffffff !important; font-weight: 500 !important; }
     .step-num { width: 30px !important; height: 30px !important; font-size: 0.9rem !important; color: var(--accent-cyan) !important; font-weight: 700 !important; }
+    
+    /* Dual Range Slider Overlays */
+    .dual-range-container { position: relative; width: 100%; height: 20px; display: flex; align-items: center; margin-bottom: 10px; margin-top: -4px; }
+    .dual-range-track { position: absolute; left: 0; top: 65%; transform: translateY(-50%); width: 100%; height: 4px; background: #ffffff14; border-radius: 9999px; z-index: 0; pointer-events: none; }
+    .dual-range-container .planner-range { position: absolute; left: 0; top: 50%; transform: translateY(-50%); margin: 0; pointer-events: none; background: transparent !important; z-index: 2; border: none; outline: none; -webkit-appearance: none; appearance: none; }
+    .dual-range-container .planner-range::-webkit-slider-runnable-track { background: transparent !important; border: none !important; height: 0 !important; color: transparent !important; -webkit-appearance: none; appearance: none; }
+    .dual-range-container .planner-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; pointer-events: auto; position: relative; z-index: 3; width: 16px; height: 14px; background: var(--accent-cyan, #22d3ee); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); cursor: pointer; border: none; }
+    .dual-range-container .min-range { z-index: 4; }
+    .dual-range-container .max-range { z-index: 3; }
   </style>
 
   <script>
@@ -4459,34 +4468,50 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <div class="slider-group">
                   <div class="slider-header">
-                    <span class="slider-label">Energy (Calories)</span>
-                    <span class="slider-value" id="val-search-cal">800 KCal</span>
+                    <span class="slider-label">Energy</span>
+                    <span class="slider-value" id="val-search-cal">100 - 800 KCal</span>
                   </div>
-                  <input type="range" class="planner-range" id="search-nut-cal" min="100" max="1500" value="800">
+                  <div class="dual-range-container">
+                    <div class="dual-range-track"></div>
+                    <input type="range" class="planner-range min-range" id="search-nut-cal-min" min="0" max="2500" value="100">
+                    <input type="range" class="planner-range max-range" id="search-nut-cal-max" min="0" max="2500" value="800">
+                  </div>
                 </div>
 
                 <div class="slider-group">
                   <div class="slider-header">
                     <span class="slider-label">Carbohydrates</span>
-                    <span class="slider-value" id="val-search-carbs">150g</span>
+                    <span class="slider-value" id="val-search-carbs">10 - 150g</span>
                   </div>
-                  <input type="range" class="planner-range" id="search-nut-carbs" min="10" max="450" value="150">
+                  <div class="dual-range-container">
+                    <div class="dual-range-track"></div>
+                    <input type="range" class="planner-range min-range" id="search-nut-carbs-min" min="0" max="500" value="10">
+                    <input type="range" class="planner-range max-range" id="search-nut-carbs-max" min="0" max="500" value="150">
+                  </div>
                 </div>
 
                 <div class="slider-group">
                   <div class="slider-header">
                     <span class="slider-label">Protein</span>
-                    <span class="slider-value" id="val-search-protein">30g</span>
+                    <span class="slider-value" id="val-search-protein">5 - 30g</span>
                   </div>
-                  <input type="range" class="planner-range" id="search-nut-protein" min="5" max="120" value="30">
+                  <div class="dual-range-container">
+                    <div class="dual-range-track"></div>
+                    <input type="range" class="planner-range min-range" id="search-nut-protein-min" min="0" max="200" value="5">
+                    <input type="range" class="planner-range max-range" id="search-nut-protein-max" min="0" max="200" value="30">
+                  </div>
                 </div>
 
                 <div class="slider-group">
                   <div class="slider-header">
                     <span class="slider-label">Fat</span>
-                    <span class="slider-value" id="val-search-fat">60g</span>
+                    <span class="slider-value" id="val-search-fat">5 - 60g</span>
                   </div>
-                  <input type="range" class="planner-range" id="search-nut-fat" min="5" max="150" value="60">
+                  <div class="dual-range-container">
+                    <div class="dual-range-track"></div>
+                    <input type="range" class="planner-range min-range" id="search-nut-fat-min" min="0" max="250" value="5">
+                    <input type="range" class="planner-range max-range" id="search-nut-fat-max" min="0" max="250" value="60">
+                  </div>
                 </div>
 
               </div>
