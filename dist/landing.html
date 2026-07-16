@@ -2347,7 +2347,8 @@
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:9000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
     .modal-backdrop.active { display:flex; }
     .modal-container { background:var(--surface,#263A23); border:1px solid var(--border); border-radius:18px; max-width:600px; width:90%; max-height:85vh; overflow-y:auto; box-shadow:0 32px 64px rgba(0,0,0,.6); }
-    .modal-header { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 1.5rem; border-bottom:1px solid var(--border); }
+    .modal-header { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 1.5rem; border-bottom:1px solid var(--border); cursor:grab; user-select:none; }
+    .modal-header:active { cursor:grabbing; }
     .modal-title { color:var(--text-1,#F5F1E1); font-weight:800; font-size:1.1rem; }
     .btn-close-modal { background:transparent; color:var(--text-2); border:none; font-size:1.4rem; cursor:pointer; line-height:1; }
     .modal-body { padding:1.5rem; }
@@ -5857,7 +5858,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
   </div>
   <!-- Sliding drawer with detailed ingredients list, steps, and nutrition breakdown -->
   <div class="modal-backdrop" id="modal-recipe-detail">
-    <div class="modal-container" style="max-width: 800px; width: 95%;">
+    <div class="modal-container" id="draggable-recipe-modal" style="max-width: 800px; width: 95%; position: relative;">
       <div class="modal-header">
         <h3 class="modal-title" id="det-modal-title">Recipe Details</h3>
         <button class="btn-close-modal" id="btn-close-recipe">&times;</button>
@@ -7993,6 +7994,56 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
       const observer = new MutationObserver(initWidget);
       observer.observe(document.body, { childList: true, subtree: true });
     });
+  </script>
+  <script>
+    // Draggable recipe detail modal
+    (function() {
+      const modal = document.getElementById('draggable-recipe-modal');
+      const header = modal ? modal.querySelector('.modal-header') : null;
+      if (!modal || !header) return;
+      let isDragging = false, startX, startY, origX, origY;
+
+      header.addEventListener('mousedown', function(e) {
+        if (e.target.closest('.btn-close-modal')) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = modal.getBoundingClientRect();
+        origX = rect.left;
+        origY = rect.top;
+        modal.style.position = 'fixed';
+        modal.style.margin = '0';
+        modal.style.left = origX + 'px';
+        modal.style.top = origY + 'px';
+        modal.style.transition = 'none';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        modal.style.left = (origX + dx) + 'px';
+        modal.style.top = (origY + dy) + 'px';
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+
+      // Reset position when modal is closed
+      const backdrop = document.getElementById('modal-recipe-detail');
+      const observer = new MutationObserver(function() {
+        if (!backdrop.classList.contains('active')) {
+          modal.style.position = 'relative';
+          modal.style.left = '';
+          modal.style.top = '';
+          modal.style.margin = '';
+          modal.style.transition = '';
+        }
+      });
+      observer.observe(backdrop, { attributes: true, attributeFilter: ['class'] });
+    })();
   </script>
 </body>
 
