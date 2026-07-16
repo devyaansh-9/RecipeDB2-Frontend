@@ -1463,7 +1463,7 @@ async function v() {
             minProt = parseInt(t.searchNutProteinMin.value), maxProt = parseInt(t.searchNutProteinMax.value),
             minFat = parseInt(t.searchNutFatMin.value), maxFat = parseInt(t.searchNutFatMax.value);
           data = data.filter((item) => {
-            const c = parseFloat(item.Calories) || 0,
+            const c = parseFloat(item["Energy (kcal)"]) || parseFloat(item.Calories) * 4 || 0,
               carb = parseFloat(item["Carbohydrate, by difference (g)"]) || 0,
               prot = parseFloat(item["Protein (g)"]) || 0,
               fat = parseFloat(item["Total lipid (fat) (g)"]) || 0;
@@ -1675,7 +1675,7 @@ async function M(e) {
       const std = Math.sqrt(valid.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / valid.length);
       return { min: Math.max(0, Math.floor(mean - std / 2)), max: Math.ceil(mean + std / 2) };
     };
-    const cal = getStats("Calories"), carb = getStats("Carbohydrate, by difference (g)"), prot = getStats("Protein (g)"), fat = getStats("Total lipid (fat) (g)");
+    const cal = getStats("Energy (kcal)"), carb = getStats("Carbohydrate, by difference (g)"), prot = getStats("Protein (g)"), fat = getStats("Total lipid (fat) (g)");
     t.searchNutCalMin.value = cal.min; t.searchNutCalMax.value = cal.max;
     t.searchNutCarbsMin.value = carb.min; t.searchNutCarbsMax.value = carb.max;
     t.searchNutProteinMin.value = prot.min; t.searchNutProteinMax.value = prot.max;
@@ -1859,7 +1859,7 @@ function J() {
       minProt = parseInt(t.searchNutProteinMin.value), maxProt = parseInt(t.searchNutProteinMax.value),
       minFat = parseInt(t.searchNutFatMin.value), maxFat = parseInt(t.searchNutFatMax.value);
     ((e = e.filter((r) => {
-      const u = parseFloat(r.Calories) || 0,
+      const u = parseFloat(r["Energy (kcal)"]) || parseFloat(r.Calories) * 4 || 0,
         p = parseFloat(r["Carbohydrate, by difference (g)"]) || 0,
         d = parseFloat(r["Protein (g)"]) || 0,
         l = parseFloat(r["Total lipid (fat) (g)"]) || 0;
