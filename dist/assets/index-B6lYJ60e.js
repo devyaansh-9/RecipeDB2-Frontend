@@ -1772,7 +1772,7 @@ function J() {
         i.searchType = null;
         i.searchVal = null;
       }
-      t.resultsTableTitle.textContent = `Filtered Category (Used: "${a || "any"}", Excluded: "${ex || "none"}")`;
+      t.resultsTableTitle.textContent = `Filtered Diet Style (Used: "${a || "any"}" | Not Used: "${ex || "none"}")`;
     } else if (i.activeSearchTab === "tab-ingredient") {
       const a = t.searchIngUsed.value.trim().split(",").filter(Boolean),
         n = t.searchIngNotUsed.value.trim().split(",").filter(Boolean);
