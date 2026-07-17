@@ -225,22 +225,9 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    console.log(`[Stability Proxy] Generating image for: "${recipeName}" (${region})...`);
-    generateImage(prompt, (err, imageBuffer) => {
-      if (err) {
-        console.error('[Stability Proxy] Image generation failed:', err.message);
-        res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        res.end(JSON.stringify({ error: err.message }));
-      } else {
-        console.log('[Stability Proxy] Image generated successfully.');
-        imageCache.set(prompt, imageBuffer);
-        res.writeHead(200, { 
-          'Content-Type': 'image/webp',
-          'Access-Control-Allow-Origin': '*'
-        });
-        res.end(imageBuffer);
-      }
-    });
+    console.log(`[Stability Proxy] Generation disabled for: "${recipeName}" (${region})...`);
+    res.writeHead(503, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify({ error: "Stability API disabled by user" }));
     return;
   }
 
