@@ -571,6 +571,8 @@ const i = {
     searchTitle: document.getElementById("search-title"),
     searchIngUsed: document.getElementById("search-ing-used"),
     searchIngNotUsed: document.getElementById("search-ing-notused"),
+    searchTypeUsed: document.getElementById("search-type-used"),
+    searchTypeNotUsed: document.getElementById("search-type-notused"),
     searchCatUsed: document.getElementById("search-cat-used"),
     searchCatNotUsed: document.getElementById("search-cat-notused"),
     searchNutCalMin: document.getElementById("search-nut-cal-min"),
@@ -1119,6 +1121,12 @@ function checkActiveFilters() {
       t.searchIngNotUsed.value.trim() !== ""
     );
   }
+  if (i.activeSearchTab === "tab-ingredient-type") {
+    return (
+      t.searchTypeUsed.value.trim() !== "" ||
+      t.searchTypeNotUsed.value.trim() !== ""
+    );
+  }
   if (i.activeSearchTab === "tab-category") {
     return (
       t.searchCatNotUsed.value.trim() !== "" ||
@@ -1365,6 +1373,9 @@ async function v() {
           if (i.activeSearchTab === "tab-ingredient") {
             return t.searchIngUsed.value.trim() !== "" || t.searchIngNotUsed.value.trim() !== "";
           }
+          if (i.activeSearchTab === "tab-ingredient-type") {
+            return t.searchTypeUsed.value.trim() !== "" || t.searchTypeNotUsed.value.trim() !== "";
+          }
           if (i.activeSearchTab === "tab-category") {
             return t.searchCatUsed.value.trim() !== "" || t.searchCatNotUsed.value.trim() !== "";
           }
@@ -1398,18 +1409,8 @@ async function v() {
               return sr && sr.includes(countryVal);
             });
         } else if (i.activeSearchTab === "tab-ingredient") {
-          const usedIng = t.searchIngUsed.value
-              .trim()
-              .toLowerCase()
-              .split(",")
-              .map((o) => o.trim())
-              .filter(Boolean),
-            exIng = t.searchIngNotUsed.value
-              .trim()
-              .toLowerCase()
-              .split(",")
-              .map((o) => o.trim())
-              .filter(Boolean);
+          const usedIng = t.searchIngUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean),
+            exIng = t.searchIngNotUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean);
           if (usedIng.length > 0) {
             data = data.filter((item) =>
               usedIng.every(
@@ -1429,6 +1430,25 @@ async function v() {
                     (item.instructions &&
                       item.instructions.toLowerCase().includes(ing)),
                 ),
+            );
+          }
+        } else if (i.activeSearchTab === "tab-ingredient-type") {
+          const usedIng = t.searchTypeUsed.value.trim().toLowerCase();
+          const exIng = t.searchTypeNotUsed.value.trim().toLowerCase();
+          if (usedIng) {
+            data = data.filter((item) =>
+              item.Recipe_title.toLowerCase().includes(usedIng) ||
+              (item.instructions && item.instructions.toLowerCase().includes(usedIng)) ||
+              (item.ingredients && item.ingredients.some(ing => (ing.ingredient_Phrase || ing.ingredient || "").toLowerCase().includes(usedIng)))
+            );
+          }
+          if (exIng) {
+            data = data.filter((item) =>
+              !(
+                item.Recipe_title.toLowerCase().includes(exIng) ||
+                (item.instructions && item.instructions.toLowerCase().includes(exIng)) ||
+                (item.ingredients && item.ingredients.some(ing => (ing.ingredient_Phrase || ing.ingredient || "").toLowerCase().includes(exIng)))
+              )
             );
           }
         } else if (i.activeSearchTab === "tab-category") {
@@ -1779,6 +1799,12 @@ function J() {
       i.searchType = "ingredient";
       i.searchVal = t.searchIngUsed.value.trim() || "any";
       t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length > 0 ? a.join(', ') : 'none'} | Not Used: ${n.length > 0 ? n.join(', ') : 'none'})`;
+    } else if (i.activeSearchTab === "tab-ingredient-type") {
+      const a = t.searchTypeUsed.value.trim();
+      const n = t.searchTypeNotUsed.value.trim();
+      i.searchType = "ingredient_type";
+      i.searchVal = a || "any";
+      t.resultsTableTitle.textContent = `Filtered Ingredient Type (Used: ${a || 'none'} | Not Used: ${n || 'none'})`;
     } else {
       i.searchType = null;
       i.searchVal = null;
@@ -1806,18 +1832,8 @@ function J() {
         (e = e.filter((s) => (s.Recipe_title || "").toLowerCase().includes(o))),
       (t.resultsTableTitle.textContent = `Showing Cuisine matches (Region: "${a || "any"}", Title: "${o || "any"}")`));
   } else if (i.activeSearchTab === "tab-ingredient") {
-    const a = t.searchIngUsed.value
-        .trim()
-        .toLowerCase()
-        .split(",")
-        .map((o) => o.trim())
-        .filter(Boolean),
-      n = t.searchIngNotUsed.value
-        .trim()
-        .toLowerCase()
-        .split(",")
-        .map((o) => o.trim())
-        .filter(Boolean);
+    const a = t.searchIngUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean),
+      n = t.searchIngNotUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean);
     (a.length > 0 &&
       (e = e.filter((o) =>
         a.every(
@@ -1836,6 +1852,26 @@ function J() {
             ),
         )),
       (t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length > 0 ? a.join(', ') : 'none'} | Not Used: ${n.length > 0 ? n.join(', ') : 'none'})`));
+  } else if (i.activeSearchTab === "tab-ingredient-type") {
+    const a = t.searchTypeUsed.value.trim().toLowerCase();
+    const n = t.searchTypeNotUsed.value.trim().toLowerCase();
+    if (a) {
+      e = e.filter((o) =>
+        (o.Recipe_title || "").toLowerCase().includes(a) ||
+        (o.instructions || "").toLowerCase().includes(a) ||
+        (o.ingredients && o.ingredients.some(ing => (ing.ingredient_Phrase || ing.ingredient || "").toLowerCase().includes(a)))
+      );
+    }
+    if (n) {
+      e = e.filter((o) =>
+        !(
+          (o.Recipe_title || "").toLowerCase().includes(n) ||
+          (o.instructions || "").toLowerCase().includes(n) ||
+          (o.ingredients && o.ingredients.some(ing => (ing.ingredient_Phrase || ing.ingredient || "").toLowerCase().includes(n)))
+        )
+      );
+    }
+    t.resultsTableTitle.textContent = `Filtered Ingredient Type (Used: ${a || 'none'} | Not Used: ${n || 'none'})`;
   } else if (i.activeSearchTab === "tab-category") {
     const a = t.searchCatUsed.value.trim().toLowerCase(),
       n = t.searchCatNotUsed.value.trim().toLowerCase();
@@ -2000,9 +2036,12 @@ async function _(e) {
   if (detIng) {
     detIng.innerHTML = "";
     if (e.ingredients && e.ingredients.length > 0) {
+      const qtyRegex = /\b((?:\d+\s+)?\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)(?:\d+\s+)?\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
       e.ingredients.forEach(ing => {
         const d = document.createElement("div");
-        d.textContent = "• " + (ing.ingredient_Phrase || ing.ingredient);
+        let ingText = "• " + (ing.ingredient_Phrase || ing.ingredient);
+        ingText = ingText.replace(qtyRegex, `<span style="color: #38bdf8; font-weight: 600;">$1</span>`);
+        d.innerHTML = ingText;
         detIng.appendChild(d);
       });
     } else {
@@ -2025,7 +2064,7 @@ async function _(e) {
       tText = tText.replace(/\s+,\s*/g, ", ");
       let C = tText.endsWith(".") ? tText : `${tText}.`;
       
-      const qtyRegex = /\b(\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
+      const qtyRegex = /\b((?:\d+\s+)?\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)(?:\d+\s+)?\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
       C = C.replace(qtyRegex, `<span style="color: #38bdf8; font-weight: 600;">$1</span>`);
 
       const techniques = [...new Set(e.Processes ? e.Processes.split("||") : ["cook", "heat"])].filter(Boolean);

@@ -19,6 +19,8 @@
     .dual-range-container .planner-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; pointer-events: auto; position: relative; z-index: 3; width: 16px; height: 14px; background: var(--accent-cyan, #22d3ee); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); cursor: pointer; border: none; }
     .dual-range-container .min-range { z-index: 4; }
     .dual-range-container .max-range { z-index: 3; }
+      select.param-field option { background-color: #1b3323; color: #e2e8f0; }
+    select.param-field option:disabled { color: #475569; font-style: italic; }
   </style>
 
   <script>
@@ -2905,6 +2907,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
   display: none !important;
 }
 </style>
+  
 </head>
 
 <body>
@@ -4267,6 +4270,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
           <div class="search-tab-bar">
             <button class="search-tab-btn active" data-search-tab="tab-cuisine">Cuisine</button>
             <button class="search-tab-btn" data-search-tab="tab-ingredient">Ingredient</button>
+            <button class="search-tab-btn" data-search-tab="tab-ingredient-type">Ingredient Type</button>
             <button class="search-tab-btn" data-search-tab="tab-category">Diet Style</button>
             <button class="search-tab-btn" data-search-tab="tab-nutrition">Nutrition</button>
             <button class="search-tab-btn" data-search-tab="tab-advanced">Advanced</button>
@@ -4434,6 +4438,45 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             </div>
 
             <!-- Filters by dietary categories like Vegan, Vegetarian, Dairy, or Gluten -->
+                        <div class="search-tab-pane" id="tab-ingredient-type">
+              <div class="search-form-row col-2">
+                <div class="param-input-group">
+                  <label class="param-label" for="search-type-used">Used</label>
+                  <select class="param-field" id="search-type-used"
+                    style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- Any Type --</option>
+                    <option value="spice">Spice / Herb 🌿</option>
+                    <option value="vegetable">Vegetable 🥦</option>
+                    <option value="meat">Meat 🥩</option>
+                    <option value="dairy">Dairy 🥛</option>
+                    <option value="fruit">Fruit 🍎</option>
+                    <option value="seafood">Seafood 🐟</option>
+                    <option value="grain">Grain / Cereal 🌾</option>
+                    <option value="nut">Nut / Seed 🥜</option>
+                    <option value="oil">Oil / Fat 🧈</option>
+                    <option value="sauce">Condiment / Sauce 🥣</option>
+                  </select>
+                </div>
+                <div class="param-input-group">
+                  <label class="param-label" for="search-type-notused">Not Used</label>
+                  <select class="param-field" id="search-type-notused"
+                    style="appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2388a47c%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.75rem center;padding-right:2rem;">
+                    <option value="">-- None Excluded --</option>
+                    <option value="spice">Spice / Herb 🌿</option>
+                    <option value="vegetable">Vegetable 🥦</option>
+                    <option value="meat">Meat 🥩</option>
+                    <option value="dairy">Dairy 🥛</option>
+                    <option value="fruit">Fruit 🍎</option>
+                    <option value="seafood">Seafood 🐟</option>
+                    <option value="grain">Grain / Cereal 🌾</option>
+                    <option value="nut">Nut / Seed 🥜</option>
+                    <option value="oil">Oil / Fat 🧈</option>
+                    <option value="sauce">Condiment / Sauce 🥣</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <div class="search-tab-pane" id="tab-category">
               <div class="search-form-row col-2">
                 <div class="param-input-group">
@@ -8046,6 +8089,41 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
       });
       observer.observe(backdrop, { attributes: true, attributeFilter: ['class'] });
     })();
+  </script>
+  
+  <script>
+    function syncDropdowns(id1, id2) {
+      const el1 = document.getElementById(id1);
+      const el2 = document.getElementById(id2);
+      if(!el1 || !el2) return;
+      function update() {
+        const val1 = el1.value;
+        const val2 = el2.value;
+        for (let opt of el2.options) {
+          if (opt.value && opt.value === val1) {
+             opt.disabled = true;
+          } else {
+             opt.disabled = false;
+          }
+        }
+        for (let opt of el1.options) {
+          if (opt.value && opt.value === val2) {
+             opt.disabled = true;
+          } else {
+             opt.disabled = false;
+          }
+        }
+      }
+      el1.addEventListener('change', update);
+      el2.addEventListener('change', update);
+      // Run once on load
+      update();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      syncDropdowns('search-ing-used', 'search-ing-notused');
+      syncDropdowns('search-type-used', 'search-type-notused');
+      syncDropdowns('search-cat-used', 'search-cat-notused');
+    });
   </script>
 </body>
 
