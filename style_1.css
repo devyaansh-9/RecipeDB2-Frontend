@@ -832,6 +832,7 @@
       }
 
       #explorer-pane .search-tab-btn {
+        white-space: nowrap !important;
         background: transparent !important;
         border: none !important;
         border-radius: 99px !important;

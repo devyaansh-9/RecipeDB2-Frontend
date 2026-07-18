@@ -1772,13 +1772,13 @@ function J() {
         i.searchType = null;
         i.searchVal = null;
       }
-      t.resultsTableTitle.textContent = `Filtered Category (Used: "${a || "any"}", Excluded: "${ex || "none"}")`;
+      t.resultsTableTitle.textContent = `Filtered Diet Style (Used: "${a || "any"}" | Not Used: "${ex || "none"}")`;
     } else if (i.activeSearchTab === "tab-ingredient") {
       const a = t.searchIngUsed.value.trim().split(",").filter(Boolean),
         n = t.searchIngNotUsed.value.trim().split(",").filter(Boolean);
       i.searchType = "ingredient";
       i.searchVal = t.searchIngUsed.value.trim() || "any";
-      t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length}, Excluded: ${n.length})`;
+      t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length > 0 ? a.join(', ') : 'none'} | Not Used: ${n.length > 0 ? n.join(', ') : 'none'})`;
     } else {
       i.searchType = null;
       i.searchVal = null;
@@ -1835,7 +1835,7 @@ function J() {
                 (o.instructions || "").toLowerCase().includes(s),
             ),
         )),
-      (t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length}, Excluded: ${n.length})`));
+      (t.resultsTableTitle.textContent = `Filtered Ingredients (Used: ${a.length > 0 ? a.join(', ') : 'none'} | Not Used: ${n.length > 0 ? n.join(', ') : 'none'})`));
   } else if (i.activeSearchTab === "tab-category") {
     const a = t.searchCatUsed.value.trim().toLowerCase(),
       n = t.searchCatNotUsed.value.trim().toLowerCase();
