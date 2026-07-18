@@ -1962,7 +1962,7 @@ async function _(e) {
     (t.detServings.textContent = e.servings || "4 servings"),
     (t.detRegion.textContent = e.Region || "Global"),
     (t.detUtensils.innerHTML = ""),
-    (e.Utensils ? e.Utensils.split("||") : ["saucepan", "spoon"]).forEach(
+    [...new Set(e.Utensils ? e.Utensils.split("||") : ["saucepan", "spoon"])].forEach(
       (f) => {
         const m = document.createElement("span");
         ((m.className = "badge"),
@@ -1975,7 +1975,7 @@ async function _(e) {
       },
     ),
     (t.detProcesses.innerHTML = ""),
-    (e.Processes ? e.Processes.split("||") : ["cook", "heat"]).forEach((f) => {
+    [...new Set(e.Processes ? e.Processes.split("||") : ["cook", "heat"])].forEach((f) => {
       const m = document.createElement("span");
       ((m.className = "badge"),
         (m.style.borderColor = "rgba(186, 184, 161, 0.25)"),
@@ -2023,8 +2023,17 @@ async function _(e) {
       let tText = f.trim();
       if (tText.length > 0) tText = tText[0].toUpperCase() + tText.slice(1);
       tText = tText.replace(/\s+,\s*/g, ", ");
-      const C = tText.endsWith(".") ? tText : `${tText}.`,
-        S = document.createElement("div");
+      let C = tText.endsWith(".") ? tText : `${tText}.`;
+      
+      const qtyRegex = /\b(\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
+      C = C.replace(qtyRegex, `<span style="color: #38bdf8; font-weight: 600;">$1</span>`);
+
+      const techniques = [...new Set(e.Processes ? e.Processes.split("||") : ["cook", "heat"])].filter(Boolean);
+      techniques.forEach(tech => {
+        const regex = new RegExp(`\\b(${tech})\\b`, 'gi');
+        C = C.replace(regex, `<span style="color: #fbbf24; font-weight: 600;">$1</span>`);
+      });
+      const S = document.createElement("div");
       ((S.className = "instruction-step"),
         (S.innerHTML = `
       <div class="step-num">${m + 1}</div>
