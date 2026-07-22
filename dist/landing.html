@@ -3503,10 +3503,12 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                   const ingEl = document.getElementById('rotd-lnd-ingredients');
                   window.rotdIngHTML = '';
                   fullRecipe.ingredients.slice(0, 15).forEach(ing => {
-                    const text = ing.ingredient_Phrase || ing.ingredient;
+                    let text = ing.ingredient_Phrase || ing.ingredient;
                     if(text) {
-                      ingEl.innerHTML += `<div>• ${text.trim()}</div>`;
-                      window.rotdIngHTML += `<div>• ${text.trim()}</div>`;
+                      const qtyRegex = /\b((?:\d+\s+)?\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)(?:\d+\s+)?\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
+                      text = text.trim().replace(qtyRegex, `<span style="color: #38bdf8; font-weight: 600;">$1</span>`);
+                      ingEl.innerHTML += `<div>• ${text}</div>`;
+                      window.rotdIngHTML += `<div>• ${text}</div>`;
                     }
                   });
                   if (fullRecipe.ingredients.length > 15) {
@@ -3535,6 +3537,17 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                     } else {
                       formattedStep = step;
                     }
+
+                    const qtyRegex = /\b((?:\d+\s+)?\d+(?:[.,/]\d+)?(?:(?:\s+to\s+|\s*-\s*)(?:\d+\s+)?\d+(?:[.,/]\d+)?)?\s+(?:tablespoon|tablespoons|tbsp|teaspoon|teaspoons|tsp|cup|cups|ounce|ounces|oz|gram|grams|g|pound|pounds|lb|lbs|liter|liters|ml|pinch|pinches|dash|dashes|clove|cloves|can|cans|drop|drops|piece|pieces|package|packages|box|boxes))\b/gi;
+                    formattedStep = formattedStep.replace(qtyRegex, `<span style="color: #38bdf8; font-weight: 600;">$1</span>`);
+
+                    const techniques = [...new Set((recipe.Processes || "cook||heat").split("||").map(p=>p.trim()))].filter(Boolean);
+                    if (techniques.length === 0) techniques.push("cook", "heat");
+                    techniques.forEach(tech => {
+                      const regex = new RegExp(`\\b(${tech})\\b`, 'gi');
+                      formattedStep = formattedStep.replace(regex, `<span style="color: #fbbf24; font-weight: 600;">$1</span>`);
+                    });
+
                     instEl.innerHTML += `<li style="margin-bottom:4px;">${formattedStep}</li>`;
                     window.rotdInstHTML += `<div class="instruction-step">
       <div class="step-num">${idx+1}</div>
@@ -4270,7 +4283,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
           <div class="search-tab-bar">
             <button class="search-tab-btn active" data-search-tab="tab-cuisine">Cuisine</button>
             <button class="search-tab-btn" data-search-tab="tab-ingredient">Ingredient</button>
-            <button class="search-tab-btn" data-search-tab="tab-ingredient-type">Ingredient Type</button>
+            <button class="search-tab-btn" data-search-tab="tab-ingredient-type">Category</button>
             <button class="search-tab-btn" data-search-tab="tab-category">Diet Style</button>
             <button class="search-tab-btn" data-search-tab="tab-nutrition">Nutrition</button>
             <button class="search-tab-btn" data-search-tab="tab-advanced">Advanced</button>
