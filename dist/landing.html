@@ -2946,10 +2946,10 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
           style="color: #9bc386 !important; text-shadow: none !important; background: none !important; -webkit-text-fill-color: initial !important;">DB2</span></span>
     </a>
     <div class="nav-links">
-      <a href="#stats-section">Database</a>
+      <a href="#" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">Home</a>
       <!-- <a href="#cuisines-section">Cuisines</a> -->
-      <a href="#live-section">Explore</a>
-      <a href="#how-to-use-section">How to Use</a>
+      <a href="#live-section" onclick="event.preventDefault();document.getElementById('live-section').scrollIntoView({behavior:'smooth'})">Explore</a>
+      <a href="#how-to-use-section" onclick="event.preventDefault();document.getElementById('how-to-use-section').scrollIntoView({behavior:'smooth'})">How to Use</a>
       <!-- <a href="#features-section">Features</a> -->
       <a href="https://cosylab.iiitd.edu.in" target="_blank">CoSyLab</a>
     </div>
@@ -3178,7 +3178,7 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
   </section>
 
   <!-- Live interactive search playground and featured recipe showcase -->
-  <section id="live-section">
+  <section id="live-section" style="scroll-margin-top: 80px;">
     <div class="section-label reveal">Live Data</div>
     <h2 class="section-heading reveal reveal-delay-1">Recipe of the <em>Day</em></h2>
     <div class="reveal reveal-delay-2" style="max-width:600px;margin-top:15px;margin-bottom:3rem;color:var(--text-3,#9ca3af);line-height:1.6;font-size:1.1rem;font-weight:500;">
