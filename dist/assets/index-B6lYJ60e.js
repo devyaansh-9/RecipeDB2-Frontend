@@ -997,6 +997,7 @@ async function H() {
       t.featuredBadges.innerHTML = "";
     }
     const n = (o, s) => {
+      if (!t.featuredBadges) return;
       const r = document.createElement("span");
       (r.className = `badge ${s}`), (r.textContent = o), t.featuredBadges.appendChild(r);
     };
@@ -1273,17 +1274,6 @@ async function v() {
         responseKey = "root";
       } else if (i.searchType === "cuisine" && (i.searchValType === "region" || i.searchValType === "country")) {
         let cuisineVal = i.searchVal || "US";
-        const fullCountryToRegionMap = {
-          "Moroccan": "Northern Africa", "Egyptian": "Middle Eastern", "Nigerian": "Rest Africa", "Rest Middle Eastern": "Middle Eastern", "Chinese": "Chinese and Mongolian", "Thai": "Thai", "Indonesian": "Southeast Asian", "Bangladeshi": "Indian Subcontinent", "Vietnamese": "Southeast Asian", "Lebanese": "Middle Eastern", "Israeli": "Middle Eastern", "Filipino": "Southeast Asian", "Indian": "Indian Subcontinent", "Korean": "Korean", "Malaysian": "Southeast Asian", "Turkish": "Middle Eastern", "Japanese": "Japanese", "Australian": "Australian", "Pakistani": "Indian Subcontinent", "Mexican": "Mexican", "Rest Caribbean": "Caribbean", "Puerto Rican": "Caribbean", "Jamaican": "Caribbean", "Cuban": "Caribbean", "Argentine": "South American", "Brazilian": "South American", "Peruvian": "South American", "Chilean": "South American", "Russian": "Eastern European", "Colombian": "South American", "Danish": "Scandinavian", "English": "UK", "Hungarian": "Eastern European", "Swedish": "Scandinavian", "Scottish": "UK", "UK": "UK", "Belgian": "Belgian", "Welsh": "UK", "Norwegian": "Scandinavian", "Austrian": "Deutschland", "Greek": "Greek", "French": "French", "Swiss": "Deutschland", "Portuguese": "Spanish and Portuguese", "Italian": "Italian", "Polish": "Eastern European", "Dutch": "Belgian", "Irish": "Irish", "German": "Deutschland", "Rest Eastern European": "Eastern European", "Spanish": "Spanish and Portuguese", "Finnish": "Scandinavian", "Czech": "Eastern European", "US": "US", "Canadian": "Canadian", "Somalian": "Rest Africa", "Namibian": "Rest Africa", "Angolan": "Rest Africa", "Libyan": "Northern Africa", "Sudanese": "Rest Africa", "Ethiopian": "Rest Africa", "Laotian": "Middle Eastern", "Nepalese": "Indian Subcontinent", "Cambodian": "Southeast Asian", "Palestinian": "Middle Eastern", "Saudi Arabian": "Middle Eastern", "Mongolian": "Chinese and Mongolian", "Iraqi": "Middle Eastern", "New Zealander": "Australian", "Honduran": "Central American", "Costa Rican": "Central American", "Guatemalan": "Central American", "Ecuadorean": "South American", "Venezuelan": "South American", "Icelandic": "Scandinavian"
-        };
-        const continentToDefaultRegionMap = {
-          "Asian": "Indian Subcontinent",
-          "European": "Italian",
-          "Latin American": "Mexican",
-          "North American": "Canadian",
-          "Australasian": "Australian",
-          "African": "Rest Africa"
-        };
         let queryVal = cuisineVal;
         if (fullCountryToRegionMap[cuisineVal]) {
           cuisineVal = fullCountryToRegionMap[cuisineVal];
@@ -1301,7 +1291,7 @@ async function v() {
         responseKey = "root";
       } else if (i.searchType === "category") {
         path = "/recipe2-api/recipe/recipesinfo";
-        queryParams = { page: i.currentPage, limit: 10 };
+        queryParams = { page: i.currentPage, limit: i.itemsPerPage };
       }
 
       if (isFiltering) {
@@ -1499,20 +1489,11 @@ async function v() {
             regVal = t.advRegion.value.trim().toLowerCase(),
             countryVal = t.advCountry.value.trim().toLowerCase(),
             titleVal = t.advTitle.value.trim().toLowerCase(),
-            usedIng = t.advIngUsed.value
-              .trim()
-              .toLowerCase()
-              .split(",")
-              .map((o) => o.trim())
-              .filter(Boolean),
-            exIng = t.advIngNotUsed.value
-              .trim()
-              .toLowerCase()
-              .split(",")
-              .map((o) => o.trim())
-              .filter(Boolean),
+            usedIng = t.advIngUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean),
+            exIng = t.advIngNotUsed.value.trim().toLowerCase().split(",").map((o) => o.trim()).filter(Boolean),
             procVal = t.advProcess.value.trim().toLowerCase(),
             utVal = t.advUtensil.value.trim().toLowerCase();
+            
           if (contVal) {
             data = data.filter((item) =>
               (item.Continent || "").toLowerCase().includes(contVal),
@@ -1593,26 +1574,52 @@ async function v() {
         return;
       }
 
-      const d = await T({ path, queryParams });
-      if (d && d.data && d.data.error === "Not enough tokens") {
+      let data = [];
+      let totalCount = 118083;
+      let tokenError = false;
+      const apiLimit = 10;
+      
+      const startItem = (i.currentPage - 1) * i.itemsPerPage;
+      const endItem = i.currentPage * i.itemsPerPage;
+      const startApiPage = Math.floor(startItem / apiLimit) + 1;
+      const endApiPage = Math.floor((endItem - 1) / apiLimit) + 1;
+      
+      for (let p = startApiPage; p <= endApiPage; p++) {
+        const qParams = { ...queryParams, page: p };
+        const d = await T({ path, queryParams: qParams });
+        if (d && d.data && d.data.error === "Not enough tokens") {
+          tokenError = true;
+          break;
+        }
+        if (d && d.data) {
+          let pageData = [];
+          if (responseKey === "root") {
+            pageData = d.data.data || [];
+            totalCount = d.data.totalResults || 118083;
+          } else {
+            const payload = d.data.payload || {};
+            pageData = payload.data || [];
+            const pagination = payload.pagination || {};
+            totalCount = pagination.totalCount || 118083;
+          }
+          data = data.concat(pageData);
+          if (pageData.length < apiLimit) break;
+        } else {
+          break;
+        }
+      }
+
+      if (tokenError) {
         t.tableBodyContainer.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #F87171; font-weight: bold;">Error: Your API Key is out of tokens. Please use the gear icon to update it.</td></tr>`;
         return;
       }
-      if (d && d.data) {
-        let data = [];
-        let totalCount = 118083;
-        if (responseKey === "root") {
-          data = d.data.data || [];
-          totalCount = d.data.totalResults || data.length;
-        } else {
-          const payload = d.data.payload || {};
-          data = payload.data || [];
-          const pagination = payload.pagination || {};
-          totalCount = pagination.totalCount || data.length;
-        }
-        i.totalPages = responseKey === "root"
-          ? d.data.totalPages || Math.ceil(totalCount / i.itemsPerPage)
-          : (d.data.payload && d.data.payload.pagination ? d.data.payload.pagination.totalPages : Math.ceil(totalCount / i.itemsPerPage));
+      
+      if (data.length > 0) {
+        const relativeStart = startItem - (startApiPage - 1) * apiLimit;
+        const relativeEnd = relativeStart + i.itemsPerPage;
+        data = data.slice(relativeStart, relativeEnd);
+        
+        i.totalPages = Math.ceil(totalCount / i.itemsPerPage);
         i.recipesList = [...data];
         i.allFetchedRecipes = [...data];
         if (a) {
@@ -2314,6 +2321,11 @@ function N(e) {
 }
 function Y(e) {
   i.searchCache = null;
+  t.searchRegion.value = "";
+  t.searchCountry.value = "";
+  t.advContinent.value = "";
+  t.advRegion.value = "";
+  t.advCountry.value = "";
   if (y.engine === "live") {
     i.searchType = "cuisine";
     i.searchValType = "region";
