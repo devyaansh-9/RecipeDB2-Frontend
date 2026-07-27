@@ -4158,17 +4158,32 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
             if(!headingEl) return;
             const text = "Find Your Recipe";
             let index = 0;
-            let typed = false;
+            let isDeleting = false;
+            let hasStarted = false;
             
             const observer = new IntersectionObserver((entries) => {
-              if (entries[0].isIntersecting && !typed) {
-                typed = true;
+              if (entries[0].isIntersecting && !hasStarted) {
+                hasStarted = true;
                 setTimeout(() => {
                   function type() {
-                    if (index < text.length) {
-                      headingEl.textContent += text.charAt(index);
-                      index++;
-                      setTimeout(type, 75);
+                    if (isDeleting) {
+                      if (index > 0) {
+                        headingEl.textContent = text.substring(0, index - 1);
+                        index--;
+                        setTimeout(type, 40);
+                      } else {
+                        isDeleting = false;
+                        setTimeout(type, 500);
+                      }
+                    } else {
+                      if (index < text.length) {
+                        headingEl.textContent += text.charAt(index);
+                        index++;
+                        setTimeout(type, 85);
+                      } else {
+                        isDeleting = true;
+                        setTimeout(type, 2500);
+                      }
                     }
                   }
                   type();
