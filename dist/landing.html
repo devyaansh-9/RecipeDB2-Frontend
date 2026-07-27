@@ -4145,7 +4145,39 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
     <div class="p-inner">
       <div class="p-header">
         <div class="section-label reveal" style="justify-content:center;">RecipeDB2 Portal</div>
-        <h2 class="section-heading reveal reveal-delay-1">Explore the Database</h2>
+        <h2 class="section-heading reveal reveal-delay-1" style="display: flex; align-items: center; justify-content: center;">
+          <span id="typing-heading"></span><span class="blinking-cursor" style="font-weight: 300; color: var(--amber); margin-left: 2px;">|</span>
+        </h2>
+        <style>
+          @keyframes blink-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+          .blinking-cursor { animation: blink-cursor 1s step-end infinite; }
+        </style>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const headingEl = document.querySelector('#typing-heading');
+            if(!headingEl) return;
+            const text = "Find Your Recipe";
+            let index = 0;
+            let typed = false;
+            
+            const observer = new IntersectionObserver((entries) => {
+              if (entries[0].isIntersecting && !typed) {
+                typed = true;
+                setTimeout(() => {
+                  function type() {
+                    if (index < text.length) {
+                      headingEl.textContent += text.charAt(index);
+                      index++;
+                      setTimeout(type, 75);
+                    }
+                  }
+                  type();
+                }, 600);
+              }
+            }, { threshold: 0.5 });
+            observer.observe(headingEl.parentElement);
+          });
+        </script>
         <p class="reveal reveal-delay-2" style="max-width:580px;margin:20px auto 0;color:var(--text-2);font-size:1rem;line-height:1.7;">
           Search 1,28,942 recipes, analyse nutrition, test API endpoints, and explore food science.
         </p>
