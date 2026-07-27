@@ -583,10 +583,14 @@ const i = {
     searchNutProteinMax: document.getElementById("search-nut-protein-max"),
     searchNutFatMin: document.getElementById("search-nut-fat-min"),
     searchNutFatMax: document.getElementById("search-nut-fat-max"),
-    valSearchCal: document.getElementById("val-search-cal"),
-    valSearchCarbs: document.getElementById("val-search-carbs"),
-    valSearchProtein: document.getElementById("val-search-protein"),
-    valSearchFat: document.getElementById("val-search-fat"),
+    valSearchCalMin: document.getElementById("search-cal-min-input"),
+    valSearchCalMax: document.getElementById("search-cal-max-input"),
+    valSearchCarbsMin: document.getElementById("search-carbs-min-input"),
+    valSearchCarbsMax: document.getElementById("search-carbs-max-input"),
+    valSearchProteinMin: document.getElementById("search-protein-min-input"),
+    valSearchProteinMax: document.getElementById("search-protein-max-input"),
+    valSearchFatMin: document.getElementById("search-fat-min-input"),
+    valSearchFatMax: document.getElementById("search-fat-max-input"),
     advContinent: document.getElementById("adv-continent"),
     advRegion: document.getElementById("adv-region"),
     advCountry: document.getElementById("adv-country"),
@@ -770,26 +774,63 @@ function z() {
       J();
     }),
     (() => {
-      const setupDualSlider = (minSlider, maxSlider, label, suffix) => {
-        const updateLabel = () => {
+      const setupDualSlider = (minSlider, maxSlider, minInput, maxInput) => {
+        const absMin = parseInt(minSlider.min);
+        const absMax = parseInt(maxSlider.max);
+        const updateInputs = () => {
           let minVal = parseInt(minSlider.value);
           let maxVal = parseInt(maxSlider.value);
           if (minVal > maxVal) { let tmp = minVal; minVal = maxVal; maxVal = tmp; }
-          label.textContent = `${minVal} - ${maxVal}${suffix}`;
+          minInput.value = minVal;
+          maxInput.value = maxVal;
         };
         minSlider.addEventListener("input", () => {
           if (parseInt(minSlider.value) >= parseInt(maxSlider.value)) { minSlider.value = maxSlider.value - 1; }
-          updateLabel();
+          updateInputs();
         });
         maxSlider.addEventListener("input", () => {
           if (parseInt(maxSlider.value) <= parseInt(minSlider.value)) { maxSlider.value = parseInt(minSlider.value) + 1; }
-          updateLabel();
+          updateInputs();
         });
+        minInput.addEventListener("change", () => {
+          let val = parseInt(minInput.value);
+          if (isNaN(val)) val = absMin;
+          if (val < absMin || val > absMax) {
+            alert(`Please type in range ${absMin} to ${absMax}`);
+            val = Math.max(absMin, Math.min(val, absMax));
+          }
+          let maxVal = parseInt(maxSlider.value);
+          if (val >= maxVal) val = maxVal - 1;
+          minSlider.value = val;
+          minInput.value = val;
+        });
+        maxInput.addEventListener("change", () => {
+          let val = parseInt(maxInput.value);
+          if (isNaN(val)) val = absMax;
+          if (val < absMin || val > absMax) {
+            alert(`Please type in range ${absMin} to ${absMax}`);
+            val = Math.max(absMin, Math.min(val, absMax));
+          }
+          let minVal = parseInt(minSlider.value);
+          if (val <= minVal) val = minVal + 1;
+          maxSlider.value = val;
+          maxInput.value = val;
+        });
+        minInput.addEventListener("input", () => {
+           let val = parseInt(minInput.value);
+           if (!isNaN(val) && val >= absMin && val < parseInt(maxSlider.value)) minSlider.value = val;
+        });
+        maxInput.addEventListener("input", () => {
+           let val = parseInt(maxInput.value);
+           if (!isNaN(val) && val <= absMax && val > parseInt(minSlider.value)) maxSlider.value = val;
+        });
+        minInput.addEventListener("focus", function() { this.select(); });
+        maxInput.addEventListener("focus", function() { this.select(); });
       };
-      setupDualSlider(t.searchNutCalMin, t.searchNutCalMax, t.valSearchCal, " KCal");
-      setupDualSlider(t.searchNutCarbsMin, t.searchNutCarbsMax, t.valSearchCarbs, "g");
-      setupDualSlider(t.searchNutProteinMin, t.searchNutProteinMax, t.valSearchProtein, "g");
-      setupDualSlider(t.searchNutFatMin, t.searchNutFatMax, t.valSearchFat, "g");
+      setupDualSlider(t.searchNutCalMin, t.searchNutCalMax, t.valSearchCalMin, t.valSearchCalMax);
+      setupDualSlider(t.searchNutCarbsMin, t.searchNutCarbsMax, t.valSearchCarbsMin, t.valSearchCarbsMax);
+      setupDualSlider(t.searchNutProteinMin, t.searchNutProteinMax, t.valSearchProteinMin, t.valSearchProteinMax);
+      setupDualSlider(t.searchNutFatMin, t.searchNutFatMax, t.valSearchFatMin, t.valSearchFatMax);
     })(),
     t.advRegion.addEventListener("change", () => {}),
     t.advShowNutri.addEventListener("change", () => {

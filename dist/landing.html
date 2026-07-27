@@ -21,6 +21,12 @@
     .dual-range-container .max-range { z-index: 3; }
       select.param-field option { background-color: #263a23; color: #e2e8f0; }
     select.param-field option:disabled { color: #475569; font-style: italic; }
+    .slider-input-group { display: flex; align-items: center; gap: 4px; font-size: 0.85rem; color: #fff; font-weight: 700; }
+    .slider-input { width: 70px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 4px; padding: 2px 0; font-family: inherit; font-size: 0.85rem; font-weight: 700; outline: none; }
+    .slider-input:focus { border-color: var(--accent-cyan, #22d3ee); }
+    .slider-input::-webkit-outer-spin-button, .slider-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .slider-input { -moz-appearance: textfield; }
+    .slider-group .slider-label { display: flex; flex-direction: column; gap: 2px; line-height: 1; }
   </style>
 
   <script>
@@ -4574,8 +4580,11 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <div class="slider-group">
                   <div class="slider-header">
-                    <span class="slider-label">Energy</span>
-                    <span class="slider-value" id="val-search-cal">100 - 800 KCal</span>
+                    <span class="slider-label">Energy <i style="font-size:0.65rem; color:#88a47c; font-weight:normal">(0-2500)</i></span>
+                    <div class="slider-input-group">
+                      <input type="number" class="slider-input" id="search-cal-min-input" value="100"> - 
+                      <input type="number" class="slider-input" id="search-cal-max-input" value="800"> KCal
+                    </div>
                   </div>
                   <div class="dual-range-container">
                     <div class="dual-range-track"></div>
@@ -4586,8 +4595,11 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <div class="slider-group">
                   <div class="slider-header">
-                    <span class="slider-label">Carbohydrates</span>
-                    <span class="slider-value" id="val-search-carbs">10 - 150g</span>
+                    <span class="slider-label">Carbs <i style="font-size:0.65rem; color:#88a47c; font-weight:normal">(0-500)</i></span>
+                    <div class="slider-input-group">
+                      <input type="number" class="slider-input" id="search-carbs-min-input" value="10"> - 
+                      <input type="number" class="slider-input" id="search-carbs-max-input" value="150"> g
+                    </div>
                   </div>
                   <div class="dual-range-container">
                     <div class="dual-range-track"></div>
@@ -4598,8 +4610,11 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <div class="slider-group">
                   <div class="slider-header">
-                    <span class="slider-label">Protein</span>
-                    <span class="slider-value" id="val-search-protein">5 - 30g</span>
+                    <span class="slider-label">Protein <i style="font-size:0.65rem; color:#88a47c; font-weight:normal">(0-200)</i></span>
+                    <div class="slider-input-group">
+                      <input type="number" class="slider-input" id="search-protein-min-input" value="5"> - 
+                      <input type="number" class="slider-input" id="search-protein-max-input" value="30"> g
+                    </div>
                   </div>
                   <div class="dual-range-container">
                     <div class="dual-range-track"></div>
@@ -4610,8 +4625,11 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
 
                 <div class="slider-group">
                   <div class="slider-header">
-                    <span class="slider-label">Fat</span>
-                    <span class="slider-value" id="val-search-fat">5 - 60g</span>
+                    <span class="slider-label">Fat <i style="font-size:0.65rem; color:#88a47c; font-weight:normal">(0-250)</i></span>
+                    <div class="slider-input-group">
+                      <input type="number" class="slider-input" id="search-fat-min-input" value="5"> - 
+                      <input type="number" class="slider-input" id="search-fat-max-input" value="60"> g
+                    </div>
                   </div>
                   <div class="dual-range-container">
                     <div class="dual-range-track"></div>
