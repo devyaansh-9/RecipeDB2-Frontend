@@ -4274,6 +4274,11 @@ a, button, [role="button"], select, input[type="submit"], input[type="button"], 
                 const cuisine = tab.dataset.cuisine;
                 const label = document.getElementById('cuisine-filter-label');
                 if (label) label.textContent = cuisine ? 'Filtered: ' + tab.textContent.trim() : 'All cuisines shown';
+                const tableContainer = document.querySelector('.recipe-results-panel') || document.getElementById('recipes-data-table');
+                if (tableContainer) {
+                  const y = tableContainer.getBoundingClientRect().top + window.scrollY - 130;
+                  window.scrollTo({top: y, behavior: 'smooth'});
+                }
               });
             })();
           </script>
