@@ -2,7 +2,7 @@
 
 This is a premium Single-Page Application (SPA) for the RecipeDB2 Computational Gastronomy Portal. It interfaces with the Foodoscope API and utilizes external AI tools for content generation.
 
-## 🚀 Quick Start Guide
+##  Quick Start Guide
 
 ### Prerequisites
 1. **Node.js**: Make sure you have Node.js installed (v18 or higher recommended).
